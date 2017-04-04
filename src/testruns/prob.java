@@ -5,7 +5,6 @@ package testruns;
  */
 
 import com.aldebaran.qi.Application;
-import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
 public class prob {
     public static void main(String[] args){
@@ -19,7 +18,8 @@ public class prob {
         catch(Exception e){
             // The application could not be started.
             e.printStackTrace();
-        }}
-
+        }
     }
+
 }
+
