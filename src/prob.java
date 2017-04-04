@@ -4,6 +4,6 @@
 public class prob {
     public static void main(String[] args){
         //test test
-        system.out.println("Hallo Jungs und Mädels");
+        System.out.println("Hallo Jungs und Mädels");
     }
 }
