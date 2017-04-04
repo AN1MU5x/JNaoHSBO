@@ -3,7 +3,7 @@
  */
 
 //probe
-import com.aldebaran.qimessaging.*;
+import com.aldebaran.qi.*;
 import javafx.application.Application;
 
 public class SayHello {
