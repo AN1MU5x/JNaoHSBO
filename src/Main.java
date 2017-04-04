@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args){
         System.out.println("Alles Klar?");
         //Das ist ein Kommentar
-
+        //Das ist ein weiterer Kommentar
         /*Das ist
           noch ein Kommentar
          */
