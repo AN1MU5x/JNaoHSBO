@@ -4,18 +4,17 @@
 
 //probe
 import com.aldebaran.qi.*;
-import javafx.application.Application;
 
 public class SayHello {
     public static void main(String [] args) throws Exception{
         Application app = new Application(args);
         Session session = new Session();
-        Future<void> fut = session.connect("tcp://nao.local:9559");
+        Future<Void> fut = session.connect("tcp://nao.local:9559");
         synchronized (fut){
             fut.wait(1000);
         }
 
-        com.aldebaran.qimessaging.Object tts = null;
+        com.aldebaran.qi.AnyObject tts = null;
         tts = session.service("ALTextToSpeech");
         tts.call("sai", "hello, world");
     }
