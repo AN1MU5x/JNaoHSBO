@@ -19,7 +19,7 @@ public class Test_Andi {
         // Create an ALTextToSpeech object and link it to your current session
         ALTextToSpeech a = new ALTextToSpeech(application.session());
         // Make your robot say something
-        a.say("Hello World!");
+        a.say("Project");
 
     }
 
