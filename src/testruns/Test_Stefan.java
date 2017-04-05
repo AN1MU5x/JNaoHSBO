@@ -9,7 +9,7 @@ package testruns; /**
 public class Test_Stefan {
 
     public static class SayHello {
-        //stefan
+        //lisa
         public static void main(String[] args) throws Exception {
             String robotUrl = "tcp://nao.local:9559";
             // Create a new application

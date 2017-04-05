@@ -9,7 +9,7 @@ import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
     public class Lisa {
 
         public static void main(String[] args) throws Exception {
-            String robotUrl = "tcp://nao.local:9559";
+            String robotUrl = "tcp://Emma.local:9559";
             // Create a new application
             Application application = new Application(args, robotUrl);
             // Start your application
