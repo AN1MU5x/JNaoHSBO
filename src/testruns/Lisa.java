@@ -17,7 +17,9 @@ public class Lisa {
             application.start();
 
             ALMotion a = new ALMotion(application.session());
-           a.moveTo(0.0f,0.0f,1.571f);
+            ALMotion b = new ALMotion(application.session());
+            a.moveTo(0f,0.3f,0f);
+            b.moveTo(0f,-0.3f,0f);
         }
     }
 
