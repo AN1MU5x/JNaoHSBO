@@ -9,7 +9,7 @@ package testruns;
 import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
-public class Test_Andi {
+public class Test_Speak {
     public static void main(String[] args) throws Exception {
        String robotUrl = "tcp://Emma.local:9559";
         // Create a new application

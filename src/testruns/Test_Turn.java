@@ -1,13 +1,13 @@
 package testruns;
 
 /**
- * Created by Lisa on 04.04.2017.
+ * Created by Test_Turn on 04.04.2017.
  */
     import com.aldebaran.qi.Application;
     import com.aldebaran.qi.helper.proxies.ALMotion;
 
 
-public class Lisa {
+public class Test_Turn {
 
         public static void main(String[] args) throws Exception {
             String robotUrl = "tcp://Emma.local:9559";
