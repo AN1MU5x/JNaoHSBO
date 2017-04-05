@@ -15,9 +15,7 @@ import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
             // Start your application
             application.start();
             // Create an ALTextToSpeech object and link it to your current session
-            ALTextToSpeech tts = new ALTextToSpeech(application.session());
-            // Make your robot say something
-            tts.say("Hello World!");
+            ALMotionProxy::moveTo(0,0,3.14);
         }
     }
 
