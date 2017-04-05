@@ -5,7 +5,7 @@ package testruns;
  */
     import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
-
+/*
     public class Lisa {
 
         public static void main(String[] args) throws Exception {
@@ -19,3 +19,4 @@ import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
         }
     }
 
+*/
