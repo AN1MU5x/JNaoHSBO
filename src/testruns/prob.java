@@ -22,7 +22,7 @@ public class prob {
     }
    /* public static void main(String[] args){
 
-        Application application = new Application(args);
+        Aplication application = new Application(args);
         try{
             // Start the application and create a session.
             application.start();
