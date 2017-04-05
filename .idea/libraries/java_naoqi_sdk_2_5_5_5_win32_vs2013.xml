@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="java-naoqi-sdk-2.5.5.5-win32-vs2013">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Texte/libs/java-naoqi-sdk-2.5.5.5-win32-vs2013.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Texte/Libs/java-naoqi-sdk-2.5.5.5-win32-vs2013.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
