@@ -1,7 +1,7 @@
 package testruns;
 
 import com.aldebaran.qi.Application;
-import com.aldebaran.qi.helper.proxies.ALMotion;
+import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 
 /**
  * Created by Lisa on 05.04.2017.
@@ -14,10 +14,16 @@ public class Test_Vision {
         Application application = new Application(args, robotUrl);
         application.start();
 
-        ALMotion a = new ALMotion(application.session());
-        a.moveTo(0f,0f,3.14f);
 
 
-
+    }
+    public boolean learnFace(String sName) throws Exception {
+        ALFaceDetection oA = new ALFaceDetection();
+        if(oA.learnFace(sName)){
+            return(true);
+        }
+        else{
+            return(false);
+        }
     }
 }
