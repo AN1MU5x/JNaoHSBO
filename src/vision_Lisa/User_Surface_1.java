@@ -9,8 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -26,7 +25,8 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     GridPane grid1, grid2;
     Label address;
     Text scenetitle1, scenetitle2;
-    HBox hbBtn1;
+    HBox hbBtn1, hbBtn2;
+
 
     public static void main(String[] args) throws Exception{
         launch(args);
@@ -69,13 +69,13 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid2.setVgap(10);
         grid2.setPadding(new Insets(25, 25, 25, 25));
 
-        scene2 = new Scene(grid2, 300, 275);
+        scene2 = new Scene(grid2, 1500, 900);
         scenetitle2 = new Text("Hallo");
         scenetitle2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid2.add(scenetitle2, 0, 0, 2, 1);
 
         btn2 = new Button("IP Address change");
-        HBox hbBtn2 = new HBox(10);
+        hbBtn2 = new HBox(10);
         hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn2.getChildren().add(btn2);
         grid2.add(hbBtn2, 1, 4);
