@@ -1,7 +1,8 @@
 package testruns;
 
-import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
+import com.aldebaran.qi.helper.proxies.ALVisionRecognition;
+import utillities.Utts;
 
 /**
  * Created by Lisa on 05.04.2017.
@@ -10,15 +11,19 @@ public class Test_Vision {
 
     public static void main(String[] args) throws Exception {
 
-        String robotUrl = "tcp://Emma.local:9559";
-        Application application = new Application(args, robotUrl);
-        application.start();
+        Utts.AppStart();
+
+        ALFaceDetection a = new ALFaceDetection(Utts.APP.session());
+        a.setRecognitionEnabled(true);
+
+
 
 
 
     }
-    public boolean learnFace(String sName) throws Exception {
-        ALFaceDetection oA = new ALFaceDetection();
+
+    public static boolean learnFace(String sName) throws Exception {
+        ALFaceDetection oA = new ALFaceDetection(Utts.APP.session());
         if(oA.learnFace(sName)){
             return(true);
         }
@@ -26,4 +31,5 @@ public class Test_Vision {
             return(false);
         }
     }
+
 }
