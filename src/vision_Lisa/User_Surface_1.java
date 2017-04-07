@@ -69,12 +69,12 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid2.setVgap(10);
         grid2.setPadding(new Insets(25, 25, 25, 25));
 
-        scene2 = new Scene(grid2, 1500, 900);
+        scene2 = new Scene(grid2, 300, 250);
         scenetitle2 = new Text("Hallo");
         scenetitle2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid2.add(scenetitle2, 0, 0, 2, 1);
 
-        btn2 = new Button("IP Address change");
+        btn2 = new Button("TCP change");
         hbBtn2 = new HBox(10);
         hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn2.getChildren().add(btn2);
