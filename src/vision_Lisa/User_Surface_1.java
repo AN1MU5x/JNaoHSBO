@@ -70,7 +70,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid2.setPadding(new Insets(25, 25, 25, 25));
 
         scene2 = new Scene(grid2, 300, 275);
-        scenetitle2 = new Text("Verbunden mit ?????");
+        scenetitle2 = new Text("Hallo");
         scenetitle2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid2.add(scenetitle2, 0, 0, 2, 1);
 
