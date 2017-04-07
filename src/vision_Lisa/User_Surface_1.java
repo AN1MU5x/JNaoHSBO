@@ -1,31 +1,25 @@
-package testruns;
+package vision_Lisa;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-
 
 /**
- * Created by Lisa on 05.04.2017.
+ * Created by Lisa on 07.04.2017.
  */
-public class Test_Vision extends Application implements EventHandler<ActionEvent> {
-
+public class User_Surface_1 extends Application implements EventHandler<ActionEvent>{
     Stage window;
     Scene scene1, scene2;
     Button btn1, btn2;
@@ -90,6 +84,7 @@ public class Test_Vision extends Application implements EventHandler<ActionEvent
         primaryStage.setScene(scene1);
         primaryStage.show();
     }
+
     @Override
     public void handle(ActionEvent event){
         if(event.getSource()== btn1){
@@ -101,6 +96,4 @@ public class Test_Vision extends Application implements EventHandler<ActionEvent
             window.show();
         }
     }
-
 }
-
