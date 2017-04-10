@@ -1,106 +1,57 @@
 package testruns;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import com.aldebaran.qi.Application;
+import com.aldebaran.qi.CallError;
+import com.aldebaran.qi.Session;
+import com.aldebaran.qi.helper.EventCallback;
+import com.aldebaran.qi.helper.proxies.ALFaceDetection;
+import com.aldebaran.qi.helper.proxies.ALMemory;
+import utillities.Utts;
+
 
 
 /**
  * Created by Lisa on 05.04.2017.
  */
-public class Test_Vision extends Application implements EventHandler<ActionEvent> {
+public class Test_Vision{
+    public static void main(String[] args)throws Exception {
 
-    Stage window;
-    Scene scene1, scene2;
-    Button btn1, btn2;
-    GridPane grid1, grid2;
-    Label address;
-    Text scenetitle1, scenetitle2;
-    HBox hbBtn1;
+        String robotUrl = "tcp://Emma.local:9559";
+        Application application = new Application(args, robotUrl);
+        application.start();
+        System.out.println("Successfully connected to the robot");
 
-    public static void main(String[] args) throws Exception{
-        launch(args);
+        ALFaceDetection a = new ALFaceDetection(Utts.APP.session());
+        a.setRecognitionEnabled(true);
+
+
+
+
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        window = primaryStage;
-        primaryStage.setTitle("Nao");
+    ALMemory memory;
+    ALFaceDetection fd;
+    long faceDetectedID;
 
-        //Erstes Fenster
-        grid1 = new GridPane();
-        grid1.setAlignment(Pos.CENTER);
-        grid1.setHgap(10);
-        grid1.setVgap(10);
-        grid1.setPadding(new Insets(25, 25, 25, 25));
+    public void run(Session session) throws Exception {
 
-        scene1 = new Scene(grid1, 300, 275);
-        scenetitle1 = new Text("Welcome ");
-        scenetitle1.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid1.add(scenetitle1, 0, 0, 2, 1);
+        memory = new ALMemory(session);
+        fd = new ALFaceDetection(session);
+        faceDetectedID = 0;
 
-        address = new Label("tcp://");
-        grid1.add(address, 0, 1);
+        faceDetectedID = memory.subscribeToEvent(
+                "FaceDetected", new EventCallback<Float>() {
+                    @Override
+                    public void onEvent(Float arg0) throws InterruptedException, CallError {
 
-        TextField userTextField = new TextField();
-        grid1.add(userTextField, 1, 1);
-
-        btn1 = new Button("Connect");
-        hbBtn1 = new HBox(10);
-        hbBtn1.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn1.getChildren().add(btn1);
-        grid1.add(hbBtn1, 1, 4);
-        btn1.setOnAction(this);
-
-        //Zweites Fenster
-        grid2 = new GridPane();
-        grid2.setAlignment(Pos.CENTER);
-        grid2.setHgap(10);
-        grid2.setVgap(10);
-        grid2.setPadding(new Insets(25, 25, 25, 25));
-
-        scene2 = new Scene(grid2, 300, 275);
-        scenetitle2 = new Text("Verbunden mit ?????");
-        scenetitle2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid2.add(scenetitle2, 0, 0, 2, 1);
-
-        btn2 = new Button("IP Address change");
-        HBox hbBtn2 = new HBox(10);
-        hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn2.getChildren().add(btn2);
-        grid2.add(hbBtn2, 1, 4);
-        btn2.setOnAction(this);
-
-        primaryStage.setScene(scene1);
-        primaryStage.show();
+                        if (arg0 > 0) {
+                            try {
+                                Utts.talk("Hello");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
     }
-    @Override
-    public void handle(ActionEvent event){
-        if(event.getSource()== btn1){
-            window.setScene(scene2);
-            window.show();
-        }
-        if(event.getSource() == btn2){
-            window.setScene(scene1);
-            window.show();
-        }
-    }
-
 }
-

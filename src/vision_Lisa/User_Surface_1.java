@@ -26,6 +26,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     Label address;
     Text scenetitle1, scenetitle2;
     HBox hbBtn1, hbBtn2;
+    TextField userTextField;
 
 
     public static void main(String[] args) throws Exception{
@@ -52,7 +53,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         address = new Label("tcp://");
         grid1.add(address, 0, 1);
 
-        TextField userTextField = new TextField();
+        userTextField = new TextField();
         grid1.add(userTextField, 1, 1);
 
         btn1 = new Button("Connect");
