@@ -1,6 +1,7 @@
 package utillities;
 
 import com.aldebaran.qi.Application;
+import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
@@ -33,5 +34,15 @@ public class Utts {
         ALMotion a = new ALMotion(APP.session());
         a.moveTo(x,y,DegToRad(d));
 
+    }
+
+    public static boolean learnFace(String sName) throws Exception {
+        ALFaceDetection oA = new ALFaceDetection(Utts.APP.session());
+        if(oA.learnFace(sName)){
+            return(true);
+        }
+        else{
+            return(false);
+        }
     }
 }
