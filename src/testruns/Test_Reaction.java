@@ -20,8 +20,6 @@ public class Test_Reaction{
     static ArrayList<String> voc = new ArrayList<>();
 
     public static void main(String[] args) throws Exception{
-        long LastWordID;
-        ArrayList rec = new ArrayList<>();
 
         voc.add("hello");
         voc.add("lisa");
