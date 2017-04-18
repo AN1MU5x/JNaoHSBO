@@ -1,6 +1,6 @@
 package testruns;
 
-
+import com.aldebaran.qi.helper.ALProxy;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,8 +15,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import utillities.Utts;
-
 
 /**
      * Created by Lisa on 07.04.2017.
@@ -26,23 +24,36 @@ import utillities.Utts;
         Scene scene1, scene2;
         Button btn1, btn2;
         GridPane grid1, grid2;
-        Label name, port;
-        Text scenetitle1, scenetitle2;
+        Label name, port, battery;
+        Text scenetitle1, scenetitle21, scenetitle22;
         HBox hbBtn1, hbBtn2;
         TextField userTextField, portTextField;
 
-
         public static void main(String[] args) throws Exception{
-            launch(args);
-
+            Application.launch(args);
         }
-
         @Override
-        public void start(Stage primaryStage) {
+        public void start(Stage primaryStage)throws Exception {
             window = primaryStage;
-            primaryStage.setTitle("Nao");
+            window.setTitle("Nao");
+            window.centerOnScreen();
 
-            //Erstes Fenster
+            window1();
+            window2();
+
+            primaryStage.setScene(scene1);
+            primaryStage.show();
+        }
+        @Override
+        public void handle(ActionEvent event){
+            if(event.getSource()== btn1) {
+                //Utts.AppStart(userTextField.getText(),portTextField.getText());
+                window.setScene(scene2);
+                window.centerOnScreen();
+                window.show();
+            }
+        }
+        public void window1(){
             grid1 = new GridPane();
             grid1.setAlignment(Pos.CENTER);
             grid1.setHgap(10);
@@ -72,37 +83,28 @@ import utillities.Utts;
             hbBtn1.getChildren().add(btn1);
             grid1.add(hbBtn1, 1, 4);
             btn1.setOnAction(this);
-
-            //Zweites Fenster
+        }
+        public void window2(){
             grid2 = new GridPane();
-            grid2.setAlignment(Pos.CENTER);
-            grid2.setHgap(10);
-            grid2.setVgap(10);
+            grid2.setAlignment(Pos.TOP_LEFT);
+            grid2.setHgap(20);
+            grid2.setVgap(20);
             grid2.setPadding(new Insets(25, 25, 25, 25));
-
+            grid2.setGridLinesVisible(true);
             scene2 = new Scene(grid2, 1200, 800);
-            scenetitle2 = new Text("Hallo");
-            scenetitle2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            grid2.add(scenetitle2, 0, 0, 2, 1);
 
-            btn2 = new Button("TCP change");
-            hbBtn2 = new HBox(10);
-            hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
-            hbBtn2.getChildren().add(btn2);
-            grid2.add(hbBtn2, 1, 4);
-            btn2.setOnAction(this);
+            scenetitle21 = new Text("Info");
+            scenetitle21.setFont(Font.font("Tahoma",FontWeight.NORMAL, 20));
+            grid2.add(scenetitle21, 0,9 , 2, 1);
 
-            primaryStage.setScene(scene1);
-            primaryStage.show();
+            battery = new Label("Battery");
+            grid2.add(battery, 0,10);
+
+            scenetitle22 = new Text("Nao");
+            scenetitle22.setFont(Font.font("Tahoma",FontWeight.NORMAL, 20));
+            grid2.add(scenetitle22, 0,25 , 2, 1);
+
         }
 
-        @Override
-        public void handle(ActionEvent event){
-            if(event.getSource()== btn1) {
-                Utts.AppStart(userTextField.getText(),portTextField.getText());
-                window.setScene(scene2);
-                window.show();
-            }
-        }
     }
 
