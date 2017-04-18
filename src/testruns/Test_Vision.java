@@ -5,7 +5,7 @@ import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 
 /**
  * Created by Lisa on 05.04.2017.
- */
+ *//*
 public class Test_Vision {
 
     public static void main(String[] args) throws Exception {
@@ -17,8 +17,8 @@ public class Test_Vision {
 
 
     }
-    public boolean learnFace(String sName) throws Exception {
-        ALFaceDetection oA = new ALFaceDetection();
+    /*public boolean learnFace(String sName) throws Exception {
+        /*ALFaceDetection oA = new ALFaceDetection();
         if(oA.learnFace(sName)){
             return(true);
         }
@@ -27,3 +27,4 @@ public class Test_Vision {
         }
     }
 }
+*/

@@ -13,7 +13,7 @@ public class Position  {
 
 
 
-    public static ALRobotPosture  p ;
+    public static ALRobotPosture p;
 
 
 
