@@ -5,13 +5,36 @@ import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
+import java.util.ArrayList;
+
 /** 
  * Created by Lisa on 06.04.2017.
  */
-public class Utts {
+public class Utts extends Thread {
 
-    public static Application APP;
-    public static String EMMA = "tcp://Emma.local:9559";
+    private static Application APP;
+    private static String EMMA = "tcp://Emma.local:9559";
+    private static ArrayList<String> names;
+
+    public static Application getAPP() {
+        return APP;
+    }
+
+    public static String getEMMA() {
+        return EMMA;
+    }
+
+    public void setNames(ArrayList names) {
+        this.names = names;
+    }
+
+    public static ArrayList<String> getNames() {
+        return names;
+    }
+
+    public void addNames(String name){
+        names.add(name);
+    }
 
     public static float DegToRad(int d){
         float e;
@@ -45,4 +68,5 @@ public class Utts {
             return(false);
         }
     }
+
 }

@@ -15,34 +15,25 @@ import java.util.ArrayList;
  */
 public class Test_Reaction{
 
-    static ArrayList<String> voc = new ArrayList<>();
-    static ALSpeechRecognition alSpeechRecognition;
+    private static ALSpeechRecognition alSpeechRecognition;
 
     public static void main(String[] args) throws Exception{
 /*
-        voc.add("hello");
-        voc.add("lisa");
-        voc.add("stop");
-        voc.add("andrew");
-        voc.add("stefan");
-        voc.add("iskar");
-        voc.add("do it");
-
-
         alSpeechRecognition.pause(true);
-        alSpeechRecognition.setVocabulary(voc, true);
+        alSpeechRecognition.setVocabulary(names, true);
         alSpeechRecognition.pause(false);
-        alSpeechRecognition = new ALSpeechRecognition(Utts.APP.session());
 */
+        alSpeechRecognition = new ALSpeechRecognition(Utts.getAPP().session());
+
         Test_Reaction test_reaction = new Test_Reaction();
 
-        test_reaction.run(Utts.APP.session());
-        Utts.APP.run();
+        test_reaction.run(Utts.getAPP().session());
+        Utts.getAPP().run();
     }
 
-    long recID;
-    ALMemory memory;
-    ArrayList recWord = new ArrayList<String>();
+    private long recID;
+    private ALMemory memory;
+    private ArrayList recWord = new ArrayList<String>();
 
     public void run(Session session) throws Exception {
 
@@ -51,7 +42,7 @@ public class Test_Reaction{
                 "WordRecognized", arg0 -> {
 
                     alSpeechRecognition.pause(true);
-                    alSpeechRecognition.setVocabulary(voc, true);
+                 //   alSpeechRecognition.setVocabulary(names, true);
                     //getting the last word
                     recWord = (ArrayList) memory.getData("WordRecognized");
                     System.out.println(recWord);
@@ -63,7 +54,7 @@ public class Test_Reaction{
                         System.out.println(name);
                     }
 
-                    for (String m: voc) {
+                    for (String m: Utts.getNames()) {
                         //Talk to known people
                         if(name.equals(m)&&!name.equals("do it")&&!name.equals("stop")&&(float)recWord.get(1)>0.5f){
                             try {
@@ -84,7 +75,7 @@ public class Test_Reaction{
                             e.printStackTrace();
                         }
                         memory.unsubscribeToEvent(recID);
-                        Utts.APP.stop();
+                        Utts.getAPP().stop();
                     }else if(name.equals("do it")&&(float)recWord.get(1)>0.5f) {
                         try {
                             Utts.talk("No, I will not!");
