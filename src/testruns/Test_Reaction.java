@@ -19,7 +19,7 @@ public class Test_Reaction{
     static ALSpeechRecognition alSpeechRecognition;
 
     public static void main(String[] args) throws Exception{
-
+/*
         voc.add("hello");
         voc.add("lisa");
         voc.add("stop");
@@ -27,11 +27,13 @@ public class Test_Reaction{
         voc.add("stefan");
         voc.add("iskar");
         voc.add("do it");
-        alSpeechRecognition = new ALSpeechRecognition(Utts.APP.session());
+
 
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(voc, true);
         alSpeechRecognition.pause(false);
+        alSpeechRecognition = new ALSpeechRecognition(Utts.APP.session());
+*/
         Test_Reaction test_reaction = new Test_Reaction();
 
         test_reaction.run(Utts.APP.session());
