@@ -16,7 +16,7 @@ public class Position  {
     public static ALRobotPosture p;
 
 
-
+/*
     public static void Sit() throws Exception{
         p = new ALRobotPosture(Utts.APP.session());
         p.stopMove();
@@ -74,6 +74,6 @@ public class Position  {
         Utts.talk("I am ready with StandInit");
     }
 
-
+*/
 
 }

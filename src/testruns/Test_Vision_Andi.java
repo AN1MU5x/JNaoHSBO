@@ -43,30 +43,31 @@ public class Test_Vision_Andi {
         tts = new ALTextToSpeech(session);
         face = new ALFaceDetection(session);
 
+
         System.out.println("Ausgabe der gesichter "+face.getLearnedFacesList());
 
         System.out.println("Start prob");
 
          face.subscribe("Test",500,0.0f);
-        memory.subscribeToEvent("FaceDetected",
+         memory.subscribeToEvent("FaceDetected",
                 new EventCallback() {
                     @Override
                     public void onEvent(Object o)
                             throws InterruptedException, CallError {
                                 System.out.println("Face detected");
-
                                 ArrayList ergebnis = (ArrayList) o;
-
-
                                 if(ergebnis.size()>1) {
-
-
                                     ArrayList faceInfoArray= (ArrayList) ergebnis.get(1);
-
-
-
                                     if(faceInfoArray.size()>1){
+                                        ArrayList faceInfo=(ArrayList)faceInfoArray.get(0);
+                                        ArrayList extraInfo=(ArrayList)faceInfo.get(1);
+                                        String facelabel=(String)extraInfo.get(2);
+                                        System.out.println(facelabel);
+                                        tts.say(facelabel);
+
+                                        /*
                                         ArrayList timeFilteredRecoInfo=(ArrayList)faceInfoArray.get(1);
+
                                         if(timeFilteredRecoInfo.size()>=2){
 
 
@@ -75,18 +76,13 @@ public class Test_Vision_Andi {
                                                name = "" + nameImArray.get(0);
                                                System.out.println(name);
                                                tts.say(name);
-
-
-
-
                                         }
+                                        */
                                     }
-
-                        }
+                                }
 
                     }
                 });
-
 
 
     }
