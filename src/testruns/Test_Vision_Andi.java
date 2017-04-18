@@ -30,6 +30,7 @@ public class Test_Vision_Andi {
 
         // Run your application
         application.run();
+
     }
 
     ALMemory memory;
@@ -40,9 +41,11 @@ public class Test_Vision_Andi {
 
 
 
+
     public void run(Session session) throws Exception {
 
         memory = new ALMemory(session);
+
 
         tts = new ALTextToSpeech(session);
         face = new ALFaceDetection(session);
@@ -87,6 +90,7 @@ public class Test_Vision_Andi {
 
                     }
                 });
+
 
 
     }
