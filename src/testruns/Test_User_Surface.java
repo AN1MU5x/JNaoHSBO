@@ -1,6 +1,5 @@
 package testruns;
 
-import com.aldebaran.qi.helper.ALProxy;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import utillities.Utts;
 
 /**
      * Created by Lisa on 07.04.2017.
@@ -47,7 +47,7 @@ import javafx.stage.Stage;
         @Override
         public void handle(ActionEvent event){
             if(event.getSource()== btn1) {
-                //Utts.AppStart(userTextField.getText(),portTextField.getText());
+                Utts.AppStart(userTextField.getText(),portTextField.getText());
                 window.setScene(scene2);
                 window.centerOnScreen();
                 window.show();
