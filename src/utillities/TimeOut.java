@@ -33,7 +33,7 @@ public class TimeOut extends Thread {
 
 
     public static void avoid(){
-        System.out.println("INTERRUPTED");
+        System.out.println("TimeOut INTERRUPTED");
         timeOut.interrupt();
     }
 
@@ -43,6 +43,6 @@ public class TimeOut extends Thread {
         while((delay -currTime)>0){
             currTime = System.currentTimeMillis();
         }
-        Utts.getAPP().stop();
+        Utts.AppStop();
     }
 }

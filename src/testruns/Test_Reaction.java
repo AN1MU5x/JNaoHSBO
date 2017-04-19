@@ -2,8 +2,7 @@ package testruns;
 
 
 import com.aldebaran.qi.Session;
-import com.aldebaran.qi.helper.proxies.ALMemory;
-import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
+import com.aldebaran.qi.helper.proxies.*;
 import utillities.Utts;
 
 
@@ -16,6 +15,8 @@ import java.util.ArrayList;
 public class Test_Reaction{
 
     private static ALSpeechRecognition alSpeechRecognition;
+    private static ArrayList<String> allWords = new ArrayList<>();
+
 
     public static void main(String[] args) throws Exception{
 /*
@@ -23,15 +24,36 @@ public class Test_Reaction{
         alSpeechRecognition.setVocabulary(names, true);
         alSpeechRecognition.pause(false);
 */
-        alSpeechRecognition = new ALSpeechRecognition(Utts.getAPP().session());
+       // Utts.AppStart();
+        (new ALFaceDetection(Utts.getSESSION())).setTrackingEnabled(true);
+        alSpeechRecognition = new ALSpeechRecognition(Utts.getSESSION());
+        Utts.setNames(new ArrayList());
+        Utts.addNames("lisa");
+        Utts.addNames("andi");
+        Utts.addNames("iskar");
+        Utts.addNames("stefan");
+
+        ArrayList<String> uttWords = new ArrayList<>();
+        uttWords.add("stop");
+        uttWords.add("akku");
+        System.out.println(Utts.getNames());
+
+        for (String m: Utts.getNames()) {
+            allWords.add(m);
+
+        }
+        for (String m: uttWords) {
+            allWords.add(m);
+
+        }
 
         Test_Reaction test_reaction = new Test_Reaction();
 
-        test_reaction.run(Utts.getAPP().session());
+        test_reaction.run(Utts.getSESSION());
         Utts.getAPP().run();
     }
 
-    private long recID;
+    protected static long recID;
     private ALMemory memory;
     private ArrayList recWord = new ArrayList<String>();
 
@@ -42,24 +64,24 @@ public class Test_Reaction{
                 "WordRecognized", arg0 -> {
 
                     alSpeechRecognition.pause(true);
-                 //   alSpeechRecognition.setVocabulary(names, true);
+                    alSpeechRecognition.setVocabulary(allWords , true);
                     //getting the last word
-                    recWord = (ArrayList) memory.getData("WordRecognized");
+                    recWord = (ArrayList) arg0;
                     System.out.println(recWord);
-                    String name = (String)recWord.get(0);
-
-                    if (name.charAt(0)=='<') {
+                    String word = (String)recWord.get(0);
+                    if (word.charAt(0)=='<') {
                         // cut out <...> phrases
-                        name = name.substring(name.indexOf('>') + 2, name.lastIndexOf('<') - 1);
-                        System.out.println(name);
+                        word = word.substring(word.indexOf('>') + 2, word.lastIndexOf('<') - 1);
+                        System.out.println(word);
                     }
 
                     for (String m: Utts.getNames()) {
                         //Talk to known people
-                        if(name.equals(m)&&!name.equals("do it")&&!name.equals("stop")&&(float)recWord.get(1)>0.5f){
+                        if(word.equals(m)&&(float)recWord.get(1)>0.5f){
                             try {
-                                Utts.talk("Hello " + name + " I know You!");
-                                Thread.sleep(20);
+                                Utts.talk("Hallo " + word + ", wie geht es dir?");
+                                Thread.sleep(100);
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -67,19 +89,19 @@ public class Test_Reaction{
                         }
 
 
-                    }if(name.equals("stop")&&(float)recWord.get(1)>0.3f){
+                    }if(word.equals("stop")&&(float)recWord.get(1)>0.3f){
                         try {
-                            Utts.talk("OK i will stop!");
+                            Utts.talk("OK ich höre auf!");
                             Thread.sleep(20);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        alSpeechRecognition.pause(false);
                         memory.unsubscribeToEvent(recID);
-                        Utts.getAPP().stop();
-                    }else if(name.equals("do it")&&(float)recWord.get(1)>0.5f) {
+                        Utts.AppStop();
+                    }else if(word.equals("akku")){
                         try {
-                            Utts.talk("No, I will not!");
-                            Thread.sleep(20);
+                            Utts.talk("Mein Akku hat noch "+(new ALBattery(Utts.getSESSION())).getBatteryCharge()+"%");
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

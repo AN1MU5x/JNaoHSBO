@@ -1,6 +1,7 @@
 package utillities;
 
 import com.aldebaran.qi.Application;
+import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
@@ -13,26 +14,31 @@ import java.util.ArrayList;
 public class Utts extends Thread {
 
     private static Application APP;
+    private static Session SESSION;
     private static String EMMA = "tcp://Emma.local:9559";
-    private static ArrayList<String> names;
+    private static ArrayList<String> names = new ArrayList<>();
 
     public static Application getAPP() {
         return APP;
+    }
+
+    public static Session getSESSION() {
+        return SESSION;
     }
 
     public static String getEMMA() {
         return EMMA;
     }
 
-    public void setNames(ArrayList names) {
-        this.names = names;
+    public static void setNames(ArrayList names) {
+        names = names;
     }
 
     public static ArrayList<String> getNames() {
         return names;
     }
 
-    public void addNames(String name){
+    public static void addNames(String name){
         names.add(name);
     }
 
@@ -46,6 +52,11 @@ public class Utts extends Thread {
         String[] args = new String[]{""};
         APP = new Application(args, EMMA);
         APP.start();
+        SESSION = APP.session();
+    }
+
+    public static void AppStop(){
+        APP.stop();
     }
 
     public static void talk(String txt) throws Exception{
