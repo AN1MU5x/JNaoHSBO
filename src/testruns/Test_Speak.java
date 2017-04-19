@@ -8,19 +8,22 @@ package testruns;
 
 import com.aldebaran.qi.Application;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
+import utillities.Utts;
 
 public class Test_Speak {
     public static void main(String[] args) throws Exception {
-       String robotUrl = "tcp://Emma.local:9559";
+      /* String robotUrl = "tcp://Emma.local:9559";
         // Create a new application
         Application application = new Application(args, robotUrl);
         // Start your application
         application.start();
         // Create an ALTextToSpeech object and link it to your current session
-        ALTextToSpeech a = new ALTextToSpeech(application.session());
+       ALTextToSpeech a = new ALTextToSpeech(application.session());
         // Make your robot say something
-        a.say("iskar, lets smoke a cigarette!");
-
+        a.say("Stefan come with me I would like to smoke");
+        */
+        Utts.AppStart();
+        Utts.talk("hello");
     }
 
 }

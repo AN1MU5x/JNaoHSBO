@@ -1,17 +1,46 @@
 package utillities;
 
 import com.aldebaran.qi.Application;
+import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
+import java.util.ArrayList;
+
 /** 
  * Created by Lisa on 06.04.2017.
  */
-public class Utts {
+public class Utts extends Thread {
 
-    public static Application APP;
-    public static String EMMA = "tcp://Emma.local:9559";
+    private static Application APP;
+    private static Session SESSION;
+    private static String EMMA = "tcp://Emma.local:9559";
+    private static ArrayList<String> names = new ArrayList<>();
+
+    public static Application getAPP() {
+        return APP;
+    }
+
+    public static Session getSESSION() {
+        return SESSION;
+    }
+
+    public static String getEMMA() {
+        return EMMA;
+    }
+
+    public static void setNames(ArrayList names) {
+        names = names;
+    }
+
+    public static ArrayList<String> getNames() {
+        return names;
+    }
+
+    public static void addNames(String name){
+        names.add(name);
+    }
 
     public static float DegToRad(int d){
         float e;
@@ -23,6 +52,11 @@ public class Utts {
         String[] args = new String[]{""};
         APP = new Application(args, EMMA);
         APP.start();
+        SESSION = APP.session();
+    }
+
+    public static void AppStop(){
+        APP.stop();
     }
 
     public static void AppStart(String name, String port){
@@ -51,4 +85,5 @@ public class Utts {
             return(false);
         }
     }
+
 }
