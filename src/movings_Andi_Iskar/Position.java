@@ -1,8 +1,11 @@
 package movings_Andi_Iskar;
 
 
+import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALRobotPosture;
 import utillities.Utts;
+
+import java.util.ArrayList;
 
 /**
  * Created by Andi on 10.04.2017.
@@ -14,6 +17,15 @@ public class Position  {
 
 
     private static ALRobotPosture p;
+    private static ALMotion bew;
+    private static ArrayList name;
+    private static ArrayList name1;
+    private static ArrayList angles;
+    private static ArrayList angles1;
+    private static ArrayList time;
+    private static ArrayList time1;
+
+
 
 
 
@@ -91,6 +103,92 @@ public class Position  {
         }
     }
 
+    public static void winken() throws Exception{
+        bew= new ALMotion(Utts.getAPP().session());
 
+        //erzeugen ArrayList
+        name =new ArrayList<String>();
+        name1 =new ArrayList<String>();
 
+        angles =new ArrayList<Float>();
+        angles1 =new ArrayList<Float>();
+
+        time =new ArrayList<Float>();
+        time1 =new ArrayList<Float>();
+
+        //hinzufügen bewegungsaktionen zur liste
+        name.add(0,"RShoulderPitch");
+        name.add(1,"RWristYaw");
+        name.add(2,"RHand");
+
+        name1.add(0,"RShoulderRoll");
+        //festlegen der Aktionswinkel in liste
+        angles.add(0,Utts.DegToRad(-70));
+        angles.add(1,Utts.DegToRad(-70));
+        angles.add(2,Utts.DegToRad(50));
+
+        angles1.add(0,Utts.DegToRad(-50));
+        angles1.add(1,Utts.DegToRad(0));
+
+        //festlegen der Zeitpunkte der Aktionen
+        time.add(0,1.f);
+        time.add(1,1.2f);
+        time.add(2,1.4f);
+
+        time1.add(0,1.0f);
+        time1.add(1,2.0f);
+        //Die Steifheit auf 100% stellen
+        bew.setStiffnesses("RArm",1.0f);
+        //aussprache
+        Utts.talk("Guten Tag");
+        //Bewegungsaktionen ausführen
+        bew.angleInterpolation(name,angles,time,true);
+
+        for(int i=0;i<2;i++) {
+            bew.angleInterpolation(name1, angles1, time1, true);
+        }
+
+        bew.closeHand("RHand");
+
+               /*
+       ********
+       für "Body" namen(körpername)
+        HeadYaw, HeadPitch, LShoulderPitch, LShoulderRoll, LElbowYaw, LElbowRoll, LWristYaw, LHand, LHipYawPitch, LHipRoll,
+       LHipPitch, LKneePitch, LAnklePitch, LAnkleRoll, RHipYawPitch, RHipRoll, RHipPitch, RKneePitch, RAnklePitch, RAnkleRoll, RShoulderPitch,
+       RShoulderRoll, RElbowYaw, RElbowRoll, RWristYaw, RHand
+       ********
+       ********
+       für "Chains" name(Ketten)
+       Head, LArm, LLeg, RLeg, RArm
+       ********
+       ********
+        "Joints" (Gelenke)
+        HeadYaw, HeadPitch, LShoulderPitch, LShoulderRoll, LElbowYaw, LElbowRoll, LWristYaw, LHipYawPitch, LHipRoll, LHipPitch,
+        LKneePitch, LAnklePitch, LAnkleRoll, RHipYawPitch, RHipRoll, RHipPitch, RKneePitch, RAnklePitch, RAnkleRoll, RShoulderPitch, RShoulderRoll,
+        RElbowYaw, RElbowRoll, RWristYaw]
+        ********
+        *********
+       "JointActuators"(Aktuatoren Stellantriebe)
+        HeadYaw, HeadPitch, LShoulderPitch, LShoulderRoll, LElbowYaw, LElbowRoll, LWristYaw, LHand, LHipYawPitch, LHipRoll, LHipPitch, LKneePitch,
+        LAnklePitch, LAnkleRoll, RHipYawPitch, RHipRoll, RHipPitch, RKneePitch, RAnklePitch, RAnkleRoll, RShoulderPitch, RShoulderRoll, RElbowYaw,
+        RElbowRoll, RWristYaw, RHand
+        ***********
+        **********
+       "Actuators" (Aktuatoren)
+       LHand, RHand
+       *************
+        */
+       /*
+       angles (Winkel)
+       setAngles erwartet(const AL::ALValue& names, const AL::ALValue& angles, const float& fractionMaxSpeed)
+
+        names – The name or names of joints, chains, “Body”, “JointActuators”, “Joints” or “Actuators”.
+        angles – One or more angles in radians
+        fractionMaxSpeed – The fraction of maximum speed to use
+        */
+
+    }
 }
+
+
+
