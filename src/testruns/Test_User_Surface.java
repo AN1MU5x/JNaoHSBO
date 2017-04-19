@@ -1,6 +1,5 @@
 package testruns;
 
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,8 +14,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import utillities.Utts;
 
-    /**
+/**
      * Created by Lisa on 07.04.2017.
      */
     public class Test_User_Surface extends Application implements EventHandler<ActionEvent> {
@@ -24,79 +24,87 @@ import javafx.stage.Stage;
         Scene scene1, scene2;
         Button btn1, btn2;
         GridPane grid1, grid2;
-        Label address;
-        Text scenetitle1, scenetitle2;
+        Label name, port, battery;
+        Text scenetitle1, scenetitle21, scenetitle22;
         HBox hbBtn1, hbBtn2;
-        TextField userTextField;
-
+        TextField userTextField, portTextField;
 
         public static void main(String[] args) throws Exception{
-            launch(args);
+            Application.launch(args);
         }
-
         @Override
-        public void start(Stage primaryStage) {
+        public void start(Stage primaryStage)throws Exception {
             window = primaryStage;
-            primaryStage.setTitle("Nao");
+            window.setTitle("Nao");
+            window.centerOnScreen();
 
-            //Erstes Fenster
+            window1();
+            window2();
+
+            primaryStage.setScene(scene1);
+            primaryStage.show();
+        }
+        @Override
+        public void handle(ActionEvent event){
+            if(event.getSource()== btn1) {
+                Utts.AppStart(userTextField.getText(),portTextField.getText());
+                window.setScene(scene2);
+                window.centerOnScreen();
+                window.show();
+            }
+        }
+        public void window1(){
             grid1 = new GridPane();
             grid1.setAlignment(Pos.CENTER);
             grid1.setHgap(10);
             grid1.setVgap(10);
             grid1.setPadding(new Insets(25, 25, 25, 25));
-
             scene1 = new Scene(grid1, 300, 275);
             scenetitle1 = new Text("Welcome ");
             scenetitle1.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             grid1.add(scenetitle1, 0, 0, 2, 1);
 
-            address = new Label("tcp://");
-            grid1.add(address, 0, 1);
-
+            //Namensfeld und Eingabe
+            name = new Label("Name:");
+            grid1.add(name, 0, 1);
             userTextField = new TextField();
             grid1.add(userTextField, 1, 1);
 
+            //Portfeld und Eingabe
+            port = new Label("Port:");
+            grid1.add(port, 0, 2);
+            portTextField = new TextField();
+            grid1.add(portTextField, 1, 2);
+
+            //Button Connect
             btn1 = new Button("Connect");
             hbBtn1 = new HBox(10);
             hbBtn1.setAlignment(Pos.BOTTOM_RIGHT);
             hbBtn1.getChildren().add(btn1);
             grid1.add(hbBtn1, 1, 4);
             btn1.setOnAction(this);
-
-            //Zweites Fenster
+        }
+        public void window2(){
             grid2 = new GridPane();
-            grid2.setAlignment(Pos.CENTER);
-            grid2.setHgap(10);
-            grid2.setVgap(10);
+            grid2.setAlignment(Pos.TOP_LEFT);
+            grid2.setHgap(20);
+            grid2.setVgap(20);
             grid2.setPadding(new Insets(25, 25, 25, 25));
+            grid2.setGridLinesVisible(true);
+            scene2 = new Scene(grid2, 1200, 800);
 
-            scene2 = new Scene(grid2, 300, 250);
-            scenetitle2 = new Text("Hallo");
-            scenetitle2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            grid2.add(scenetitle2, 0, 0, 2, 1);
+            scenetitle21 = new Text("Info");
+            scenetitle21.setFont(Font.font("Tahoma",FontWeight.NORMAL, 20));
+            grid2.add(scenetitle21, 0,9 , 2, 1);
 
-            btn2 = new Button("TCP change");
-            hbBtn2 = new HBox(10);
-            hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
-            hbBtn2.getChildren().add(btn2);
-            grid2.add(hbBtn2, 1, 4);
-            btn2.setOnAction(this);
+            battery = new Label("Battery");
+            grid2.add(battery, 0,10);
 
-            primaryStage.setScene(scene1);
-            primaryStage.show();
+            scenetitle22 = new Text("Nao");
+            scenetitle22.setFont(Font.font("Tahoma",FontWeight.NORMAL, 20));
+            grid2.add(scenetitle22, 0,25 , 2, 1);
+
         }
 
-        @Override
-        public void handle(ActionEvent event){
-            if(event.getSource()== btn1){
-                window.setScene(scene2);
-                window.show();
-            }
-            if(event.getSource() == btn2){
-                window.setScene(scene1);
-                window.show();
-            }
-        }
     }
 
