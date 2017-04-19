@@ -2,6 +2,7 @@ package testruns;
 
 import com.aldebaran.qi.helper.proxies.ALLocalization;
 import com.aldebaran.qi.helper.proxies.ALMotion;
+import movings_Andi_Iskar.Position;
 import utillities.Utts;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class Test_mov_bew_Andi {
        /*
        für chainnaem(Ketten) =Head, LArm, LLeg, RLeg, RArm
         */
+
+
 
 
     }
