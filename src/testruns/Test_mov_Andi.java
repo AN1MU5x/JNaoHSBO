@@ -7,27 +7,47 @@ package testruns;
  * Created by Andi on 06.04.2017.
  */
 
-    import com.aldebaran.qi.*;
 
-    public class Test_mov_Andi {
+
+    import com.aldebaran.qi.helper.proxies.ALLocalization;
+    import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
+    import utillities.Utts;
+
+    import java.util.*;
+
+public class Test_mov_Andi {
 
         public static void main(String[] args) throws Exception {
-            Application app = new Application(args,"tcp://Emma.local:9559");
-            app.start(); // will throw if connection fails
+            Utts.AppStart();
+            ALLocalization home = new ALLocalization(Utts.getAPP().session());
 
-            Session session = app.session();
+           // home.learnHome();
 
-            AnyObject tts = session.service("ALTextToSpeech");
 
-            boolean ping = tts.<Boolean>call("ping").get();
-            if (!ping) {
-                System.out.println("Could not ping TTS");
-            } else {
-                System.out.println("Ping ok");
-            }
+            ArrayList<Float> homepostion = new ArrayList<>();
+            ArrayList<Float> prob = new ArrayList<>();
+           homepostion=(ArrayList)home.getRobotPosition();
+           prob.add(0,0f);
+            prob.add(1,0f);
+            prob.add(2,0f);
+           System.out.println("Die home position"+homepostion);
+            System.out.println("Die prob position"+prob);
+           System.out.println("Roboter Postionn anfang "+home.getRobotPosition());
+          //Utts.walk(0.5f,0.f,0);
+          // Utts.walk(0.f,0.2f,0);
+            System.out.println("Roboter Postionn vor go home "+home.getRobotPosition());
 
-            System.out.println("Calling say");
-            tts.call("say", "Hello, world");
+          home.goToPosition(prob);
+
+           //home.goToHome();
+
+
+
+            System.out.println("Ist der Roboter zuhause? "+home.isInCurrentHome());
+            System.out.println("Die orientierung "+home.getRobotOrientation());
+            System.out.println("Roboter Postionn nach go homer "+home.getRobotPosition());
+            System.out.println();
+
         }
 
     }

@@ -70,7 +70,11 @@ public class Test_Vision_Andi {
                                         ArrayList extraInfo=(ArrayList)faceInfo.get(1);
                                         String facelabel=(String)extraInfo.get(2);
                                         System.out.println(facelabel);
-                                        tts.say(facelabel);
+                                        if(facelabel.equals("Stefan")) {
+                                            tts.say("Hallo"+facelabel);
+                                        }else if(facelabel.equals("Lisa")||facelabel.equals("Iskar")||facelabel.equals("Andi")){
+                                            tts.say("Hallo"+facelabel);
+                                        }
 
                                         /*
                                         ArrayList timeFilteredRecoInfo=(ArrayList)faceInfoArray.get(1);

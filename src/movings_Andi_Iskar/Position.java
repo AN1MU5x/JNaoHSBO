@@ -17,62 +17,62 @@ public class Position  {
 
 
 
-    public static void Sit() throws Exception{
+    public static void Sitzen() throws Exception{
         p = new ALRobotPosture(Utts.getAPP().session());
         p.stopMove();
-        Utts.talk("Give me a second I am sitting down.");
+        Utts.talk("Gib mir ein moment ich setze mich hin.");
         p.goToPosture("Sit", 1.f);
-        Utts.talk("I am ready with sitting");
+        Utts.talk("Ich hab mich hingesetzt");
     }
 
     public static void Crouch() throws Exception{
         p = new ALRobotPosture(Utts.getAPP().session());
         p.stopMove();
-        Utts.talk("Give me a second I am crouching.");
+        Utts.talk("Gib mir ein moment ich hocke mich hin.");
         p.goToPosture("Crouch", 1.f);
-        Utts.talk("I am ready with Crouching");
+        Utts.talk("Ich bin fertig");
     }
     public static void Stand() throws Exception{
         p = new ALRobotPosture(Utts.getAPP().session());
         p.stopMove();
-        Utts.talk("Give me a second I am Stand up.");
+        Utts.talk("Gib mir ein moment ich stehe auf.");
         p.goToPosture("Stand", 1.f);
-        Utts.talk("I am ready with Stand up");
+        Utts.talk("Ich stehe");
     }
     public static void LyingBack() throws Exception{
         p = new ALRobotPosture(Utts.getAPP().session());
         p.stopMove();
-        Utts.talk("Give me a second I am LyingBack.");
+        Utts.talk("Gib mir ein moment ich lege mich auf den Rücken.");
         p.goToPosture("LyingBack", 1.f);
-        Utts.talk("I am ready with LyingBack");
+        Utts.talk("Ich liege auf den Rücken");
     }
     public static void LyingBelly() throws Exception{
         p = new ALRobotPosture(Utts.getAPP().session());
         p.stopMove();
-        Utts.talk("Give me a second I am LyingBelly.");
+        Utts.talk("Gib mir ein moment ich lege mich auf den Bauch hin.");
         p.goToPosture("LyingBelly", 1.f);
-        Utts.talk("I am ready with LyingBelly");
+        Utts.talk("Ich liege auf dem Bauch");
     }
     public static void StandZero() throws Exception{
         p = new ALRobotPosture(Utts.getAPP().session());
         p.stopMove();
-        Utts.talk("Give me a second I am Stand Zero.");
+        Utts.talk("");
         p.goToPosture("StandZero", 1.f);
-        Utts.talk("I am ready with StandZero");
+        Utts.talk("");
     }
     public static void SitRelax() throws Exception{
         p = new ALRobotPosture(Utts.getAPP().session());
         p.stopMove();
-        Utts.talk("Give me a second I am Sit Relax.");
+        Utts.talk(".");
         p.goToPosture("SitRelax", 1.f);
-        Utts.talk("I am ready with Sit Relax");
+        Utts.talk("");
     }
     public static void StandInit() throws Exception{
         p = new ALRobotPosture(Utts.getAPP().session());
         p.stopMove();
-        Utts.talk("Give me a second I am Stand Init.");
+        Utts.talk("");
         p.goToPosture("StandInit", 1.f);
-        Utts.talk("I am ready with StandInit");
+        Utts.talk("");
     }
 
 
