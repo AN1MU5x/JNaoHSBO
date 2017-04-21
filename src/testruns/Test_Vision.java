@@ -8,6 +8,7 @@ import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 import movings_Andi_Iskar.Position;
+import utillities.Utts;
 
 import java.util.ArrayList;
 
@@ -18,15 +19,13 @@ public class Test_Vision {
 
     static ALFaceDetection a;
     public static void main(String[] args) throws Exception {
-        String robotUrl = "tcp://Emma.local:9559";
-        Application application = new Application(args, robotUrl);
-        application.start();
+       Utts.AppStart();
         System.out.println("Successfully connected to the robot");
-        a = new ALFaceDetection(application.session());
+        a = new ALFaceDetection(Utts.getAPP().session());
         a.setTrackingEnabled(true);
         Test_Vision vision = new Test_Vision();
-        vision.run(application.session());
-        application.run();
+        vision.run(Utts.getAPP().session());
+        Utts.getAPP().run();
     }
     ALMemory alMemory;
     ALTextToSpeech alTextToSpeech;
@@ -37,7 +36,6 @@ public class Test_Vision {
     boolean shilf=true;
 
     public void run(Session session) throws Exception {
-
         alMemory = new ALMemory(session);
         alTextToSpeech = new ALTextToSpeech(session);
         alFaceDetection = new ALFaceDetection(session);
@@ -60,27 +58,43 @@ public class Test_Vision {
                             if (faceLabel.equals("Lisa")){
                                 lhilf=false;
                                 alTextToSpeech.say("Hallo " + faceLabel);
-
+                                try {
+                                    Position.winken();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                         if(ahilf){
                             if (faceLabel.equals("Andi")){
                                 ahilf=false;
                                 alTextToSpeech.say("Hallo " + faceLabel);
-
+                                try {
+                                    Position.winken();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                         if(ihilf){
                             if (faceLabel.equals("Iskar")){
                                 ihilf=false;
                                 alTextToSpeech.say("Hallo " + faceLabel);
-
+                                try {
+                                    Position.winken();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                         if(shilf){
                             if (faceLabel.equals("Stefan")){
                                 shilf=false;
-                                alTextToSpeech.say("Hallo " + faceLabel);
+                                alTextToSpeech.say("Hallo " + faceLabel);try {
+                                    Position.winken();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                         else{
