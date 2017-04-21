@@ -7,6 +7,7 @@ import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
+import movings_Andi_Iskar.Position;
 
 import java.util.ArrayList;
 
@@ -15,12 +16,13 @@ import java.util.ArrayList;
  */
 public class Test_Vision {
 
+    static ALFaceDetection a;
     public static void main(String[] args) throws Exception {
         String robotUrl = "tcp://Emma.local:9559";
         Application application = new Application(args, robotUrl);
         application.start();
         System.out.println("Successfully connected to the robot");
-        ALFaceDetection a = new ALFaceDetection(application.session());
+        a = new ALFaceDetection(application.session());
         a.setTrackingEnabled(true);
         Test_Vision vision = new Test_Vision();
         vision.run(application.session());
@@ -58,6 +60,7 @@ public class Test_Vision {
                             if (faceLabel.equals("Lisa")){
                                 lhilf=false;
                                 alTextToSpeech.say("Hallo " + faceLabel);
+
                             }
                         }
                         if(ahilf){
@@ -82,7 +85,7 @@ public class Test_Vision {
                         }
                         else{
                             alFaceDetection.unsubscribe("Test");
-
+                            a.setTrackingEnabled(false);
                         }
                     }
                 }
