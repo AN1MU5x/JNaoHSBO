@@ -1,30 +1,53 @@
 package testruns;
 
-import com.aldebaran.qi.helper.proxies.ALLocalization;
+
+
 import com.aldebaran.qi.helper.proxies.ALMotion;
+import movings_Andi_Iskar.Position;
 import utillities.Utts;
 
 import java.util.ArrayList;
 
+
 /**
- * Created by Daniel on 19.04.2017.
+ * Created by Andi on 19.04.2017.
  */
 public class Test_mov_bew_Andi {
     public static void main(String[] args) throws Exception {
         Utts.AppStart();
-        ALMotion bew= new ALMotion(Utts.getAPP().session());
 
-        //gelenke name der gelenke erwartet als String name – Name of a chain, “Body”, “Chains”, “JointActuators”, “Joints” or “Actuators”.
-       System.out.println( bew.getBodyNames("Chains"));
-       /*
-       für bodynamen(körpername) HeadYaw, HeadPitch, LShoulderPitch, LShoulderRoll, LElbowYaw, LElbowRoll, LWristYaw, LHand, LHipYawPitch, LHipRoll,
-       LHipPitch, LKneePitch, LAnklePitch, LAnkleRoll, RHipYawPitch, RHipRoll, RHipPitch, RKneePitch, RAnklePitch, RAnkleRoll, RShoulderPitch,
-       RShoulderRoll, RElbowYaw, RElbowRoll, RWristYaw, RHand
-         */
-       /*
-       für chainnaem(Ketten) =Head, LArm, LLeg, RLeg, RArm
-        */
+       ALMotion bew =new ALMotion(Utts.getSESSION());
 
+       ArrayList name =new ArrayList<String>();
+        ArrayList name1 =new ArrayList<String>();
+
+        ArrayList angles =new ArrayList<Float>();
+        ArrayList angles1 =new ArrayList<Float>();
+
+        ArrayList time =new ArrayList<Float>();
+        ArrayList time1 =new ArrayList<Float>();
+
+        //hinzufügen bewegungsaktionen zur liste
+        name.add(0,"RShoulderPitch");
+        name.add(1,"RWristYaw");
+        name.add(2,"RHand");
+
+        name1.add(0,"RShoulderRoll");
+        //festlegen der Aktionswinkel in liste
+        angles.add(0,Utts.DegToRad(-70));
+        angles.add(1,Utts.DegToRad(-70));
+        angles.add(2,Utts.DegToRad(50));
+
+        angles1.add(0,Utts.DegToRad(-50));
+        angles1.add(1,Utts.DegToRad(0));
+
+        //festlegen der Zeitpunkte der Aktionen
+        time.add(0,1.f);
+        time.add(1,1.2f);
+        time.add(2,1.4f);
+
+        time1.add(0,1.0f);
+        time1.add(1,2.0f);
 
     }
 

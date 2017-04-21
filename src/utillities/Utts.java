@@ -59,6 +59,12 @@ public class Utts extends Thread {
         APP.stop();
     }
 
+    public static void AppStart(String name, String port){
+        String[] args = new String[]{""};
+        APP = new Application(args,"tcp://"+name+":"+port);
+        APP.start();
+    }
+
     public static void talk(String txt) throws Exception{
         ALTextToSpeech a = new ALTextToSpeech(APP.session());
         a.say(txt);
