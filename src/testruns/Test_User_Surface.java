@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import utillities.Utts;
 
 /**
      * Created by Lisa on 07.04.2017.
@@ -24,12 +25,14 @@ import javafx.stage.Stage;
         private Scene scene1, scene2;
         private Button btn1, btn2;
         private GridPane grid1, grid2;
-        private Label name, port, battery, temperatur;
+        private Label name, port, battery, temperatur, lCharge;
         private Text scenetitle1, scenetitle21, scenetitle22;
         private HBox hbBtn1, hbBtn2;
         private TextField userTextField, portTextField;
+        private ALBattery charge;
+        private String sCharge;
 
-        public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception{
             Application.launch(args);
         }
         @Override
@@ -39,7 +42,6 @@ import javafx.stage.Stage;
             window.centerOnScreen();
 
             window1();
-            window2();
 
             primaryStage.setScene(scene1);
             primaryStage.show();
@@ -47,8 +49,23 @@ import javafx.stage.Stage;
         @Override
         public void handle(ActionEvent event){
             if(event.getSource()== btn1) {
-                //Utts.AppStart(userTextField.getText(),portTextField.getText());
+                Utts.AppStart(userTextField.getText(),portTextField.getText());
+                try {
+                    Thread.sleep(1000);
+                    charge = new ALBattery(Utts.getSESSION());
+                    sCharge = ""+(charge.getBatteryCharge());
+                    System.out.println("\n"+sCharge+"\n");
+                    window2();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 window.setScene(scene2);
+                window.centerOnScreen();
+                window.show();
+
+            }else if(event.getSource()==btn2){
+                Utts.AppStop();
+                window.setScene(scene1);
                 window.centerOnScreen();
                 window.show();
             }
@@ -67,13 +84,13 @@ import javafx.stage.Stage;
             //Namensfeld und Eingabe
             name = new Label("Name:");
             grid1.add(name, 0, 1);
-            userTextField = new TextField();
+            userTextField = new TextField("Emma.local");
             grid1.add(userTextField, 1, 1);
 
             //Portfeld und Eingabe
             port = new Label("Port:");
             grid1.add(port, 0, 2);
-            portTextField = new TextField();
+            portTextField = new TextField("9559");
             grid1.add(portTextField, 1, 2);
 
             //Button Connect
@@ -84,7 +101,7 @@ import javafx.stage.Stage;
             grid1.add(hbBtn1, 1, 4);
             btn1.setOnAction(this);
         }
-        public void window2(){
+        public void window2() throws Exception {
             grid2 = new GridPane();
             grid2.setAlignment(Pos.CENTER);
             grid2.setHgap(100);
@@ -98,8 +115,10 @@ import javafx.stage.Stage;
             scenetitle21.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             grid2.add(scenetitle21, 0, 0, 2, 1);
 
+            lCharge =new Label(sCharge+"%");
             battery = new Label("Battery");
             grid2.add(battery,0,1);
+            grid2.add(lCharge,1,1);
 
             temperatur = new Label("Temperatur");
             grid2.add(temperatur,0,2);

@@ -63,6 +63,7 @@ public class Utts extends Thread {
         String[] args = new String[]{""};
         APP = new Application(args,"tcp://"+name+":"+port);
         APP.start();
+        SESSION = APP.session();
     }
 
     public static void talk(String txt) throws Exception{
