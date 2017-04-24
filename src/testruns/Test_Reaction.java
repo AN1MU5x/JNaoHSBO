@@ -3,6 +3,7 @@ package testruns;
 
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.*;
+import movings_Andi_Iskar.Position;
 import utillities.Utts;
 
 
@@ -40,6 +41,7 @@ public class Test_Reaction{
         uttWords.add("ja");
         uttWords.add("nein");
         uttWords.add("schlecht");
+        uttWords.add("hallo");
 
         ArrayList<String> sentences = new ArrayList<>();
         sentences.add("wie geht es dir?");
@@ -60,6 +62,8 @@ public class Test_Reaction{
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(allWords, true);
         alSpeechRecognition.pause(false);
+
+        Thread.sleep(10);
         Test_Reaction test_reaction = new Test_Reaction();
 
         test_reaction.run(Utts.getSESSION());
@@ -113,7 +117,13 @@ public class Test_Reaction{
                                     e.printStackTrace();
                                 }
                                 dialogCase = 1;
-                            }
+                                }else if(word.equals("hallo")&&(float)recWord.get(1)>0.5f){
+                                    try {
+                                        Position.winken();
+                                    } catch (Exception e) {
+                                       e.printStackTrace();
+                                    }
+                                }
                             break;
                             case 1:
                                 if (word.equals("gut")) {
