@@ -64,10 +64,7 @@ import utillities.Utts;
                 window.show();
 
             }else if(event.getSource()==btn2){
-                Utts.AppStop();
-                window.setScene(scene1);
-                window.centerOnScreen();
-                window.show();
+                System.exit(0);
             }
         }
         public void window1(){
