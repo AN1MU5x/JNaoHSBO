@@ -1,5 +1,6 @@
 package testruns;
 
+import com.aldebaran.qi.helper.proxies.ALBattery;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,20 +15,19 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import utillities.Utts;
 
 /**
      * Created by Lisa on 07.04.2017.
      */
     public class Test_User_Surface extends Application implements EventHandler<ActionEvent> {
-        Stage window;
-        Scene scene1, scene2;
-        Button btn1, btn2;
-        GridPane grid1, grid2;
-        Label name, port, battery;
-        Text scenetitle1, scenetitle21, scenetitle22;
-        HBox hbBtn1, hbBtn2;
-        TextField userTextField, portTextField;
+        private Stage window;
+        private Scene scene1, scene2;
+        private Button btn1, btn2;
+        private GridPane grid1, grid2;
+        private Label name, port, battery, temperatur;
+        private Text scenetitle1, scenetitle21, scenetitle22;
+        private HBox hbBtn1, hbBtn2;
+        private TextField userTextField, portTextField;
 
         public static void main(String[] args) throws Exception{
             Application.launch(args);
@@ -47,7 +47,7 @@ import utillities.Utts;
         @Override
         public void handle(ActionEvent event){
             if(event.getSource()== btn1) {
-                Utts.AppStart(userTextField.getText(),portTextField.getText());
+                //Utts.AppStart(userTextField.getText(),portTextField.getText());
                 window.setScene(scene2);
                 window.centerOnScreen();
                 window.show();
@@ -86,23 +86,30 @@ import utillities.Utts;
         }
         public void window2(){
             grid2 = new GridPane();
-            grid2.setAlignment(Pos.TOP_LEFT);
-            grid2.setHgap(20);
+            grid2.setAlignment(Pos.CENTER);
+            grid2.setHgap(100);
             grid2.setVgap(20);
-            grid2.setPadding(new Insets(25, 25, 25, 25));
+            grid2.setPadding(new Insets(10, 10, 10, 10));
             grid2.setGridLinesVisible(true);
-            scene2 = new Scene(grid2, 1200, 800);
 
-            scenetitle21 = new Text("Info");
-            scenetitle21.setFont(Font.font("Tahoma",FontWeight.NORMAL, 20));
-            grid2.add(scenetitle21, 0,9 , 2, 1);
+            scene2 = new Scene(grid2, 1200, 850);
+
+            scenetitle21 = new Text("Info ");
+            scenetitle21.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            grid2.add(scenetitle21, 0, 0, 2, 1);
 
             battery = new Label("Battery");
-            grid2.add(battery, 0,10);
+            grid2.add(battery,0,1);
 
-            scenetitle22 = new Text("Nao");
-            scenetitle22.setFont(Font.font("Tahoma",FontWeight.NORMAL, 20));
-            grid2.add(scenetitle22, 0,25 , 2, 1);
+            temperatur = new Label("Temperatur");
+            grid2.add(temperatur,0,2);
+
+            btn2 = new Button("Disconnect");
+            hbBtn2 = new HBox(10);
+            hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
+            hbBtn2.getChildren().add(btn2);
+            grid2.add(hbBtn2, 10, 35);
+            btn2.setOnAction(this);
 
         }
 

@@ -1,12 +1,13 @@
 package testruns;
 
-import com.aldebaran.qi.Application;
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
+import movings_Andi_Iskar.Position;
+import utillities.Utts;
 
 import java.util.ArrayList;
 
@@ -15,27 +16,22 @@ import java.util.ArrayList;
  */
 public class Test_Vision {
 
+    static ALFaceDetection a;
     public static void main(String[] args) throws Exception {
-        String robotUrl = "tcp://Emma.local:9559";
-        Application application = new Application(args, robotUrl);
-        application.start();
+       Utts.AppStart();
         System.out.println("Successfully connected to the robot");
-        ALFaceDetection a = new ALFaceDetection(application.session());
+        a = new ALFaceDetection(Utts.getAPP().session());
         a.setTrackingEnabled(true);
         Test_Vision vision = new Test_Vision();
-        vision.run(application.session());
-        application.run();
+        vision.run(Utts.getAPP().session());
+        Utts.getAPP().run();
     }
     ALMemory alMemory;
     ALTextToSpeech alTextToSpeech;
     ALFaceDetection alFaceDetection;
-    boolean lhilf=true;
-    boolean ahilf=true;
-    boolean ihilf=true;
-    boolean shilf=true;
+   private boolean hilf1=true;
 
     public void run(Session session) throws Exception {
-
         alMemory = new ALMemory(session);
         alTextToSpeech = new ALTextToSpeech(session);
         alFaceDetection = new ALFaceDetection(session);
@@ -52,37 +48,55 @@ public class Test_Vision {
                     ArrayList extraInfo = (ArrayList) (faceInfo.get(1));
                     String faceLabel = (String) (extraInfo.get(2));
 
-                    if(!faceLabel.equals("")){
+                    if(!faceLabel.equals("")&&hilf1) {
                         System.out.println(faceLabel);
-                        if(lhilf){
-                            if (faceLabel.equals("Lisa")){
-                                lhilf=false;
-                                alTextToSpeech.say("Hallo " + faceLabel);
+                        if (faceLabel.equals("Lisa")) {
+                            hilf1 = false;
+                            alTextToSpeech.say("Hallo " + faceLabel);
+                            try {
+                                Position.winken();
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        }
-                        if(ahilf){
-                            if (faceLabel.equals("Andi")){
-                                ahilf=false;
-                                alTextToSpeech.say("Hallo " + faceLabel);
-
-                            }
-                        }
-                        if(ihilf){
-                            if (faceLabel.equals("Iskar")){
-                                ihilf=false;
-                                alTextToSpeech.say("Hallo " + faceLabel);
-
-                            }
-                        }
-                        if(shilf){
-                            if (faceLabel.equals("Stefan")){
-                                shilf=false;
-                                alTextToSpeech.say("Hallo " + faceLabel);
-                            }
-                        }
-                        else{
                             alFaceDetection.unsubscribe("Test");
-
+                            a.setTrackingEnabled(false);
+                            Utts.AppStop();
+                        }
+                        if (faceLabel.equals("Andi")) {
+                            hilf1 = false;
+                            alTextToSpeech.say("Hallo " + faceLabel);
+                            try {
+                                Position.winken();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            alFaceDetection.unsubscribe("Test");
+                            a.setTrackingEnabled(false);
+                            Utts.AppStop();
+                        }
+                        if (faceLabel.equals("Iskar")) {
+                            hilf1 = false;
+                            alTextToSpeech.say("Hallo " + faceLabel);
+                            try {
+                                Position.winken();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            alFaceDetection.unsubscribe("Test");
+                            a.setTrackingEnabled(false);
+                            Utts.AppStop();
+                        }
+                        if (faceLabel.equals("Stefan")) {
+                            hilf1 = false;
+                            alTextToSpeech.say("Hallo " + faceLabel);
+                            try {
+                                Position.winken();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            alFaceDetection.unsubscribe("Test");
+                            a.setTrackingEnabled(false);
+                            Utts.AppStop();
                         }
                     }
                 }
