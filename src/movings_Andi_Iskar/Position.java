@@ -98,7 +98,7 @@ public class Position  {
         p.stopMove();
         if(!p.getPosture().equals("StandInit")) {
             Utts.talk("Gib mir ein moment ich stell mich hin");
-            p.goToPosture("StandInit", 1.f);
+            p.goToPosture("StandInit", 0.5f);
             Utts.talk("Ich stehe");
         }
     }
