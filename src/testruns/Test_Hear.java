@@ -35,7 +35,6 @@ public class Test_Hear {
     public void run(Session session) throws Exception {
         System.out.println("START");
 
-        System.out.println("TimeOut started");
         memory = new ALMemory(session);
         recID = memory.subscribeToEvent(
                 "SpeechDetected", arg0 -> {

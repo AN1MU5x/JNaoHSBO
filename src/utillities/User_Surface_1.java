@@ -46,7 +46,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     @Override
     public void handle(ActionEvent event){
         if(event.getSource()== btn1) {
-            //Utts.AppStart(userTextField.getText(),portTextField.getText());
+            Utts.AppStart(userTextField.getText(),portTextField.getText());
             window.setScene(scene2);
             window.centerOnScreen();
             window.show();
@@ -102,6 +102,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         scenetitle22 = new Text("Nao");
         scenetitle22.setFont(Font.font("Tahoma",FontWeight.NORMAL, 20));
         grid2.add(scenetitle22, 0,25 , 2, 1);
+
     }
 
 }

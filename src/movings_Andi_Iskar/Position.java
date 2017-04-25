@@ -139,8 +139,6 @@ public class Position  {
         time1.add(1,2.0f);
         //Die Steifheit auf 100% stellen
         bew.setStiffnesses("RArm",1.0f);
-        //aussprache
-        Utts.talk("Guten Tag");
         //Bewegungsaktionen ausführen
         bew.angleInterpolation(name,angles,time,true);
 
