@@ -17,6 +17,11 @@ public class Test_Reaction{
 
     private static ALSpeechRecognition alSpeechRecognition;
     private static ArrayList<String> allWords = new ArrayList<>();
+    protected static long recID;
+    private static ALMemory memory;
+    private ArrayList recWord = new ArrayList<>();
+    private int dialogCase =0;
+    boolean stop=false;
 
 
     public static void main(String[] args) throws Exception{
@@ -45,6 +50,7 @@ public class Test_Reaction{
 
         ArrayList<String> sentences = new ArrayList<>();
         sentences.add("wie geht es dir?");
+        sentences.add("wer bin ich?");
         System.out.println(Utts.getNames());
 
         for (String m: Utts.getNames()) {
@@ -59,33 +65,36 @@ public class Test_Reaction{
         for (String m: sentences){
             allWords.add(m);
         }
-        alSpeechRecognition.pause(true);
-        alSpeechRecognition.setVocabulary(allWords, true);
-        alSpeechRecognition.pause(false);
+
 
         Thread.sleep(10);
+        memory = new ALMemory(Utts.getSESSION());
         Test_Reaction test_reaction = new Test_Reaction();
 
         test_reaction.run(Utts.getSESSION());
         Utts.getAPP().run();
+        System.out.println("AFTER RUN");
+        alSpeechRecognition.unsubscribe("TestRec");
     }
 
-    protected static long recID;
-    private ALMemory memory;
-    private ArrayList recWord = new ArrayList<String>();
-    private int dialogCase =0;
-    boolean stop=false;
+
+
+
 
     public void run(Session session) throws Exception {
 
-        memory = new ALMemory(session);
+        System.out.println("RUN TEST");
+        alSpeechRecognition.subscribe("TestRec");
+        alSpeechRecognition.pause(true);
+        alSpeechRecognition.setVocabulary(allWords, true);
+        alSpeechRecognition.pause(false);
+
         recID = memory.subscribeToEvent(
                 "WordRecognized", arg0 -> {
 
                     alSpeechRecognition.pause(true);
                     System.out.println("PAUSED");
-                    System.out.println("var stop is "+stop);
-                    System.out.println("dialogCase = "+ dialogCase);
+
                     //getting the last word
                     recWord = (ArrayList) arg0;
                     System.out.println(recWord);
@@ -109,6 +118,7 @@ public class Test_Reaction{
                                             e.printStackTrace();
                                         }
                                         dialogCase = 1;
+                                        System.out.println("dialogCase = "+ dialogCase);
                                     }
                                 }if(word.equals("wie geht es dir?")&&(float)recWord.get(1)>0.5f){
                                 try {
@@ -117,14 +127,25 @@ public class Test_Reaction{
                                     e.printStackTrace();
                                 }
                                 dialogCase = 1;
+                                System.out.println("dialogCase = "+ dialogCase);
                                 }else if(word.equals("hallo")&&(float)recWord.get(1)>0.5f){
                                     try {
                                         Position.winken();
                                     } catch (Exception e) {
                                        e.printStackTrace();
                                     }
+                                }else if(word.equals("wer bin ich?")&&(float)recWord.get(1)>0.5f){
+                                    Test_Vision tv = new Test_Vision();
+                                try {
+                                    System.out.println("FaceRec started");
+                                    tv.run(Utts.getSESSION());
+                                    Utts.getAPP().run();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            break;
+                            }
+
+                                break;
                             case 1:
                                 if (word.equals("gut")) {
                                     try {
@@ -140,6 +161,7 @@ public class Test_Reaction{
                                         e.printStackTrace();
                                     }
                                     dialogCase = 0;
+                                    System.out.println("dialogCase = "+ dialogCase);
                                 }
                                 break;
                         }
@@ -151,6 +173,7 @@ public class Test_Reaction{
                                 e.printStackTrace();
                             }
                             stop = true;
+                            System.out.println("var stop is "+stop);
 
                         } else if (word.equals("akku") && (int) recWord.get(1) > 0.5f) {
                             try {
@@ -172,14 +195,16 @@ public class Test_Reaction{
                         }else if(word.equals("nein")&&(float)recWord.get(1)>0.5f){
                             try {
                                 Utts.talk("Dann mache ich weiter!");
-                            } catch (Exception e) {
+                                } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             stop=false;
+                            System.out.println("var stop is "+stop);
                         }
                     }
                     alSpeechRecognition.pause(false);
                     System.out.println("PAUSE END");
                 });
+
     }
 }
