@@ -42,7 +42,7 @@ public class Test_Vision {
                 @Override
                 public void onEvent(Object o) throws InterruptedException, CallError {
                     int i=0;
-                    while(i<1000&&hilf1) {
+                    while(i<500&&hilf1) {
                         System.out.println("Face detected");
                         ArrayList faceDetected = (ArrayList) o;
                         ArrayList faceInfoList = (ArrayList) (faceDetected.get(1));

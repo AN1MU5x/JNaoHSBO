@@ -1,23 +1,21 @@
-package testruns;
+package vision_Lisa;
 
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
-import com.aldebaran.qi.helper.proxies.*;
-import movings_Andi_Iskar.Position;
+import com.aldebaran.qi.helper.proxies.ALMemory;
+import com.aldebaran.qi.helper.proxies.ALMovementDetection;
+import testruns.Test_Sensor;
+import testruns.Test_Vision;
 import utillities.Utts;
-
-import java.util.ArrayList;
-
 /**
- * Created by Lisa on 24.04.2017.
+ * Created by Lisa on 26.04.2017.
  */
-public class Test_Sensor {
-
+public class MovingDetection {
     public static void main(String[] args) throws Exception {
         Utts.AppStart();
         System.out.println("Successfully connected to the robot");
-        Test_Sensor sensor = new Test_Sensor();
+        MovingDetection sensor = new MovingDetection();
         sensor.run(Utts.getAPP().session());
         Utts.getAPP().run();
     }
