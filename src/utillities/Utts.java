@@ -2,6 +2,7 @@ package utillities;
 
 import com.aldebaran.qi.Application;
 import com.aldebaran.qi.Session;
+import com.aldebaran.qi.helper.proxies.ALBattery;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
@@ -86,5 +87,4 @@ public class Utts extends Thread {
             return(false);
         }
     }
-
 }
