@@ -4,9 +4,11 @@ import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALBarcodeReader;
+import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
-import com.aldebaran.qi.helper.proxies.ALMovementDetection;
 import utillities.Utts;
+
+import java.util.ArrayList;
 
 /**
  * Created by Lisa on 05.04.2017.
@@ -15,6 +17,8 @@ public class Test_Vision {
     public static void main(String[] args) throws Exception {
         Utts.AppStart();
         System.out.println("Successfully connected to the robot");
+        ALFaceDetection a = new ALFaceDetection(Utts.getAPP().session());
+        a.setTrackingEnabled(false);
         Test_Vision sensor = new Test_Vision();
         sensor.run(Utts.getAPP().session());
         Utts.getAPP().run();
@@ -30,10 +34,17 @@ public class Test_Vision {
 
         alBarcodeReader.subscribe("Test",10000,0.0f);
         alMemory.subscribeToEvent(
-                "BarcodeReader/BarcodeDetected()", new EventCallback() {
+                "BarcodeReader/BarcodeDetected", new EventCallback() {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
-                        System.out.println("Barcode detected");
+                        ArrayList codeData = (ArrayList)o;
+                        ArrayList data = (ArrayList) (codeData.get(0));
+                        String text = (String)(data.get(0));
+                        try {
+                            Utts.talk(text);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }
