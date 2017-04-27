@@ -5,7 +5,6 @@ import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALMovementDetection;
-import testruns.Test_Sensor;
 import testruns.Test_Vision;
 import utillities.Utts;
 /**
