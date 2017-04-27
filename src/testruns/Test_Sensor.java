@@ -6,6 +6,7 @@ import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.*;
 import movings_Andi_Iskar.Position;
 import utillities.Utts;
+import vision_Lisa.Vision_1;
 
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ public class Test_Sensor {
                         if(hilf){
                             hilf=false;
                             Thread.sleep(6000);
-                            Test_Vision vision = new Test_Vision();
+                            Vision_1 vision = new Vision_1();
                             try {
                                 vision.run(Utts.getAPP().session());
                             } catch (Exception e) {

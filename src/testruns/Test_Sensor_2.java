@@ -3,39 +3,40 @@ package testruns;
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
-import com.aldebaran.qi.helper.proxies.ALBarcodeReader;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALMovementDetection;
+import com.aldebaran.qi.helper.proxies.ALSonar;
 import utillities.Utts;
 
 /**
- * Created by Lisa on 05.04.2017.
+ * Created by Lisa on 27.04.2017.
  */
-public class Test_Vision {
+public class Test_Sensor_2 {
     public static void main(String[] args) throws Exception {
         Utts.AppStart();
         System.out.println("Successfully connected to the robot");
-        Test_Vision sensor = new Test_Vision();
+        Test_Sensor_2 sensor = new Test_Sensor_2();
         sensor.run(Utts.getAPP().session());
         Utts.getAPP().run();
     }
 
     ALMemory alMemory;
-    ALBarcodeReader alBarcodeReader;
+    ALSonar alSonar;
     boolean hilf= true;
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
-        alBarcodeReader = new ALBarcodeReader(session);
+        alSonar = new ALSonar(session);
 
-        alBarcodeReader.subscribe("Test",10000,0.0f);
+        alSonar.subscribe("Test",10000,0.0f);
         alMemory.subscribeToEvent(
-                "BarcodeReader/BarcodeDetected()", new EventCallback() {
+                "SonarLeftDetected", new EventCallback() {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
-                        System.out.println("Barcode detected");
+                        System.out.println("Sonar detected");
+
+
                     }
                 });
     }
-
 }
