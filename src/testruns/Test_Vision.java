@@ -18,7 +18,7 @@ public class Test_Vision {
 
     static ALFaceDetection a;
     public static void main(String[] args) throws Exception {
-       Utts.AppStart();
+        Utts.AppStart();
         System.out.println("Successfully connected to the robot");
         a = new ALFaceDetection(Utts.getAPP().session());
         a.setTrackingEnabled(true);
@@ -29,7 +29,7 @@ public class Test_Vision {
     ALMemory alMemory;
     ALTextToSpeech alTextToSpeech;
     ALFaceDetection alFaceDetection;
-   private boolean hilf1=true;
+    private boolean hilf1=true;
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
@@ -41,16 +41,18 @@ public class Test_Vision {
             "FaceDetected", new EventCallback() {
                 @Override
                 public void onEvent(Object o) throws InterruptedException, CallError {
-                    System.out.println("Face detected");
-                    ArrayList faceDetected = (ArrayList)o;
-                    ArrayList faceInfoList =(ArrayList) (faceDetected.get(1));
-                    ArrayList faceInfo = (ArrayList) (faceInfoList.get(0));
-                    ArrayList extraInfo = (ArrayList) (faceInfo.get(1));
-                    String faceLabel = (String) (extraInfo.get(2));
+                    int i=0;
+                    while(i<500&&hilf1) {
+                        System.out.println("Face detected");
+                        ArrayList faceDetected = (ArrayList) o;
+                        ArrayList faceInfoList = (ArrayList) (faceDetected.get(1));
+                        ArrayList faceInfo = (ArrayList) (faceInfoList.get(0));
+                        ArrayList extraInfo = (ArrayList) (faceInfo.get(1));
+                        String faceLabel = (String) (extraInfo.get(2));
 
-                    if(!faceLabel.equals("")&&hilf1) {
-                        System.out.println(faceLabel);
-                        if (faceLabel.equals("Lisa")) {
+                        Thread.sleep(4000);
+                        if (!faceLabel.equals("") && hilf1) {
+                            System.out.println(faceLabel);
                             hilf1 = false;
                             alTextToSpeech.say("Hallo " + faceLabel);
                             try {
@@ -62,42 +64,19 @@ public class Test_Vision {
                             a.setTrackingEnabled(false);
                             Utts.AppStop();
                         }
-                        if (faceLabel.equals("Andi")) {
-                            hilf1 = false;
-                            alTextToSpeech.say("Hallo " + faceLabel);
-                            try {
-                                Position.winken();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            alFaceDetection.unsubscribe("Test");
-                            a.setTrackingEnabled(false);
-                            Utts.AppStop();
+                        i++;
+                    }
+                    if(hilf1){
+                        hilf1=false;
+                        alTextToSpeech.say("Hallo");
+                        try {
+                            Position.winken();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        if (faceLabel.equals("Iskar")) {
-                            hilf1 = false;
-                            alTextToSpeech.say("Hallo " + faceLabel);
-                            try {
-                                Position.winken();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            alFaceDetection.unsubscribe("Test");
-                            a.setTrackingEnabled(false);
-                            Utts.AppStop();
-                        }
-                        if (faceLabel.equals("Stefan")) {
-                            hilf1 = false;
-                            alTextToSpeech.say("Hallo " + faceLabel);
-                            try {
-                                Position.winken();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            alFaceDetection.unsubscribe("Test");
-                            a.setTrackingEnabled(false);
-                            Utts.AppStop();
-                        }
+                        alFaceDetection.unsubscribe("Test");
+                        a.setTrackingEnabled(false);
+                        Utts.AppStop();
                     }
                 }
             });

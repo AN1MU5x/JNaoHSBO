@@ -17,8 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import utillities.Utts;
 
-/**
-     * Created by Lisa on 07.04.2017.
+/** Created by Lisa on 07.04.2017.
      */
     public class Test_User_Surface extends Application implements EventHandler<ActionEvent> {
         private Stage window;
@@ -91,7 +90,7 @@ import utillities.Utts;
             grid1.add(portTextField, 1, 2);
 
             //Button Connect
-            btn1 = new Button("Connect");
+            btn1 = new Button("Verbinden");
             hbBtn1 = new HBox(10);
             hbBtn1.setAlignment(Pos.BOTTOM_RIGHT);
             hbBtn1.getChildren().add(btn1);
@@ -105,22 +104,25 @@ import utillities.Utts;
             grid2.setVgap(20);
             grid2.setPadding(new Insets(10, 10, 10, 10));
             grid2.setGridLinesVisible(true);
-
             scene2 = new Scene(grid2, 1200, 850);
 
+            //Info
             scenetitle21 = new Text("Info ");
             scenetitle21.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             grid2.add(scenetitle21, 0, 0, 2, 1);
 
+            //Batterie Zustand
             lCharge =new Label(sCharge+"%");
-            battery = new Label("Battery");
+            battery = new Label("Batterie");
             grid2.add(battery,0,1);
             grid2.add(lCharge,1,1);
 
+            //Temperatur Diagnose
             temperatur = new Label("Temperatur");
             grid2.add(temperatur,0,2);
 
-            btn2 = new Button("Disconnect");
+            //Programm beenden
+            btn2 = new Button("Schließen");
             hbBtn2 = new HBox(10);
             hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
             hbBtn2.getChildren().add(btn2);
