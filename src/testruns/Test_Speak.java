@@ -8,11 +8,6 @@ import utillities.Utts;
  */
 public class Test_Speak {
     public static void main(String[] args) throws Exception {
-<<<<<<< HEAD
-=======
-    Utts.AppStart();
-    ALAudioPlayer ap = new ALAudioPlayer(Utts.getAPP().session());
-    //ap.playFile("C:/Users/Lisa/Desktop/instrument4.wav");
->>>>>>> origin/master
+
     }
 }
