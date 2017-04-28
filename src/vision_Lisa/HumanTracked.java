@@ -1,24 +1,22 @@
-package testruns;
+package vision_Lisa;
 
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
-import com.aldebaran.qi.helper.proxies.*;
-import movings_Andi_Iskar.Position;
+import com.aldebaran.qi.helper.proxies.ALFaceDetection;
+import com.aldebaran.qi.helper.proxies.ALMemory;
+import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
+import testruns.Test_Sensor;
 import utillities.Utts;
-import vision_Lisa.Vision_1;
-
-import java.util.ArrayList;
 
 /**
- * Created by Lisa on 24.04.2017.
+ * Created by Lisa on 28.04.2017.
  */
-public class Test_Sensor {
-
+public class HumanTracked {
     public static void main(String[] args) throws Exception {
         Utts.AppStart();
         System.out.println("Successfully connected to the robot");
-        Test_Sensor sensor = new Test_Sensor();
+        HumanTracked sensor = new HumanTracked();
         sensor.run(Utts.getAPP().session());
         Utts.getAPP().run();
     }
@@ -26,7 +24,7 @@ public class Test_Sensor {
     ALMemory alMemory;
     ALTextToSpeech alTextToSpeech;
     long alBasicAwarenessID=0;
-    private boolean hilf1=true;
+    private boolean hilf=true;
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
@@ -37,6 +35,19 @@ public class Test_Sensor {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
                         System.out.println("ALBasicAwareness/HumanTracked");
+                        if(hilf){
+                            hilf=false;
+                            Thread.sleep(3500);
+                            Vision_1 vision = new Vision_1();
+                            try {
+                                vision.run(Utts.getAPP().session());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            Utts.getAPP().run();
+                            alMemory.unsubscribeToEvent(alBasicAwarenessID);
+                            Utts.AppStop();
+                        }
                     }
                 });
     }

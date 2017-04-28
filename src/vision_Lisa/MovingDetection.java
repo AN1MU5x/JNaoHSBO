@@ -33,19 +33,6 @@ public class MovingDetection {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
                         System.out.println("Movement detected");
-                        if(hilf){
-                            hilf=false;
-                            Thread.sleep(4000);
-                            Vision_1 vision = new Vision_1();
-                            try {
-                                vision.run(Utts.getAPP().session());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            Utts.getAPP().run();
-                            alMovementDetection.unsubscribe("Test");
-                            Utts.AppStop();
-                        }
 
                     }
                 });
