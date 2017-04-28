@@ -17,9 +17,9 @@ public class Test_Turn {
             application.start();
 
             ALMotion a = new ALMotion(application.session());
-            ALMotion b = new ALMotion(application.session());
+            //ALMotion b = new ALMotion(application.session());
             a.moveTo(0f,0.3f,0f);
-            b.moveTo(0f,-0.3f,0f);
+            //b.moveTo(0f,-0.3f,0f);
         }
     }
 
