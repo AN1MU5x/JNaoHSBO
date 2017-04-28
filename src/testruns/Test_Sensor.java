@@ -24,19 +24,16 @@ public class Test_Sensor {
     }
 
     ALMemory alMemory;
-    ALTextToSpeech alTextToSpeech;
-    long alBasicAwarenessID=0;
-    private boolean hilf1=true;
+    long alTrackedID=0;
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
-        alTextToSpeech = new ALTextToSpeech(session);
 
-        alBasicAwarenessID = alMemory.subscribeToEvent(
-                "ALBasicAwareness/HumanTracked", new EventCallback() {
+        alTrackedID = alMemory.subscribeToEvent(
+                "ALLandMarkDetection", new EventCallback() {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
-                        System.out.println("ALBasicAwareness/HumanTracked");
+                        System.out.println("LandMark");
                     }
                 });
     }
