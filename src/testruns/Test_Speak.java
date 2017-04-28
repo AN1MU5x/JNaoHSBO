@@ -11,6 +11,5 @@ public class Test_Speak {
     Utts.AppStart();
     ALAudioPlayer ap = new ALAudioPlayer(Utts.getAPP().session());
     //ap.playFile("C:/Users/Lisa/Desktop/instrument4.wav");
-    ap.
     }
 }
