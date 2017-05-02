@@ -18,16 +18,12 @@ public class Test_mov_bew_Andi {
         Utts.AppStart();
 
 
-       ALMotion bew =new ALMotion(Utts.getSESSION());
-       System.out.println("STart");
-       bew.setStiffnesses("LShoulderPitch",1.f);
-       bew.setAngles("LShoulderPitch",3.1f,0.2f);
-       Thread.sleep(5000);
-     bew.setStiffnesses("LShoulderPitch",0.f);
 
+        ALMotion bew = new ALMotion(Utts.getSESSION());
 
       bew.wakeUp();
        bew.stopMove();
+       //bew.rest();
     ALRobotPosture p= new ALRobotPosture(Utts.getAPP().session());
        p.goToPosture("Stand",0.5f);
       Thread.sleep(1000);
@@ -39,6 +35,7 @@ public class Test_mov_bew_Andi {
         ArrayList name3 =new ArrayList<String>();
      ArrayList name4 =new ArrayList<String>();
      ArrayList name5=new ArrayList<String>();
+        ArrayList name6=new ArrayList<String>();
 
         ArrayList angles =new ArrayList<Float>();
         ArrayList angles1 =new ArrayList<Float>();
@@ -46,6 +43,7 @@ public class Test_mov_bew_Andi {
         ArrayList angles3 =new ArrayList<Float>();
         ArrayList angles4 =new ArrayList<Float>();
      ArrayList angles5 =new ArrayList<Float>();
+        ArrayList angles6 =new ArrayList<Float>();
 
         ArrayList time =new ArrayList<Float>();
         ArrayList time1 =new ArrayList<Float>();
@@ -53,6 +51,7 @@ public class Test_mov_bew_Andi {
         ArrayList time3 =new ArrayList<Float>();
         ArrayList time4 =new ArrayList<Float>();
      ArrayList time5 =new ArrayList<Float>();
+        ArrayList time6 =new ArrayList<Float>();
 
         //hinzufügen bewegungsaktionen zur liste
         Utts.talk("Bitte festhalten");
@@ -79,6 +78,7 @@ public class Test_mov_bew_Andi {
 
        //neu
         name3.add(3,"LShoulderPitch");
+        name3.add(4,"LKneePitch");
 
        name4.add(0,"RAnklePitch");
         name4.add(1,"RHipRoll");
@@ -88,15 +88,26 @@ public class Test_mov_bew_Andi {
         name4.add(4,"RHipPitch");
         name4.add(5,"RKneePitch");
         name4.add(6,"LAnklePitch");
+        name4.add(7,"LShoulderPitch");
 
-     name5.add(0,"RHipRoll");
-     name5.add(1,"LHipRoll");
+        name5.add(0,"LKneePitch");
+        name5.add(1,"RHipRoll");
+        name5.add(2,"LHipRoll");
+        name5.add(3,"RKneePitch");
+        name5.add(4,"RAnkleRoll");
+
+       // name6.add(0,"LKneePitch");
+        name6.add(0,"LHipPitch");
+        name6.add(1,"RHipPitch");
+       name6.add(2,"LHipRoll");
+       name6.add(3,"LAnkleRoll");
+
 
        // name1.add(0,"RShoulderRoll");
         //festlegen der Aktionswinkel in liste
 
-        angles.add(0,Utts.DegToRad(-4));
-        angles.add(1,Utts.DegToRad(4));
+        angles.add(0,Utts.DegToRad(-5));
+        angles.add(1,Utts.DegToRad(5));
 
         angles1.add(0,Utts.DegToRad(10));
         angles1.add(1,Utts.DegToRad(10));
@@ -114,17 +125,28 @@ public class Test_mov_bew_Andi {
         angles3.add(1,Utts.DegToRad(10));
         angles3.add(2,Utts.DegToRad(-40));
         angles3.add(3,Utts.DegToRad(0));
+        angles3.add(4,Utts.DegToRad(25));
 
         angles4.add(0,Utts.DegToRad(-30));
         angles4.add(1,Utts.DegToRad(13));
         angles4.add(2,Utts.DegToRad(10));
         angles4.add(3,Utts.DegToRad(-30));
-        angles4.add(4,Utts.DegToRad(10));
-        angles4.add(5,Utts.DegToRad(20));
+        angles4.add(4,Utts.DegToRad(2));
+        angles4.add(5,Utts.DegToRad(40));
         angles4.add(6,Utts.DegToRad(30));
+        angles4.add(7,Utts.DegToRad(0));
 
-     angles5.add(0,Utts.DegToRad(10));
-     angles5.add(1,Utts.DegToRad(10));
+     angles5.add(0,Utts.DegToRad(25));
+     angles5.add(1,Utts.DegToRad(17));
+     angles5.add(2,Utts.DegToRad(17));
+        angles5.add(3,Utts.DegToRad(35));
+        angles5.add(4,Utts.DegToRad(2));
+
+    // angles6.add(0,Utts.DegToRad(0));
+        angles6.add(0,Utts.DegToRad(10));
+        angles6.add(1,Utts.DegToRad(10));
+        angles6.add(2,Utts.DegToRad(13));
+        angles6.add(3,Utts.DegToRad(3));
 
 
         //festlegen der Zeitpunkte der Aktionen
@@ -147,6 +169,7 @@ public class Test_mov_bew_Andi {
         time3.add(1,7f);
         time3.add(2,7f);
         time3.add(3,7f);
+        time3.add(4,7f);
 
         time4.add(0,5.f);
         time4.add(1,5.f);
@@ -155,9 +178,20 @@ public class Test_mov_bew_Andi {
         time4.add(4,5.f);
         time4.add(5,5.f);
         time4.add(6,5.f);
+        time4.add(7,5.f);
 
      time5.add(0,5.f);
      time5.add(1,5.f);
+     time5.add(2,5.f);
+        time5.add(3,5.f);
+        time5.add(4,5.f);
+
+     //time6.add(0,5.f);
+       time6.add(0,5.f);
+        time6.add(1,5.f);
+        time6.add(2,5.f);
+        time6.add(3,5.f);
+
 
 
 
@@ -187,7 +221,7 @@ public class Test_mov_bew_Andi {
        // bew.setStiffnesses("RAnklePitch",1.0f);
        // bew.setStiffnesses("LAnkleRoll",0.0f);
        // bew.setStiffnesses("LAnklePitch",0.0f);
-        bew.setStiffnesses("LKneePitch",0.0f);
+       // bew.setStiffnesses("LKneePitch",0.0f);
         bew.angleInterpolation(name3,angles3,time3,true);
         //bew.setStiffnesses("LKneePitch",1.0f);
 
@@ -197,9 +231,17 @@ public class Test_mov_bew_Andi {
         bew.angleInterpolation(name4,angles4,time4,true);
         bew.setStiffnesses("LAnkleRoll",1.0f);
         bew.setStiffnesses("LAnklePitch",1.0f);
+      //  bew.setStiffnesses("LKneePitch",1.0f);
+        bew.setStiffnesses("LAnklePitch",0.f);
+        bew.angleInterpolation(name5,angles5,time5,true);
+        bew.setStiffnesses("LAnklePitch",1.f);
+
+        bew.setStiffnesses("RAnklePitch",0.f);
+       bew.angleInterpolation(name6,angles6,time6,true);
+        bew.setStiffnesses("RAnklePitch",1.f);
 
 
-        Thread.sleep(10000);
+        Thread.sleep(5000);
         System.out.println("Ende");
 
     }

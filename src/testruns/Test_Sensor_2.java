@@ -3,37 +3,39 @@ package testruns;
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
-import com.aldebaran.qi.helper.proxies.*;
-import movings_Andi_Iskar.Position;
+import com.aldebaran.qi.helper.proxies.ALMemory;
+import com.aldebaran.qi.helper.proxies.ALMovementDetection;
+import com.aldebaran.qi.helper.proxies.ALSonar;
 import utillities.Utts;
-import vision_Lisa.Vision_1;
-
-import java.util.ArrayList;
 
 /**
- * Created by Lisa on 24.04.2017.
+ * Created by Lisa on 27.04.2017.
  */
-public class Test_Sensor {
-
+public class Test_Sensor_2 {
     public static void main(String[] args) throws Exception {
         Utts.AppStart();
         System.out.println("Successfully connected to the robot");
-        Test_Sensor sensor = new Test_Sensor();
+        Test_Sensor_2 sensor = new Test_Sensor_2();
         sensor.run(Utts.getAPP().session());
         Utts.getAPP().run();
     }
 
     ALMemory alMemory;
-    long alTrackedID=0;
+    ALSonar alSonar;
+    boolean hilf= true;
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
+        alSonar = new ALSonar(session);
 
-        alTrackedID = alMemory.subscribeToEvent(
-                "ALLandMarkDetection", new EventCallback() {
+        alSonar.subscribe("Test",10000,0.0f);
+        alMemory.subscribeToEvent(
+                "SonarLeftDetected", new EventCallback() {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
-                        System.out.println("LandMark");
+                        System.out.println("Sonar detected");
+
+
                     }
                 });
     }
