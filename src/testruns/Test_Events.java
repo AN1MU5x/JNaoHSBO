@@ -1,11 +1,12 @@
 package testruns;
 
 import com.aldebaran.qi.CallError;
+import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.*;
 import movings_Andi_Iskar.Position;
+import utillities.Utts;
 import java.util.ArrayList;
-
 import static testruns.Test_Combo.getAllWords;
 import static utillities.Utts.*;
 
@@ -15,37 +16,40 @@ import static utillities.Utts.*;
 public class Test_Events {
 
 
-    private static ALSpeechRecognition alSpeechRecognition;
-    private static ArrayList<String> allWords = new ArrayList<>();
-    protected static long recID;
-    private static ALMemory memory;
-    private static ArrayList recWord = new ArrayList<>();
-    private static int dialogCase =0;
-    private static boolean stop=false;
-    private static ALMemory alMemory;
-    private static ALTextToSpeech alTextToSpeech;
-    private static ALFaceDetection alFaceDetection;
-    private static boolean hilf1=true;
-    private static ALFaceDetection a;
-    private static boolean returnValue;
+    private ALSpeechRecognition alSpeechRecognition;
+    private ArrayList<String> allWords;
+    private ALMemory memory1, memory2;
+    private ArrayList recWord = new ArrayList<>();
+    private int dialogCase =0;
+    private boolean stop=false;
+    private ALMemory alMemory;
+    private ALTextToSpeech alTextToSpeech;
+    private ALFaceDetection alFaceDetection;
+    private boolean hilf1=true;
+    private ALFaceDetection a;
+    private boolean returnValue;
+    private long recID;
 
-
-    public static void reaction()throws Exception{
-        alSpeechRecognition  = new ALSpeechRecognition(getSESSION());
-        memory = new ALMemory(getSESSION());
-        alSpeechRecognition.subscribe("TestRec");
+    public Test_Events(ALMemory memory1, ALMemory memory2, ALSpeechRecognition speechRecognition, ALFaceDetection faceDetection, ArrayList wordList) throws InterruptedException, CallError {
+        this.memory1 = memory1;
+        this.memory2 = memory2;
+        this.alSpeechRecognition = speechRecognition;
+        this.alFaceDetection = faceDetection;
+        this.allWords = wordList;
         alSpeechRecognition.pause(true);
-        alSpeechRecognition.setVocabulary(getAllWords(), true);
+        alSpeechRecognition.setVocabulary(allWords, true);
         alSpeechRecognition.pause(false);
+    }
 
-        recID = memory.subscribeToEvent(
+
+    void reaction()throws Exception{
+
+        recID = memory1.subscribeToEvent(
                 "WordRecognized", arg0 -> {
 
                     alSpeechRecognition.pause(true);
                     returnValue = false;
                     System.out.println("PAUSED");
-                    System.out.println("var stop is "+stop);
-                    System.out.println("dialogCase = "+ dialogCase);
                     //getting the last word
                     recWord = (ArrayList) arg0;
                     System.out.println(recWord);
@@ -69,6 +73,7 @@ public class Test_Events {
                                             e.printStackTrace();
                                         }
                                         dialogCase = 1;
+                                        System.out.println("dialogCase = "+ dialogCase);
                                     }
                                 }
                                 if(word.equals("wie geht es dir?")&&(float)recWord.get(1)>0.5f){
@@ -78,6 +83,7 @@ public class Test_Events {
                                         e.printStackTrace();
                                     }
                                     dialogCase = 1;
+                                    System.out.println("dialogCase = "+ dialogCase);
                                 }else if(word.equals("hallo")&&(float)recWord.get(1)>0.5f){
                                     try {
                                         Position.winken();
@@ -87,6 +93,8 @@ public class Test_Events {
                                 }else if(word.equals("wer bin ich?")&&(float)recWord.get(1)>0.5f){
                                     System.out.println("FaceRec started");
                                     returnValue = true;
+                                    memory1.raiseEvent("ComboLoop", returnValue);
+                                    memory1.unsubscribeToEvent(recID);
                                 }
                                 break;
                             case 1:
@@ -97,6 +105,7 @@ public class Test_Events {
                                         e.printStackTrace();
                                     }
                                     dialogCase = 0;
+                                    System.out.println("dialogCase = "+ dialogCase);
                                 }else if(word.equals("schlecht")){
                                     try {
                                         talk("Das ist aber schade.");
@@ -104,6 +113,7 @@ public class Test_Events {
                                         e.printStackTrace();
                                     }
                                     dialogCase = 0;
+                                    System.out.println("dialogCase = "+ dialogCase);
                                 }
                                 break;
                         }
@@ -115,6 +125,7 @@ public class Test_Events {
                                 e.printStackTrace();
                             }
                             stop = true;
+                            System.out.println("var stop is "+stop);
 
                         } else if (word.equals("akku") && (float) recWord.get(1) > 0.5f) {
                             try {
@@ -134,7 +145,7 @@ public class Test_Events {
                             }
                             alSpeechRecognition.pause(false);
                             alSpeechRecognition.unsubscribe("TestRec");
-                            memory.unsubscribeToEvent(recID);
+                            memory1.unsubscribeToEvent(recID);
                             AppStop();
                         }else if(word.equals("nein")&&(float)recWord.get(1)>0.5f){
                             try {
@@ -145,34 +156,36 @@ public class Test_Events {
                                 e.printStackTrace();
                             }
                             stop=false;
+                            System.out.println("var stop is "+stop);
                         }
                     }
+                    Thread.sleep(50);
                     alSpeechRecognition.pause(false);
-                    memory.raiseEvent("ComboLoop", returnValue);
+                    memory1.raiseEvent("ComboLoop", returnValue);
                 });
 
     }
 
-    public static void see() throws Exception {
-        alMemory = new ALMemory(getSESSION());
+    void see() throws Exception {
         alTextToSpeech = new ALTextToSpeech(getSESSION());
-        alFaceDetection = new ALFaceDetection(getSESSION());
 
         alFaceDetection.subscribe("Test",10000,0.0f);
-        alMemory.subscribeToEvent(
+        memory2.subscribeToEvent(
                 "FaceDetected", new EventCallback() {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
-                        System.out.println("Face detected");
-                        ArrayList faceDetected = (ArrayList)o;
-                        ArrayList faceInfoList =(ArrayList) (faceDetected.get(1));
-                        ArrayList faceInfo = (ArrayList) (faceInfoList.get(0));
-                        ArrayList extraInfo = (ArrayList) (faceInfo.get(1));
-                        String faceLabel = (String) (extraInfo.get(2));
+                        int i=0;
+                        while(i<1000&&hilf1) {
+                            System.out.println("Face detected");
+                            ArrayList faceDetected = (ArrayList) o;
+                            ArrayList faceInfoList = (ArrayList) (faceDetected.get(1));
+                            ArrayList faceInfo = (ArrayList) (faceInfoList.get(0));
+                            ArrayList extraInfo = (ArrayList) (faceInfo.get(1));
+                            String faceLabel = (String) (extraInfo.get(2));
 
-                        if(!faceLabel.equals("")&&hilf1) {
-                            System.out.println(faceLabel);
-                            if (faceLabel.equals("Lisa")) {
+                            Thread.sleep(4000);
+                            if (!faceLabel.equals("") && hilf1) {
+                                System.out.println(faceLabel);
                                 hilf1 = false;
                                 alTextToSpeech.say("Hallo " + faceLabel);
                                 try {
@@ -180,49 +193,29 @@ public class Test_Events {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                alFaceDetection.unsubscribe("Test");
-                                a.setTrackingEnabled(false);
-                                memory.raiseEvent("ComboLoop", false);
-                                return ;
-                            }
-                            if (faceLabel.equals("Andi")) {
-                                hilf1 = false;
-                                alTextToSpeech.say("Hallo " + faceLabel);
-                                try {
-                                    Position.winken();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                alFaceDetection.unsubscribe("Test");
-                                a.setTrackingEnabled(false);
-
-                            }
-                            if (faceLabel.equals("Iskar")) {
-                                hilf1 = false;
-                                alTextToSpeech.say("Hallo " + faceLabel);
-                                try {
-                                    Position.winken();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                alFaceDetection.unsubscribe("Test");
-                                a.setTrackingEnabled(false);
-
-                            }
-                            if (faceLabel.equals("Stefan")) {
-                                hilf1 = false;
-                                alTextToSpeech.say("Hallo " + faceLabel);
-                                try {
-                                    Position.winken();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                Thread.sleep(50);
+                                memory2.raiseEvent("ComboLoop", false);
                                 alFaceDetection.unsubscribe("Test");
                                 a.setTrackingEnabled(false);
                             }
+                            i++;
                         }
-                        memory.raiseEvent("ComboLoop", false);
+                        if(hilf1){
+                            hilf1=false;
+                            alTextToSpeech.say("Hallo");
+                            try {
+                                Position.winken();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            Thread.sleep(50);
+                            memory2.raiseEvent("ComboLoop", false);
+                            alFaceDetection.unsubscribe("Test");
+                            a.setTrackingEnabled(false);
+                        }
+
                     }
+
                 });
     }
 }
