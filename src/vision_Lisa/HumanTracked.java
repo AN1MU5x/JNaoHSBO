@@ -13,18 +13,12 @@ import utillities.Utts;
  * Created by Lisa on 28.04.2017.
  */
 public class HumanTracked {
-    public static void main(String[] args) throws Exception {
-        Utts.AppStart();
-        System.out.println("Successfully connected to the robot");
-        HumanTracked sensor = new HumanTracked();
-        sensor.run(Utts.getAPP().session());
-        Utts.getAPP().run();
-    }
 
     ALMemory alMemory;
     ALTextToSpeech alTextToSpeech;
     long alBasicAwarenessID=0;
     private boolean hilf=true;
+    public boolean xHumanTracked = true;
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
