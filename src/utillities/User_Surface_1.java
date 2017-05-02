@@ -1,7 +1,10 @@
 package utillities;
 
 import com.aldebaran.qi.helper.proxies.ALBattery;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,22 +19,38 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.omg.PortableServer.THREAD_POLICY_ID;
+
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by Lisa on 07.04.2017.
  */
 public class User_Surface_1 extends Application implements EventHandler<ActionEvent> {
-    private Stage window;
-    private Scene scene1, scene2;
-    private Button btn1, btn2;
-    private GridPane grid1, grid2;
-    private Label name, port, battery, temperatur, lCharge;
-    private Text scenetitle1, scenetitle21, scenetitle22;
-    private HBox hbBtn1, hbBtn2;
-    private TextField userTextField, portTextField;
-    private ALBattery charge;
-    private String sCharge;
+    private static Stage window;
+    private static Scene scene1, scene2;
+    private static Button btn1, btn2;
+    private static GridPane grid1, grid2;
+    private static Label name, port, battery, temperatur, lCharge;
+    private static Text scenetitle1, scenetitle21, scenetitle22;
+    private static HBox hbBtn1, hbBtn2;
+    private static TextField userTextField, portTextField;
+    private static ALBattery charge, chargeA;
+    private static String sCharge = "",sChargeA="";
+
+    //Benötigt als Datenaustausch zwichen den Threads
+    public static String sBattery = "Batterie";
+    public static String sTemperatur = "Temp";
+    private static int iTmp = 0;
+    private Timer t1 = new Timer();
 
     public static void main(String[] args) throws Exception{
+        window1();
+        window2();
+
         Application.launch(args);
     }
     @Override
@@ -40,10 +59,24 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         window.setTitle("Nao");
         window.centerOnScreen();
 
-        window1();
+        btn1.setOnAction(this);
 
         primaryStage.setScene(scene1);
         primaryStage.show();
+
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    aktualisieren();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
     }
     @Override
     public void handle(ActionEvent event){
@@ -54,19 +87,19 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
                 charge = new ALBattery(Utts.getSESSION());
                 sCharge = ""+(charge.getBatteryCharge());
                 System.out.println("\n"+sCharge+"\n");
-                window2();
+                btn2.setOnAction(this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             window.setScene(scene2);
             window.centerOnScreen();
-            window.show();
+
 
         }else if(event.getSource()==btn2){
             System.exit(0);
         }
     }
-    public void window1(){
+    public static void window1(){
         grid1 = new GridPane();
         grid1.setAlignment(Pos.CENTER);
         grid1.setHgap(10);
@@ -95,9 +128,8 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         hbBtn1.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn1.getChildren().add(btn1);
         grid1.add(hbBtn1, 1, 4);
-        btn1.setOnAction(this);
     }
-    public void window2() throws Exception {
+    public static void window2() throws Exception {
         grid2 = new GridPane();
         grid2.setAlignment(Pos.CENTER);
         grid2.setHgap(100);
@@ -127,8 +159,16 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn2.getChildren().add(btn2);
         grid2.add(hbBtn2, 10, 35);
-        btn2.setOnAction(this);
+
+    }
+
+    public static synchronized void aktualisieren()throws Exception{
+        iTmp++;
+        chargeA = new ALBattery(Utts.getSESSION());
+        sChargeA = ""+(chargeA.getBatteryCharge());
+        System.out.println("\n"+sChargeA+"\n");
+        lCharge.setText(sChargeA);
+
 
     }
 }
-

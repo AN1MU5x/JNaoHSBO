@@ -7,22 +7,24 @@ import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 import movings_Andi_Iskar.Position;
+import testruns.Test_Vision;
 import utillities.Utts;
 import java.util.ArrayList;
 /**
  * Created by Lisa on 07.04.2017.
  */
 public class Vision_1 {
-    static ALFaceDetection a;
-    public static void main(String[] args) throws Exception {
+
+    public static void main(String[]args)throws Exception{
         Utts.AppStart();
         System.out.println("Successfully connected to the robot");
-        a = new ALFaceDetection(Utts.getAPP().session());
+        ALFaceDetection a = new ALFaceDetection(Utts.getAPP().session());
         a.setTrackingEnabled(true);
-        Vision_1 vision = new Vision_1();
-        vision.run(Utts.getAPP().session());
+        Vision_1 sensor = new Vision_1();
+        sensor.run(Utts.getAPP().session());
         Utts.getAPP().run();
     }
+
     ALMemory alMemory;
     ALTextToSpeech alTextToSpeech;
     ALFaceDetection alFaceDetection;
@@ -39,7 +41,7 @@ public class Vision_1 {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
                         int i=0;
-                        while(i<50&&hilf1) {
+                        while(i<30&&hilf1) {
                             System.out.println("Face detected");
                             ArrayList faceDetected = (ArrayList) o;
                             ArrayList faceInfoList = (ArrayList) (faceDetected.get(1));
@@ -58,7 +60,6 @@ public class Vision_1 {
                                     e.printStackTrace();
                                 }
                                 alFaceDetection.unsubscribe("Test");
-                                a.setTrackingEnabled(false);
                                 Utts.AppStop();
                             }
                             i++;
@@ -72,7 +73,6 @@ public class Vision_1 {
                                 e.printStackTrace();
                             }
                             alFaceDetection.unsubscribe("Test");
-                            a.setTrackingEnabled(false);
                             Utts.AppStop();
                         }
                     }
