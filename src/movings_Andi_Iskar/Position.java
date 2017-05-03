@@ -190,7 +190,7 @@ public class Position  {
        setAngles erwartet(const AL::ALValue& names, const AL::ALValue& angles, const float& fractionMaxSpeed)
 
         names – The name or names of joints, chains, “Body”, “JointActuators”, “Joints” or “Actuators”.
-        angles – One or more angles in radians
+        angles – One or more angles in radiansh
         fractionMaxSpeed – The fraction of maximum speed to use
         */
 
