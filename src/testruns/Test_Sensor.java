@@ -1,12 +1,9 @@
 package testruns;
 
-import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
-import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.*;
-import movings_Andi_Iskar.Position;
 import utillities.Utts;
-
+import com.aldebaran.qi.helper.proxies.ALMotion;
 import java.util.ArrayList;
 
 /**
@@ -22,35 +19,59 @@ public class Test_Sensor {
         Utts.getAPP().run();
     }
 
-    ALMemory alMemory;
-    ALMovementDetection alMovementDetection;
-    boolean hilf= true;
+
 
     public void run(Session session) throws Exception {
-        alMemory = new ALMemory(session);
-        alMovementDetection = new ALMovementDetection(session);
 
-        alMovementDetection.subscribe("Test",10000,0.0f);
-        alMemory.subscribeToEvent(
-                "MovementDetection/MovementDetected", new EventCallback() {
-                    @Override
-                    public void onEvent(Object o) throws InterruptedException, CallError {
-                        System.out.println("Movement detected");
-                        if(hilf){
-                            hilf=false;
-                            Thread.sleep(6000);
-                            Test_Vision vision = new Test_Vision();
-                            try {
-                                vision.run(Utts.getAPP().session());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            Utts.getAPP().run();
-                            alMovementDetection.unsubscribe("Test");
-                            Utts.AppStop();
-                        }
+        ALTracker a = new ALTracker(session);
+        ALMotion suche = new ALMotion(Utts.getSESSION());
+/*
+        ArrayList name =new ArrayList<String>();
+        ArrayList name1 =new ArrayList<String>();
+        ArrayList angles =new ArrayList<Float>();
+        ArrayList angles1 =new ArrayList<Float>();
+        ArrayList time =new ArrayList<Float>();
+        ArrayList time1 =new ArrayList<Float>();
+        name.add(0,"HeadYaw");
+        //name.add(1,"HeadPitch");
+        name1.add(0,"HeadYaw");
+        //name1.add(1,"HeadPitch");
+        angles.add(0,Utts.DegToRad(-30));
+        //angles.add(1,Utts.DegToRad(0));
+        angles1.add(0,Utts.DegToRad(30));
+        //angles1.add(1,Utts.DegToRad(0));
+        time.add(0,1.5f);
+        //time.add(1,1f);
+        time1.add(0,3.f);
+        //time1.add(1,1f);
+        //suche.setStiffnesses("Head",1.0f);*/
 
-                    }
-                });
+        boolean b = true;
+        while(b){
+            a.track("Face");
+            a.setMode("Move");
+            //a.track("Face");
+            //suche.angleInterpolation(name,angles,time,true);
+            //suche.angleInterpolation(name1,angles1,time1,true);
+            System.out.println(a.isSearchEnabled());
+            Thread.sleep(1000);
+            System.out.println(a.getTargetPosition().size());
+            //if(a.getTargetPosition().size() > 0) {
+              //  suche.moveTo(a.getTargetPosition());
+
+            //}
+
+        }
+
+        System.out.println(a.getSupportedTargets());
+        System.out.println(a.getTargetPosition());
+        //a.toggleSearch(false);
+
     }
 }
+
+
+
+//Thread.sleep(5000);
+//System.out.println(a.isSearchEnabled());
+//System.out.println(a.getTargetPosition().get(0));

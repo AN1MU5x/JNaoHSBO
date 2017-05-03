@@ -1,38 +1,40 @@
-package vision_Lisa;
+package testruns;
 
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALMovementDetection;
-import testruns.Test_Vision;
+import com.aldebaran.qi.helper.proxies.ALSonar;
 import utillities.Utts;
+
 /**
- * Created by Lisa on 26.04.2017.
+ * Created by Lisa on 27.04.2017.
  */
-public class MovingDetection {
+public class Test_Sensor_2 {
     public static void main(String[] args) throws Exception {
         Utts.AppStart();
         System.out.println("Successfully connected to the robot");
-        MovingDetection sensor = new MovingDetection();
+        Test_Sensor_2 sensor = new Test_Sensor_2();
         sensor.run(Utts.getAPP().session());
         Utts.getAPP().run();
     }
 
     ALMemory alMemory;
-    ALMovementDetection alMovementDetection;
+    ALSonar alSonar;
     boolean hilf= true;
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
-        alMovementDetection = new ALMovementDetection(session);
+        alSonar = new ALSonar(session);
 
-        alMovementDetection.subscribe("Test",10000,0.0f);
+        alSonar.subscribe("Test",10000,0.0f);
         alMemory.subscribeToEvent(
-                "MovementDetection/MovementDetected", new EventCallback() {
+                "SonarLeftDetected", new EventCallback() {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
-                        System.out.println("Movement detected");
+                        System.out.println("Sonar detected");
+
 
                     }
                 });
