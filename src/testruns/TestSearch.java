@@ -10,6 +10,7 @@ import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.CallError;
 
+
 import java.util.ArrayList;
 
 /**

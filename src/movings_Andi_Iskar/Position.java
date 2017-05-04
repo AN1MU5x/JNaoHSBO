@@ -3,6 +3,7 @@ package movings_Andi_Iskar;
 
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALRobotPosture;
+import com.aldebaran.qi.Session;
 import utillities.Utts;
 
 import java.util.ArrayList;
@@ -11,10 +12,6 @@ import java.util.ArrayList;
  * Created by Andi on 10.04.2017.
  */
 public class Position  {
-
-
-
-
 
     private static ALRobotPosture p;
     private static ALMotion bew;
@@ -33,18 +30,20 @@ public class Position  {
     private static ArrayList array6;
     private static ArrayList array7;
 
+    private static Session session;
 
-
-
-
+    public Position(Session session){
+        this.session=session;
+    }
 
     public static void sitzen() throws Exception{
-        p = new ALRobotPosture(Utts.getAPP().session());
+        p = new ALRobotPosture(session);
+
         p.stopMove();
         if(!p.getPosture().equals("Sit")) {
             Utts.talk("Gib mir ein moment ich setze mich hin.");
             p.goToPosture("Sit", 1.f);
-            Utts.talk("Ich hab mich hingesetzt");
+           // Utts.talk("Ich hab mich hingesetzt");
         }
     }
 
