@@ -1,11 +1,14 @@
 package testruns;
 
-import com.aldebaran.qi.Application;
-import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
-import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.*;
 import utillities.Utts;
+import com.aldebaran.qi.helper.proxies.ALMotion;
+import com.aldebaran.qi.CallError;
+import com.aldebaran.qi.helper.EventCallback;
+import com.aldebaran.qi.helper.proxies.ALMemory;
+import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
+
 
 /**
  * Created by Lisa on 24.04.2017.
@@ -20,18 +23,51 @@ public class Test_Sensor {
         Utts.getAPP().run();
     }
 
-    ALMemory alMemory;
-    long alTrackedID=0;
+    ALMemory memory;
+    ALTextToSpeech tts;
+    long frontTactilSubscriptionId;
+    private static boolean b = true;
 
     public void run(Session session) throws Exception {
-        alMemory = new ALMemory(session);
 
-        alTrackedID = alMemory.subscribeToEvent(
-                "LandMarks", new EventCallback() {
-                    @Override
-                    public void onEvent(Object o) throws InterruptedException, CallError {
-                        System.out.println("LandMark");
-                    }
-                });
+        memory = new ALMemory(session);
+        tts = new ALTextToSpeech(session);
+        frontTactilSubscriptionId = 0;
+
+        ALTracker a = new ALTracker(session);
+        ALMotion suche = new ALMotion(Utts.getSESSION());
+
+        while (b) {
+            a.track("Face");
+            a.setMode("Move");
+            System.out.println(a.isSearchEnabled());
+            Thread.sleep(1000);
+            System.out.println(a.getTargetPosition().size());
+
+            //Event, welches auf die Berührung des FrontTactile reagiert
+            frontTactilSubscriptionId = memory.subscribeToEvent(
+                    "FrontTactilTouched", new EventCallback<Float>() {
+                        @Override
+                        public void onEvent(Float arg0)
+                                throws InterruptedException, CallError {
+                            // 1 --> Sensor wurde gedrückt
+                            if (arg0 > 0 && b) {
+                                //Beenden der Schleife
+                                b = false;
+                                tts.say("Ok ich folge dir nicht mehr");
+                                //Von hier wird die App beendet
+                                Utts.AppStop();
+                                memory.unsubscribeToEvent(frontTactilSubscriptionId);
+                            }
+                        }
+                    });
+        }
     }
 }
+
+//System.out.println(a.getTargetPosition());
+//a.track("Face");
+
+//Thread.sleep(5000);
+//System.out.println(a.isSearchEnabled());
+//System.out.println(a.getTargetPosition().get(0));
