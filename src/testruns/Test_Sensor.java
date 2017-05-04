@@ -1,5 +1,6 @@
 package testruns;
 
+import com.aldebaran.qi.Application;
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
@@ -26,7 +27,7 @@ public class Test_Sensor {
         alMemory = new ALMemory(session);
 
         alTrackedID = alMemory.subscribeToEvent(
-                "LandMark", new EventCallback() {
+                "LandMarks", new EventCallback() {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
                         System.out.println("LandMark");

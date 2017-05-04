@@ -31,7 +31,7 @@ public class HumanTracked {
                         System.out.println("ALBasicAwareness/HumanTracked");
                         if(hilf){
                             hilf=false;
-                            Thread.sleep(3500);
+                            Thread.sleep(1000);
                             Vision_1 vision = new Vision_1();
                             try {
                                 vision.run(Utts.getAPP().session());
@@ -40,7 +40,6 @@ public class HumanTracked {
                             }
                             Utts.getAPP().run();
                             alMemory.unsubscribeToEvent(alBasicAwarenessID);
-                            Utts.AppStop();
                         }
                     }
                 });
