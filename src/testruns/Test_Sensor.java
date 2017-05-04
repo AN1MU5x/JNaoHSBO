@@ -4,7 +4,11 @@ import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.*;
 import utillities.Utts;
 import com.aldebaran.qi.helper.proxies.ALMotion;
-import java.util.ArrayList;
+import com.aldebaran.qi.CallError;
+import com.aldebaran.qi.helper.EventCallback;
+import com.aldebaran.qi.helper.proxies.ALMemory;
+import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
+
 
 /**
  * Created by Lisa on 24.04.2017.
@@ -19,58 +23,50 @@ public class Test_Sensor {
         Utts.getAPP().run();
     }
 
-
+    ALMemory memory;
+    ALTextToSpeech tts;
+    long frontTactilSubscriptionId;
+    private static boolean b = true;
 
     public void run(Session session) throws Exception {
 
+        memory = new ALMemory(session);
+        tts = new ALTextToSpeech(session);
+        frontTactilSubscriptionId = 0;
+
         ALTracker a = new ALTracker(session);
         ALMotion suche = new ALMotion(Utts.getSESSION());
-/*
-        ArrayList name =new ArrayList<String>();
-        ArrayList name1 =new ArrayList<String>();
-        ArrayList angles =new ArrayList<Float>();
-        ArrayList angles1 =new ArrayList<Float>();
-        ArrayList time =new ArrayList<Float>();
-        ArrayList time1 =new ArrayList<Float>();
-        name.add(0,"HeadYaw");
-        //name.add(1,"HeadPitch");
-        name1.add(0,"HeadYaw");
-        //name1.add(1,"HeadPitch");
-        angles.add(0,Utts.DegToRad(-30));
-        //angles.add(1,Utts.DegToRad(0));
-        angles1.add(0,Utts.DegToRad(30));
-        //angles1.add(1,Utts.DegToRad(0));
-        time.add(0,1.5f);
-        //time.add(1,1f);
-        time1.add(0,3.f);
-        //time1.add(1,1f);
-        //suche.setStiffnesses("Head",1.0f);*/
 
-        boolean b = true;
-        while(b){
+        while (b) {
             a.track("Face");
             a.setMode("Move");
-            //a.track("Face");
-            //suche.angleInterpolation(name,angles,time,true);
-            //suche.angleInterpolation(name1,angles1,time1,true);
             System.out.println(a.isSearchEnabled());
             Thread.sleep(1000);
             System.out.println(a.getTargetPosition().size());
-            //if(a.getTargetPosition().size() > 0) {
-              //  suche.moveTo(a.getTargetPosition());
 
-            //}
-
+            //Event, welches auf die Berührung des FrontTactile reagiert
+            frontTactilSubscriptionId = memory.subscribeToEvent(
+                    "FrontTactilTouched", new EventCallback<Float>() {
+                        @Override
+                        public void onEvent(Float arg0)
+                                throws InterruptedException, CallError {
+                            // 1 --> Sensor wurde gedrückt
+                            if (arg0 > 0 && b) {
+                                //Beenden der Schleife
+                                b = false;
+                                tts.say("Ok ich folge dir nicht mehr");
+                                //Von hier wird die App beendet
+                                Utts.AppStop();
+                                memory.unsubscribeToEvent(frontTactilSubscriptionId);
+                            }
+                        }
+                    });
         }
-
-        System.out.println(a.getSupportedTargets());
-        System.out.println(a.getTargetPosition());
-        //a.toggleSearch(false);
-
     }
 }
 
-
+//System.out.println(a.getTargetPosition());
+//a.track("Face");
 
 //Thread.sleep(5000);
 //System.out.println(a.isSearchEnabled());
