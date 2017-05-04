@@ -15,16 +15,6 @@ import java.util.ArrayList;
  * Created by Lisa on 07.04.2017.
  */
 public class Vision_1 {
-        private static ALFaceDetection a;
-    public static void main(String[] args) throws Exception {
-        Utts.AppStart();
-        System.out.println("Successfully connected to the robot");
-        a = new ALFaceDetection(Utts.getAPP().session());
-        a.setTrackingEnabled(true);
-        Vision_1 sensor = new Vision_1();
-        sensor.run(Utts.getAPP().session());
-        Utts.getAPP().run();
-    }
 
     ALMemory alMemory;
     ALTextToSpeech alTextToSpeech;
