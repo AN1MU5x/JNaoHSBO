@@ -9,9 +9,6 @@ import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 import com.aldebaran.qi.helper.proxies.ALTracker;
 import utillities.Utts;
 
-/**
- * Created by JNaoHSBO on 05.04.2017.
- */
 public class Follow {
 
     ALMemory memory;
@@ -47,7 +44,7 @@ public class Follow {
                                 b = false;
                                 tts.say("Ok ich folge dir nicht mehr");
                                 //Von hier wird die App beendet
-                                Utts.AppStop();
+
                                 memory.unsubscribeToEvent(frontTactilSubscriptionId);
                             }
                         }

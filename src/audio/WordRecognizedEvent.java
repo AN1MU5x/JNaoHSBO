@@ -6,6 +6,7 @@ import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
+import motion.Follow;
 import motion.Position;
 import utillities.Utts;
 import vision.FaceDetectedEvent;
@@ -23,13 +24,14 @@ public class WordRecognizedEvent {
 
     private static ALMemory alMemory;
     private static long wordID=0;
-    private ArrayList recWord = new ArrayList<String>();//Ändern
+    private ArrayList recWord;
     private static ALFaceDetection alFaceDetection;
     private static ALSpeechRecognition alSpeechRecognition;
     public static boolean hallo;
     public static boolean wbi;
 
     public void run(Session session) throws Exception {
+        recWord = new ArrayList<String>();
         alMemory = new ALMemory(session);
         alSpeechRecognition = new ALSpeechRecognition(Utts.getSESSION());
         alFaceDetection = new ALFaceDetection(Utts.getSESSION());
@@ -45,9 +47,10 @@ public class WordRecognizedEvent {
         vocabulary.add("stell dich hin");
         vocabulary.add("hinstellen");
         vocabulary.add("aufstehen");
-        vocabulary.add("gut");
-        vocabulary.add("schlecht");
-        vocabulary.add("geht so");
+        vocabulary.add("folge mir");
+        vocabulary.add("folgen");
+        vocabulary.add("komm zu mir");
+        vocabulary.add("stop");
 
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(vocabulary,true);
@@ -90,7 +93,7 @@ public class WordRecognizedEvent {
                             }
                             else if(word.equals("<...> setz dich hin <...>")||word.equals("<...> hinsetzen <...>")){
                                 try {
-                                    Position.sitzenRelax();
+                                    Position.sitzen();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -102,27 +105,16 @@ public class WordRecognizedEvent {
                                     e.printStackTrace();
                                 }
                             }
-                            else if(word.equals("<...> wie geht es dir <...>")){
+                            else if(word.equals("<...> folge mir <...>")||word.equals("<...> folgen <...>")){
+                                Follow follow = new Follow();
                                 try {
-                                    Utts.talk("Gut und dir");
+                                    follow.run(Utts.getAPP().session());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                if(word.equals("<...> gut <...>")){
-                                    try {
-                                        Utts.talk("Das ist aber schön");
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                else if(word.equals("<...> schlecht <...>")||word.equals("<...> geht so <...>")){
-                                    try {
-                                        Utts.talk("Das ist aber schade");
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
+                                Utts.getAPP().run();
                             }
+
                         }
                     }
                 });
