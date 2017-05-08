@@ -2,6 +2,7 @@ package testruns;
 
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.Session;
+import com.aldebaran.qi.helper.proxies.ALRobotPosture;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 import motion.Position;
@@ -38,27 +39,11 @@ public class Test_Test_üTest_Andi {
     ALTextToSpeech tts;
     long frontTactilSubscriptionId;
     boolean x=false;
-    Position position;
 
     public void run(Session session) throws Exception{
         tts =new ALTextToSpeech(session);
         memory= new ALMemory(session);
         frontTactilSubscriptionId=0;
-        position= new Position(session);
-
-
-       /* memory.subscribeToEvent(
-                "PeoplePerception/PeopleDetected", new EventCallback() {
-                    @Override
-                    public void onEvent(Object arg0)
-                            throws InterruptedException, CallError {
-                        ArrayList a= (ArrayList) arg0;
-                        System.out.println(a);
-
-
-
-                    }
-                });*/
 
        ArrayList vok = new ArrayList<String>();
         aspr= new ALSpeechRecognition(session);
@@ -75,19 +60,10 @@ public class Test_Test_üTest_Andi {
 
         System.out.println(vok);
         aspr.setLanguage("German");
+
         aspr.pause(true);
         aspr.setVocabulary(vok,true);
-
         aspr.pause(false);
-
-
-
-
-       /* aspr.subscribe("Test_aspr");
-        Thread.sleep(20000);
-        aspr.unsubscribe("Test_aspr");*/
-        //aspr.subscribe("Test_aspr",500,0.f);
-
 
          memory.subscribeToEvent(
                 "SpeechDetected", new EventCallback<Integer>() {
@@ -97,23 +73,15 @@ public class Test_Test_üTest_Andi {
                         if(arg0==1){
                             System.out.println("Sie versteht");
                             x=true;
-
-
-
                         }
-
-
-
-
                     }
                 });
-
         frontTactilSubscriptionId=memory.subscribeToEvent(
                 "WordRecognized", new EventCallback() {
                     @Override
                     public void onEvent(Object arg0)
                             throws InterruptedException, CallError {
-                        aspr.pause(true);
+
                         ArrayList a= new ArrayList();
                         a=(ArrayList)arg0;
                         System.out.println(a);
@@ -130,28 +98,30 @@ public class Test_Test_üTest_Andi {
                             }
                             if(wort.equals("<...> setz dich hin <...>")){
                                 try {
-                                    position.sitzen();
+                                    Position.winken();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-
-
                             }
-
-
-
-
                         }
-                        aspr.pause(false);
-                        //Thread.sleep(1000);
-                       // tts.say();
-
-
-
 
                     }
                 });
+        System.out.println("Hallo");
+    }
+}
+
        /* memory.subscribeToEvent(
+                "PeoplePerception/PeopleDetected", new EventCallback() {
+                    @Override
+                    public void onEvent(Object arg0)
+                            throws InterruptedException, CallError {
+                        ArrayList a= (ArrayList) arg0;
+                        System.out.println(a);
+                    }
+                });*/
+
+        /* memory.subscribeToEvent(
                 "WordRecognizedAndGrammar", new EventCallback() {
                     @Override
                     public void onEvent(Object arg0)
@@ -165,20 +135,7 @@ public class Test_Test_üTest_Andi {
                         System.out.println(wort);
                         if(vers>0.5){
                             tts.say("Habe es verstanden in grammer");
-
                         }
                         // tts.say();
-
-
-
-
                     }
                 });*/
-        System.out.println("Hallo");
-
-
-
-
-
-    }
-}

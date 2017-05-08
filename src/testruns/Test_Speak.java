@@ -15,8 +15,6 @@ import java.util.ArrayList;
  */
 public class Test_Speak{
 
-
-
     public static void main(String[] args) throws Exception{
 
         Utts.AppStart();

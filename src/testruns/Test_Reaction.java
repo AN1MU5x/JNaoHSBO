@@ -80,8 +80,7 @@ public class Test_Reaction{
 
         memory = new ALMemory(session);
         recID = memory.subscribeToEvent(
-                "WordRecognized", arg0 -> {
-
+        "WordRecognized", arg0 -> {
                     alSpeechRecognition.pause(true);
                     System.out.println("PAUSED");
                     System.out.println("var stop is "+stop);

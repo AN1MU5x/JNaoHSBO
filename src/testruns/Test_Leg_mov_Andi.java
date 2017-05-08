@@ -13,10 +13,7 @@ public class Test_Leg_mov_Andi {
     public static void main(String[] args) throws Exception {
         Utts.AppStart();
 
-
-
         ALMotion bew = new ALMotion(Utts.getSESSION());
-
         bew.wakeUp();
         bew.stopMove();
         //bew.rest();
