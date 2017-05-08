@@ -4,13 +4,12 @@ import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
-import movings_Andi_Iskar.Position;
+import motion.Position;
 import utillities.Utts;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.CallError;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Andi on 03.05.2017.

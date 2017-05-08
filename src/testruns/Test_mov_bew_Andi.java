@@ -4,7 +4,6 @@ package testruns;
 
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALRobotPosture;
-import movings_Andi_Iskar.Position;
 import utillities.Utts;
 
 import java.util.ArrayList;

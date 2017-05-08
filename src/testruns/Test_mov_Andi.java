@@ -11,7 +11,7 @@ package testruns;
 
 
     import com.aldebaran.qi.helper.proxies.*;
-    import movings_Andi_Iskar.Position;
+    import motion.Position;
     import utillities.Utts;
 
     import java.util.*;

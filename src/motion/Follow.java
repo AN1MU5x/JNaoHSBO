@@ -1,4 +1,4 @@
-package movings_Andi_Iskar;
+package motion;
 
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
@@ -12,15 +12,7 @@ import utillities.Utts;
 /**
  * Created by JNaoHSBO on 05.04.2017.
  */
-public class Moving_1 {
-
-    public static void main(String[] args) throws Exception {
-        Utts.AppStart();
-        System.out.println("Successfully connected to the robot");
-        testruns.Test_Sensor sensor = new testruns.Test_Sensor();
-        sensor.run(Utts.getAPP().session());
-        Utts.getAPP().run();
-    }
+public class Follow {
 
     ALMemory memory;
     ALTextToSpeech tts;

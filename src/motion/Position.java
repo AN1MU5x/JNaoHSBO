@@ -1,16 +1,12 @@
-package movings_Andi_Iskar;
-
+package motion;
 
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALRobotPosture;
 import com.aldebaran.qi.Session;
 import utillities.Utts;
-
 import java.util.ArrayList;
-//hallo
-/**
- * Created by Andi on 10.04.2017.
- */
+
+
 public class Position  {
 
     private static ALRobotPosture p;
@@ -29,7 +25,6 @@ public class Position  {
     private static ArrayList array5;
     private static ArrayList array6;
     private static ArrayList array7;
-
     private static Session session;
 
     public Position(Session session){

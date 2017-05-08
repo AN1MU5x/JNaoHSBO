@@ -4,7 +4,6 @@ import com.aldebaran.qi.helper.proxies.ALLocalization;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTracker;
-import movings_Andi_Iskar.Position;
 import utillities.Utts;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
