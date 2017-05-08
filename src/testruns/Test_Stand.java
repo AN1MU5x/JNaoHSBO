@@ -7,7 +7,7 @@ import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALPeoplePerception;
 import com.aldebaran.qi.helper.proxies.ALSittingPeopleDetection;
 import motion.Position;
-import utillities.Utts;
+import utillities.Uts;
 
 /**
  * Created by iskar on 08.05.17.
@@ -15,12 +15,12 @@ import utillities.Utts;
 public class Test_Stand {
     public static void main(String[] args) throws Exception{
 
-        Utts.AppStart();
+        Uts.AppStart();
 
         Thread.sleep(10);
         Test_Stand s = new Test_Stand();
-        s.run(Utts.getSESSION());
-        Utts.getAPP().run();
+        s.run(Uts.getSESSION());
+        Uts.getAPP().run();
     }
 
     ALMemory memory;
@@ -35,7 +35,7 @@ public class Test_Stand {
             public void onEvent(Object o) throws InterruptedException, CallError {
                 System.out.println("Erkannt");
                 try {
-                    Utts.talk("Na gut, unterhalten wir uns");
+                    Uts.talk("Na gut, unterhalten wir uns");
                     Position.sitzenRelax();
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -4,7 +4,7 @@ package testruns;
 
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALRobotPosture;
-import utillities.Utts;
+import utillities.Uts;
 
 import java.util.ArrayList;
 
@@ -14,16 +14,16 @@ import java.util.ArrayList;
  */
 public class Test_mov_bew_Andi {
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
+        Uts.AppStart();
 
 
 
-        ALMotion bew = new ALMotion(Utts.getSESSION());
+        ALMotion bew = new ALMotion(Uts.getSESSION());
 
       bew.wakeUp();
        bew.stopMove();
        //bew.rest();
-    ALRobotPosture p= new ALRobotPosture(Utts.getAPP().session());
+    ALRobotPosture p= new ALRobotPosture(Uts.getAPP().session());
        p.goToPosture("Stand",0.5f);
       Thread.sleep(1000);
       //bew.rest();
@@ -53,7 +53,7 @@ public class Test_mov_bew_Andi {
         ArrayList time6 =new ArrayList<Float>();
 
         //hinzufügen bewegungsaktionen zur liste
-        Utts.talk("Bitte festhalten");
+        Uts.talk("Bitte festhalten");
 
 
         name.add(0,"LHipRoll");
@@ -104,7 +104,7 @@ public class Test_mov_bew_Andi {
 
        // name1.add(0,"RShoulderRoll");
         //festlegen der Aktionswinkel in liste
-
+/*
         angles.add(0,Utts.DegToRad(-5));
         angles.add(1,Utts.DegToRad(5));
 
@@ -147,7 +147,7 @@ public class Test_mov_bew_Andi {
         angles6.add(2,Utts.DegToRad(13));
         angles6.add(3,Utts.DegToRad(3));
 
-
+*/
         //festlegen der Zeitpunkte der Aktionen
         time.add(0,2.f);
         time.add(1,2.f);

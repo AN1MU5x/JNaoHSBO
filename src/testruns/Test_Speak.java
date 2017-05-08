@@ -5,9 +5,8 @@ import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.*;
 import motion.Position;
-import utillities.Utts;
+import utillities.Uts;
 import vision.FaceDetectedEvent;
-
 import java.util.ArrayList;
 
 /**
@@ -17,12 +16,12 @@ public class Test_Speak{
 
     public static void main(String[] args) throws Exception{
 
-        Utts.AppStart();
+        Uts.AppStart();
 
         Thread.sleep(10);
         Test_Speak speak = new Test_Speak();
-        speak.run(Utts.getSESSION());
-        Utts.getAPP().run();
+        speak.run(Uts.getSESSION());
+        Uts.getAPP().run();
     }
 
     private static ALMemory alMemory;
@@ -33,8 +32,8 @@ public class Test_Speak{
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
-        alSpeechRecognition = new ALSpeechRecognition(Utts.getSESSION());
-        alFaceDetection = new ALFaceDetection(Utts.getSESSION());
+        alSpeechRecognition = new ALSpeechRecognition(Uts.getSESSION());
+        alFaceDetection = new ALFaceDetection(Uts.getSESSION());
         alFaceDetection.setTrackingEnabled(true);
 
         ArrayList<String> vocabulary = new ArrayList();
@@ -62,16 +61,16 @@ public class Test_Speak{
                             if (word.equals("<...> wer bin ich <...>")) {
                                 FaceDetectedEvent vision = new FaceDetectedEvent();
                                 try {
-                                    vision.run(Utts.getAPP().session());
+                                    vision.run(Uts.getAPP().session());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                Utts.getAPP().run();
+                                Uts.getAPP().run();
                                 alMemory.unsubscribeToEvent(wordID);
                             }
                             else if(word.equals("<...> hallo <...>")){
                                 try {
-                                    Utts.talk("Hallo");
+                                    Uts.talk("Hallo");
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

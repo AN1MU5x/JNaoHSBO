@@ -8,18 +8,18 @@ import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
 import motion.Follow;
 import motion.Position;
-import utillities.Utts;
+import utillities.Uts;
 import vision.FaceDetectedEvent;
 import java.util.ArrayList;
 
 public class WordRecognizedEvent {
     public static void main(String[] args) throws Exception{
-        Utts.AppStart();
+        Uts.AppStart();
 
         Thread.sleep(10);
         WordRecognizedEvent cWRE = new WordRecognizedEvent();
-        cWRE.run(Utts.getSESSION());
-        Utts.getAPP().run();
+        cWRE.run(Uts.getSESSION());
+        Uts.getAPP().run();
     }
 
     private static ALMemory alMemory;
@@ -33,8 +33,8 @@ public class WordRecognizedEvent {
     public void run(Session session) throws Exception {
         recWord = new ArrayList<String>();
         alMemory = new ALMemory(session);
-        alSpeechRecognition = new ALSpeechRecognition(Utts.getSESSION());
-        alFaceDetection = new ALFaceDetection(Utts.getSESSION());
+        alSpeechRecognition = new ALSpeechRecognition(Uts.getSESSION());
+        alFaceDetection = new ALFaceDetection(Uts.getSESSION());
         alFaceDetection.setTrackingEnabled(true);
 
         ArrayList<String> vocabulary = new ArrayList();
@@ -73,22 +73,22 @@ public class WordRecognizedEvent {
                                 wbi = true;
                                 FaceDetectedEvent vision = new FaceDetectedEvent();
                                 try {
-                                    vision.run(Utts.getAPP().session());
+                                    vision.run(Uts.getAPP().session());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                Utts.getAPP().run();
+                                Uts.getAPP().run();
                                 alMemory.unsubscribeToEvent(wordID);
                             }
                             else if(word.equals("<...> hallo <...>")||word.equals("<...> hi <...>")||word.equals("<...> hey <...>")){
                                 hallo = true;
                                 FaceDetectedEvent vision = new FaceDetectedEvent();
                                 try {
-                                    vision.run(Utts.getAPP().session());
+                                    vision.run(Uts.getAPP().session());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                Utts.getAPP().run();
+                                Uts.getAPP().run();
                                 alMemory.unsubscribeToEvent(wordID);
                             }
                             else if(word.equals("<...> setz dich hin <...>")||word.equals("<...> hinsetzen <...>")){
@@ -108,11 +108,11 @@ public class WordRecognizedEvent {
                             else if(word.equals("<...> folge mir <...>")||word.equals("<...> folgen <...>")){
                                 Follow follow = new Follow();
                                 try {
-                                    follow.run(Utts.getAPP().session());
+                                    follow.run(Uts.getAPP().session());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                Utts.getAPP().run();
+                                Uts.getAPP().run();
                             }
 
                         }

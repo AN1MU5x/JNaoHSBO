@@ -4,7 +4,7 @@ import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import utillities.TimeOut;
-import utillities.Utts;
+import utillities.Uts;
 
 
 
@@ -21,11 +21,11 @@ public class Test_Hear {
 
     public static void main(String[] args) throws Exception{
 
-        Utts.AppStart();
-        (new ALFaceDetection(Utts.getSESSION())).setTrackingEnabled(true);
+        Uts.AppStart();
+        (new ALFaceDetection(Uts.getSESSION())).setTrackingEnabled(true);
 
-        heard.run(Utts.getSESSION());
-        Utts.getAPP().run();
+        heard.run(Uts.getSESSION());
+        Uts.getAPP().run();
 
 
     }
@@ -40,13 +40,13 @@ public class Test_Hear {
                 "SpeechDetected", arg0 -> {
                     try {
                         memory.unsubscribeToEvent(recID);
-                        Utts.talk("Ja bitte?");
+                        Uts.talk("Ja bitte?");
                         reced = true;
                         Thread.sleep(1000);
                         Test_Reaction test_reaction = new Test_Reaction();
                         test_reaction.main(null);
-                        test_reaction.run(Utts.getSESSION());
-                        Utts.getAPP().run();
+                        test_reaction.run(Uts.getSESSION());
+                        Uts.getAPP().run();
 
 
                     } catch (Exception e) {

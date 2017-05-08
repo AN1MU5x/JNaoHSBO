@@ -4,7 +4,7 @@ import com.aldebaran.qi.Application;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALRobotPosture;
-import utillities.Utts;
+import utillities.Uts;
 
 import java.util.ArrayList;
 
@@ -14,15 +14,15 @@ import java.util.ArrayList;
 public class Test_Andi_backup {
 
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
+        Uts.AppStart();
         System.out.println("Successfully connected to the robot");
         // Subscribe to selected ALMemory events
         Test_Andi_backup reactor = new Test_Andi_backup();
 
-        reactor.run(Utts.getSESSION());
+        reactor.run(Uts.getSESSION());
 
         // Run your application
-        Utts.getAPP().run();
+        Uts.getAPP().run();
 
     }
 
@@ -103,7 +103,7 @@ public class Test_Andi_backup {
         time8 =new ArrayList<Float>();
 
         //hinzufügen bewegungsaktionen zur liste
-        Utts.talk("Bitte festhalten");
+        Uts.talk("Bitte festhalten");
 
 
         name.add(0,"LHipRoll");
@@ -185,76 +185,76 @@ public class Test_Andi_backup {
         // name1.add(0,"RShoulderRoll");
         //festlegen der Aktionswinkel in liste
 
-        angles.add(0,Utts.DegToRad(-5));
-        angles.add(1,Utts.DegToRad(5));
+        angles.add(0,Uts.DegToRad(-5));
+        angles.add(1,Uts.DegToRad(5));
 
-        angles1.add(0,Utts.DegToRad(10));
-        angles1.add(1,Utts.DegToRad(10));
-        angles1.add(2,Utts.DegToRad(10));
-        angles1.add(3,Utts.DegToRad(10));
-        angles1.add(4,Utts.DegToRad(-10));
-        angles1.add(5,Utts.DegToRad(-10));
+        angles1.add(0,Uts.DegToRad(10));
+        angles1.add(1,Uts.DegToRad(10));
+        angles1.add(2,Uts.DegToRad(10));
+        angles1.add(3,Uts.DegToRad(10));
+        angles1.add(4,Uts.DegToRad(-10));
+        angles1.add(5,Uts.DegToRad(-10));
 
-        angles2.add(0,Utts.DegToRad(10));
-        angles2.add(1,Utts.DegToRad(10));
+        angles2.add(0,Uts.DegToRad(10));
+        angles2.add(1,Uts.DegToRad(10));
 
         //   angles3.add(0,Utts.DegToRad(-10));
         //  angles3.add(1,Utts.DegToRad(-10));
-        angles3.add(0,Utts.DegToRad(13));
-        angles3.add(1,Utts.DegToRad(10));
-        angles3.add(2,Utts.DegToRad(-40));
-        angles3.add(3,Utts.DegToRad(0));
-        angles3.add(4,Utts.DegToRad(25));
+        angles3.add(0,Uts.DegToRad(13));
+        angles3.add(1,Uts.DegToRad(10));
+        angles3.add(2,Uts.DegToRad(-40));
+        angles3.add(3,Uts.DegToRad(0));
+        angles3.add(4,Uts.DegToRad(25));
 
-        angles4.add(0,Utts.DegToRad(-30));
-        angles4.add(1,Utts.DegToRad(13));
-        angles4.add(2,Utts.DegToRad(10));
-        angles4.add(3,Utts.DegToRad(-30));
-        angles4.add(4,Utts.DegToRad(2));
-        angles4.add(5,Utts.DegToRad(40));
-        angles4.add(6,Utts.DegToRad(30));
-        angles4.add(7,Utts.DegToRad(0));
+        angles4.add(0,Uts.DegToRad(-30));
+        angles4.add(1,Uts.DegToRad(13));
+        angles4.add(2,Uts.DegToRad(10));
+        angles4.add(3,Uts.DegToRad(-30));
+        angles4.add(4,Uts.DegToRad(2));
+        angles4.add(5,Uts.DegToRad(40));
+        angles4.add(6,Uts.DegToRad(30));
+        angles4.add(7,Uts.DegToRad(0));
 
-        angles5.add(0,Utts.DegToRad(25));
-        angles5.add(1,Utts.DegToRad(17));
-        angles5.add(2,Utts.DegToRad(17));
-        angles5.add(3,Utts.DegToRad(35));
-        angles5.add(4,Utts.DegToRad(2));
-        angles5.add(5,Utts.DegToRad(0));
+        angles5.add(0,Uts.DegToRad(25));
+        angles5.add(1,Uts.DegToRad(17));
+        angles5.add(2,Uts.DegToRad(17));
+        angles5.add(3,Uts.DegToRad(35));
+        angles5.add(4,Uts.DegToRad(2));
+        angles5.add(5,Uts.DegToRad(0));
 
         // angles6.add(0,Utts.DegToRad(0));
 
-        angles6.add(0,Utts.DegToRad(-3));
-        angles6.add(1,Utts.DegToRad(-30));
-        angles6.add(2,Utts.DegToRad(30));
-        angles6.add(3,Utts.DegToRad(-25));
+        angles6.add(0,Uts.DegToRad(-3));
+        angles6.add(1,Uts.DegToRad(-30));
+        angles6.add(2,Uts.DegToRad(30));
+        angles6.add(3,Uts.DegToRad(-25));
         // angles6.add(4,Utts.DegToRad(0));
-        angles6.add(4,Utts.DegToRad(-10));
-        angles6.add(5,Utts.DegToRad(-10));
-        angles6.add(6,Utts.DegToRad(0));
-        angles6.add(7,Utts.DegToRad(20));
-        angles6.add(8,Utts.DegToRad(5));
+        angles6.add(4,Uts.DegToRad(-10));
+        angles6.add(5,Uts.DegToRad(-10));
+        angles6.add(6,Uts.DegToRad(0));
+        angles6.add(7,Uts.DegToRad(20));
+        angles6.add(8,Uts.DegToRad(5));
 
-        angles7.add(0,Utts.DegToRad(8)); //name7.add(0,"LAnkleRoll");
-        angles7.add(1,Utts.DegToRad(-10)); //name7.add(1,"RAnklePitch");
-        angles7.add(2,Utts.DegToRad(30)); //name7.add(2,"RKneePitch");
-        angles7.add(3,Utts.DegToRad(-20));//name7.add(3,"LHipPitch");
+        angles7.add(0,Uts.DegToRad(8)); //name7.add(0,"LAnkleRoll");
+        angles7.add(1,Uts.DegToRad(-10)); //name7.add(1,"RAnklePitch");
+        angles7.add(2,Uts.DegToRad(30)); //name7.add(2,"RKneePitch");
+        angles7.add(3,Uts.DegToRad(-20));//name7.add(3,"LHipPitch");
         // angles6.add(4,Utts.DegToRad(0));
-        angles7.add(4,Utts.DegToRad(-15));//name7.add(4,"LHipRoll");
-        angles7.add(5,Utts.DegToRad(-10));//name7.add(5,"RHipRoll");
-        angles7.add(6,Utts.DegToRad(0));//name7.add(6,"LShoulderPitch");
-        angles7.add(7,Utts.DegToRad(25));//name7.add(7,"LKneePitch");
-        angles7.add(8,Utts.DegToRad(-5));//name7.add(8,"LAnklePitch");
+        angles7.add(4,Uts.DegToRad(-15));//name7.add(4,"LHipRoll");
+        angles7.add(5,Uts.DegToRad(-10));//name7.add(5,"RHipRoll");
+        angles7.add(6,Uts.DegToRad(0));//name7.add(6,"LShoulderPitch");
+        angles7.add(7,Uts.DegToRad(25));//name7.add(7,"LKneePitch");
+        angles7.add(8,Uts.DegToRad(-5));//name7.add(8,"LAnklePitch");
 
-        angles8.add(0,Utts.DegToRad(8)); //name7.add(0,"LAnkleRoll");
-        angles8.add(1,Utts.DegToRad(-10)); //name7.add(1,"RAnklePitch");
-        angles8.add(2,Utts.DegToRad(30)); //name7.add(2,"RKneePitch");30
-        angles8.add(3,Utts.DegToRad(-20));//name7.add(3,"LHipPitch");
-        angles8.add(4,Utts.DegToRad(-17));//name7.add(4,"LHipRoll");
-        angles8.add(5,Utts.DegToRad(-12));//name7.add(5,"RHipRoll");
-        angles8.add(6,Utts.DegToRad(0));//name7.add(6,"LShoulderPitch");
-        angles8.add(7,Utts.DegToRad(27));//name7.add(7,"LKneePitch");
-        angles8.add(8,Utts.DegToRad(-8));//name7.add(8,"LAnklePitch");
+        angles8.add(0,Uts.DegToRad(8)); //name7.add(0,"LAnkleRoll");
+        angles8.add(1,Uts.DegToRad(-10)); //name7.add(1,"RAnklePitch");
+        angles8.add(2,Uts.DegToRad(30)); //name7.add(2,"RKneePitch");30
+        angles8.add(3,Uts.DegToRad(-20));//name7.add(3,"LHipPitch");
+        angles8.add(4,Uts.DegToRad(-17));//name7.add(4,"LHipRoll");
+        angles8.add(5,Uts.DegToRad(-12));//name7.add(5,"RHipRoll");
+        angles8.add(6,Uts.DegToRad(0));//name7.add(6,"LShoulderPitch");
+        angles8.add(7,Uts.DegToRad(27));//name7.add(7,"LKneePitch");
+        angles8.add(8,Uts.DegToRad(-8));//name7.add(8,"LAnklePitch");
         //angles8.add(9,Utts.DegToRad(-30));
 
 
@@ -391,7 +391,7 @@ public class Test_Andi_backup {
 
 
 
-        Utts.talk("Fertig");
+        Uts.talk("Fertig");
 
         Thread.sleep(3000);
         System.out.println("Ende");

@@ -6,7 +6,7 @@ import com.aldebaran.qi.helper.proxies.ALRobotPosture;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 import motion.Position;
-import utillities.Utts;
+import utillities.Uts;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.CallError;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class Test_Test_üTest_Andi {
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
+        Uts.AppStart();
         System.out.println("Successfully connected to the robot");
         // Subscribe to selected ALMemory events
         Test_Test_üTest_Andi reactor = new Test_Test_üTest_Andi();
@@ -27,10 +27,10 @@ public class Test_Test_üTest_Andi {
        // position.sitzen();
      //   position.sitzen(Utts.getSESSION());
 
-        reactor.run(Utts.getSESSION());
+        reactor.run(Uts.getSESSION());
 
         // Run your application
-        Utts.getAPP().run();
+        Uts.getAPP().run();
 
     }
 

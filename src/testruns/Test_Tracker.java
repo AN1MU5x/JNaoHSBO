@@ -6,7 +6,7 @@ import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 import com.aldebaran.qi.helper.proxies.ALTracker;
-import utillities.Utts;
+import utillities.Uts;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,11 +16,11 @@ import java.util.LinkedList;
  */
 public class Test_Tracker {
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
+        Uts.AppStart();
         System.out.println("Successfully connected to the robot");
         Test_Tracker tracker = new Test_Tracker();
-        tracker.run(Utts.getAPP().session());
-        Utts.getAPP().run();
+        tracker.run(Uts.getAPP().session());
+        Uts.getAPP().run();
     }
 
     ALMemory alMemory;

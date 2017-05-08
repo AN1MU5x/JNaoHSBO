@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /** 
  * Created by Lisa on 06.04.2017.
  */
-public class Utts extends Thread {
+public class Uts extends Thread {
 
     private static Application APP;
     private static Session SESSION;
@@ -79,7 +79,7 @@ public class Utts extends Thread {
     }
 
     public static boolean learnFace(String sName) throws Exception {
-        ALFaceDetection oA = new ALFaceDetection(Utts.APP.session());
+        ALFaceDetection oA = new ALFaceDetection(Uts.APP.session());
         if(oA.learnFace(sName)){
             return(true);
         }

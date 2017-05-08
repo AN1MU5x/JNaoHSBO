@@ -15,7 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import utillities.Utts;
+import utillities.Uts;
 
 /** Created by Lisa on 07.04.2017.
      */
@@ -48,10 +48,10 @@ import utillities.Utts;
         @Override
         public void handle(ActionEvent event){
             if(event.getSource()== btn1) {
-                Utts.AppStart(userTextField.getText(),portTextField.getText());
+                Uts.AppStart(userTextField.getText(),portTextField.getText());
                 try {
                     Thread.sleep(1000);
-                    charge = new ALBattery(Utts.getSESSION());
+                    charge = new ALBattery(Uts.getSESSION());
                     sCharge = ""+(charge.getBatteryCharge());
                     System.out.println("\n"+sCharge+"\n");
                     window2();

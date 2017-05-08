@@ -7,7 +7,7 @@ import com.aldebaran.qi.helper.proxies.ALBarcodeReader;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALMotion;
-import utillities.Utts;
+import utillities.Uts;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -17,13 +17,13 @@ import java.util.Scanner;
  */
 public class Test_Vision {
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
+        Uts.AppStart();
         System.out.println("Successfully connected to the robot");
-        ALFaceDetection a = new ALFaceDetection(Utts.getAPP().session());
+        ALFaceDetection a = new ALFaceDetection(Uts.getAPP().session());
         a.setTrackingEnabled(false);
         Test_Vision sensor = new Test_Vision();
-        sensor.run(Utts.getAPP().session());
-        Utts.getAPP().run();
+        sensor.run(Uts.getAPP().session());
+        Uts.getAPP().run();
     }
 
     ALMemory alMemory;
@@ -57,7 +57,7 @@ public class Test_Vision {
                         System.out.println("Ende");
 
                         try {
-                            Utts.talk(text);
+                            Uts.talk(text);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

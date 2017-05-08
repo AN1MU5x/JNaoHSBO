@@ -4,12 +4,10 @@ import com.aldebaran.qi.helper.proxies.ALLocalization;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTracker;
-import utillities.Utts;
+import utillities.Uts;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.CallError;
-
-
 import java.util.ArrayList;
 
 /**
@@ -17,15 +15,15 @@ import java.util.ArrayList;
  */
 public class TestSearch {
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
+        Uts.AppStart();
         System.out.println("Successfully connected to the robot");
         // Subscribe to selected ALMemory events
         TestSearch reactor = new TestSearch();
 
-        reactor.run(Utts.getSESSION());
+        reactor.run(Uts.getSESSION());
 
         // Run your application
-        Utts.getAPP().run();
+        Uts.getAPP().run();
 
     }
 
@@ -70,7 +68,7 @@ public class TestSearch {
         //System.out.println(tr.getTargetPosition());
        // tr.setMode("Move");
         //tr.track("Andi");
-        Utts.talk("Hallo");
+        Uts.talk("Hallo");
         //tr.unregisterAllTargets();
         System.out.println(tr.getTargetPosition());
       //  tr.trackEvent("ALLocalization/FullScanBegin");

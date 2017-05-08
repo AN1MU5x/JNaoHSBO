@@ -6,18 +6,18 @@ import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALMovementDetection;
 import com.aldebaran.qi.helper.proxies.ALSonar;
-import utillities.Utts;
+import utillities.Uts;
 
 /**
  * Created by Lisa on 27.04.2017.
  */
 public class Test_Sensor_2 {
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
+        Uts.AppStart();
         System.out.println("Successfully connected to the robot");
         Test_Sensor_2 sensor = new Test_Sensor_2();
-        sensor.run(Utts.getAPP().session());
-        Utts.getAPP().run();
+        sensor.run(Uts.getAPP().session());
+        Uts.getAPP().run();
     }
 
     ALMemory alMemory;
