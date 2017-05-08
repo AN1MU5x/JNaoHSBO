@@ -97,6 +97,7 @@ public class WordRecognizedEvent {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                alMemory.unsubscribeToEvent(wordID);
                             }
                             else if(word.equals("<...> stell dich hin <...>")||word.equals("<...> hinstellen <...>")||word.equals("<...> aufstehen <...>")){
                                 try {
@@ -104,6 +105,7 @@ public class WordRecognizedEvent {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                alMemory.unsubscribeToEvent(wordID);
                             }
                             else if(word.equals("<...> folge mir <...>")||word.equals("<...> folgen <...>")){
                                 Follow follow = new Follow();
@@ -113,6 +115,7 @@ public class WordRecognizedEvent {
                                     e.printStackTrace();
                                 }
                                 Utts.getAPP().run();
+                                alMemory.unsubscribeToEvent(wordID);
                             }
 
                         }
