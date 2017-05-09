@@ -7,7 +7,7 @@ import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 import com.aldebaran.qi.helper.proxies.ALTracker;
-import utillities.Utts;
+import utillities.Uts;
 
 public class Follow {
 
@@ -23,14 +23,14 @@ public class Follow {
         frontTactilSubscriptionId = 0;
 
         ALTracker a = new ALTracker(session);
-        ALMotion suche = new ALMotion(Utts.getSESSION());
+        ALMotion suche = new ALMotion(Uts.getSESSION());
 
         while (b) {
             a.track("Face");
             a.setMode("Move");
-            System.out.println(a.isSearchEnabled());
+            /*System.out.println(a.isSearchEnabled());
             Thread.sleep(1000);
-            System.out.println(a.getTargetPosition().size());
+            System.out.println(a.getTargetPosition().size());*/
 
             //Event, welches auf die Berührung des FrontTactile reagiert
             frontTactilSubscriptionId = memory.subscribeToEvent(

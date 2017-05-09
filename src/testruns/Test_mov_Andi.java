@@ -1,29 +1,22 @@
 package testruns;
 
-
-
-
-
 /**
  * Created by Andi on 06.04.2017.
  */
-
-
-
     import com.aldebaran.qi.helper.proxies.*;
     import motion.Position;
-    import utillities.Utts;
+    import utillities.Uts;
 
     import java.util.*;
 
 public class Test_mov_Andi {
 
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
-        ALLocalization home = new ALLocalization(Utts.getAPP().session());
+        Uts.AppStart();
+        ALLocalization home = new ALLocalization(Uts.getAPP().session());
 
-        ALMotion bewe = new ALMotion(Utts.getSESSION());
-        ALNavigation be = new ALNavigation(Utts.getSESSION());
+        ALMotion bewe = new ALMotion(Uts.getSESSION());
+        ALNavigation be = new ALNavigation(Uts.getSESSION());
 
         ArrayList array = new ArrayList<>();
         ArrayList array1 = new ArrayList<>();

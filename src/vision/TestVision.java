@@ -1,7 +1,7 @@
 package vision;
 
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
-import utillities.Utts;
+import utillities.Uts;
 
 /**
  * Created by Lisa on 30.04.2017.
@@ -15,12 +15,12 @@ public class TestVision {
     public static void main(String[] args) throws Exception
     {
             //Roboter verbinden
-            Utts.AppStart();
+            Uts.AppStart();
             System.out.println("Successfully connected to the robot");
 
             //WordRecognizion
-            m_ht1.run(Utts.getAPP().session());
-            Utts.getAPP().run();
+            m_ht1.run(Uts.getAPP().session());
+            Uts.getAPP().run();
 
             do {
                 //Warte auf HumanTrackedEvent

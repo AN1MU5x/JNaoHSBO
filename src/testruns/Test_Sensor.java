@@ -2,7 +2,7 @@ package testruns;
 
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.*;
-import utillities.Utts;
+import utillities.Uts;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.helper.EventCallback;
@@ -16,11 +16,11 @@ import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 public class Test_Sensor {
 
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
+        Uts.AppStart();
         System.out.println("Successfully connected to the robot");
         Test_Sensor sensor = new Test_Sensor();
-        sensor.run(Utts.getAPP().session());
-        Utts.getAPP().run();
+        sensor.run(Uts.getAPP().session());
+        Uts.getAPP().run();
     }
 
     ALMemory memory;
@@ -35,7 +35,7 @@ public class Test_Sensor {
         frontTactilSubscriptionId = 0;
 
         ALTracker a = new ALTracker(session);
-        ALMotion suche = new ALMotion(Utts.getSESSION());
+        ALMotion suche = new ALMotion(Uts.getSESSION());
 
         while (b) {
             a.track("Face");
@@ -56,7 +56,7 @@ public class Test_Sensor {
                                 b = false;
                                 tts.say("Ok ich folge dir nicht mehr");
                                 //Von hier wird die App beendet
-                                Utts.AppStop();
+                                Uts.AppStop();
                                 memory.unsubscribeToEvent(frontTactilSubscriptionId);
                             }
                         }

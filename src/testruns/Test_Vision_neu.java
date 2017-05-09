@@ -4,7 +4,7 @@ import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.*;
-import utillities.Utts;
+import utillities.Uts;
 
 import java.util.ArrayList;
 
@@ -14,13 +14,13 @@ import java.util.ArrayList;
  */
 public class Test_Vision_neu {
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
-        ALTracker b  = new ALTracker(Utts.getAPP().session());
+        Uts.AppStart();
+        ALTracker b  = new ALTracker(Uts.getAPP().session());
         System.out.println("Successfully connected to the robot");
         b.trackEvent("LandMark");
         Test_Vision sensor = new Test_Vision();
-        sensor.run(Utts.getAPP().session());
-        Utts.getAPP().run();
+        sensor.run(Uts.getAPP().session());
+        Uts.getAPP().run();
     }
 
     ALMemory alMemory;

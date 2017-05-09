@@ -4,9 +4,7 @@ package testruns;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.*;
 import motion.Position;
-import utillities.Utts;
-
-
+import utillities.Uts;
 import java.util.ArrayList;
 
 
@@ -25,14 +23,14 @@ public class Test_Reaction{
         alSpeechRecognition.setVocabulary(names, true);
         alSpeechRecognition.pause(false);
 */
-        Utts.AppStart();
-        (new ALFaceDetection(Utts.getSESSION())).setTrackingEnabled(true);
-        alSpeechRecognition = new ALSpeechRecognition(Utts.getSESSION());
-        Utts.setNames(new ArrayList());
-        Utts.addNames("lisa");
-        Utts.addNames("andi");
-        Utts.addNames("iskar");
-        Utts.addNames("stefan");
+        Uts.AppStart();
+        (new ALFaceDetection(Uts.getSESSION())).setTrackingEnabled(true);
+        alSpeechRecognition = new ALSpeechRecognition(Uts.getSESSION());
+        Uts.setNames(new ArrayList());
+        Uts.addNames("lisa");
+        Uts.addNames("andi");
+        Uts.addNames("iskar");
+        Uts.addNames("stefan");
 
         ArrayList<String> uttWords = new ArrayList<>();
         uttWords.add("stop");
@@ -45,9 +43,9 @@ public class Test_Reaction{
 
         ArrayList<String> sentences = new ArrayList<>();
         sentences.add("wie geht es dir?");
-        System.out.println(Utts.getNames());
+        System.out.println(Uts.getNames());
 
-        for (String m: Utts.getNames()) {
+        for (String m: Uts.getNames()) {
             allWords.add(m);
 
         }
@@ -66,8 +64,8 @@ public class Test_Reaction{
         Thread.sleep(10);
         Test_Reaction test_reaction = new Test_Reaction();
 
-        test_reaction.run(Utts.getSESSION());
-        Utts.getAPP().run();
+        test_reaction.run(Uts.getSESSION());
+        Uts.getAPP().run();
     }
 
     protected static long recID;
@@ -97,11 +95,11 @@ public class Test_Reaction{
                     if(!stop) {
                         switch (dialogCase) {
                             case 0:
-                                for (String m : Utts.getNames()) {
+                                for (String m : Uts.getNames()) {
                                     //Talk to known people
                                     if (word.equals(m) && (float) recWord.get(1) > 0.5f) {
                                         try {
-                                            Utts.talk("Hallo " + word + ", wie geht es dir?");
+                                            Uts.talk("Hallo " + word + ", wie geht es dir?");
                                             Thread.sleep(100);
 
                                         } catch (Exception e) {
@@ -111,7 +109,7 @@ public class Test_Reaction{
                                     }
                                 }if(word.equals("wie geht es dir?")&&(float)recWord.get(1)>0.5f){
                                 try {
-                                    Utts.talk("Mir geht es gut und wie geht es dir?");
+                                    Uts.talk("Mir geht es gut und wie geht es dir?");
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -127,14 +125,14 @@ public class Test_Reaction{
                             case 1:
                                 if (word.equals("gut")) {
                                     try {
-                                        Utts.talk("Das finde ich toll!");
+                                        Uts.talk("Das finde ich toll!");
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                     dialogCase = 0;
                                 }else if(word.equals("schlecht")){
                                     try {
-                                        Utts.talk("Das ist aber schade.");
+                                        Uts.talk("Das ist aber schade.");
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -144,7 +142,7 @@ public class Test_Reaction{
                         }
                         if (word.equals("stop") && (float) recWord.get(1) > 0.3f) {
                             try {
-                                Utts.talk("Soll ich wirklich aufhören?");
+                                Uts.talk("Soll ich wirklich aufhören?");
                                 Thread.sleep(20);
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -153,7 +151,7 @@ public class Test_Reaction{
 
                         } else if (word.equals("akku") && (int) recWord.get(1) > 0.5f) {
                             try {
-                                Utts.talk("Mein Akku hat noch " + (new ALBattery(Utts.getSESSION())).getBatteryCharge() + "%");
+                                Uts.talk("Mein Akku hat noch " + (new ALBattery(Uts.getSESSION())).getBatteryCharge() + "%");
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -161,16 +159,16 @@ public class Test_Reaction{
                     }else if(stop){
                         if(word.equals("ja")&&(float)recWord.get(1)>0.5f) {
                             try {
-                                Utts.talk("OK, ich höre auf!");
+                                Uts.talk("OK, ich höre auf!");
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             alSpeechRecognition.pause(false);
                             memory.unsubscribeToEvent(recID);
-                            Utts.AppStop();
+                            Uts.AppStop();
                         }else if(word.equals("nein")&&(float)recWord.get(1)>0.5f){
                             try {
-                                Utts.talk("Dann mache ich weiter!");
+                                Uts.talk("Dann mache ich weiter!");
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

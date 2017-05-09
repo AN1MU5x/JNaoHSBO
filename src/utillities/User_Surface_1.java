@@ -81,10 +81,10 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     @Override
     public void handle(ActionEvent event){
         if(event.getSource()== btn1) {
-            Utts.AppStart(userTextField.getText(),portTextField.getText());
+            Uts.AppStart(userTextField.getText(),portTextField.getText());
             try {
                 Thread.sleep(1000);
-                charge = new ALBattery(Utts.getSESSION());
+                charge = new ALBattery(Uts.getSESSION());
                 sCharge = ""+(charge.getBatteryCharge());
                 System.out.println("\n"+sCharge+"\n");
                 btn2.setOnAction(this);
@@ -164,7 +164,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
 
     public static synchronized void aktualisieren()throws Exception{
         iTmp++;
-        chargeA = new ALBattery(Utts.getSESSION());
+        chargeA = new ALBattery(Uts.getSESSION());
         sChargeA = ""+(chargeA.getBatteryCharge());
         System.out.println("\n"+sChargeA+"\n");
         lCharge.setText(sChargeA);
