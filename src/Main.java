@@ -1,7 +1,7 @@
 import audio.WordRecognizedEvent;
 import com.aldebaran.qi.Session;
 import motion.Position;
-import sensors.FrontTactilTouchedEvent;
+import sensors.TactilTouchedEvent;
 import sun.management.Sensor;
 import utillities.Uts;
 
@@ -14,8 +14,10 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         Uts.AppStart();
-        FrontTactilTouchedEvent frontTactilTouchedEvent = new FrontTactilTouchedEvent();
-        frontTactilTouchedEvent.FrontTactil(Uts.getSESSION());
+        TactilTouchedEvent tactilTouchedEvent = new TactilTouchedEvent();
+        tactilTouchedEvent.FrontTactil(Uts.getSESSION());
+        tactilTouchedEvent.RearTactil(Uts.getSESSION());
+        tactilTouchedEvent.MiddleTactil(Uts.getSESSION());
         Uts.getAPP().run();
     }
 }
