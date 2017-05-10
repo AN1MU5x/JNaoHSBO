@@ -4,38 +4,39 @@ import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALMemory;
-import com.aldebaran.qi.helper.proxies.ALMovementDetection;
-import com.aldebaran.qi.helper.proxies.ALSonar;
+import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
+import com.aldebaran.qi.helper.proxies.ALTracker;
 import utillities.Uts;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 /**
- * Created by Lisa on 27.04.2017.
+ * Created by iskar on 02.05.17.
  */
-public class Test_Sensor_2 {
+public class Test_Tracker {
     public static void main(String[] args) throws Exception {
         Uts.AppStart();
         System.out.println("Successfully connected to the robot");
-        Test_Sensor_2 sensor = new Test_Sensor_2();
-        sensor.run(Uts.getAPP().session());
+        Test_Tracker tracker = new Test_Tracker();
+        tracker.run(Uts.getAPP().session());
         Uts.getAPP().run();
     }
 
     ALMemory alMemory;
-    ALSonar alSonar;
-    boolean hilf= true;
+    ALTextToSpeech alTextToSpeech;
+    long alBasicAwarenessID=0;
+    private boolean hilf=true;
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
-        alSonar = new ALSonar(session);
+        alTextToSpeech = new ALTextToSpeech(session);
 
-        alSonar.subscribe("Test",10000,0.0f);
-        alMemory.subscribeToEvent(
-                "SonarLeftDetected", new EventCallback() {
+        alBasicAwarenessID = alMemory.subscribeToEvent(
+                "ALTracker/trackEvent", new EventCallback() {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
-                        System.out.println("Sonar detected");
-
-
+                        System.out.println("Hallo");
                     }
                 });
     }

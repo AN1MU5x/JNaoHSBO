@@ -43,6 +43,6 @@ public class TimeOut extends Thread {
         while((delay -currTime)>0){
             currTime = System.currentTimeMillis();
         }
-        Utts.AppStop();
+        Uts.AppStop();
     }
 }

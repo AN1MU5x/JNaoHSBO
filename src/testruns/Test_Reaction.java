@@ -3,10 +3,8 @@ package testruns;
 
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.*;
-import movings_Andi_Iskar.Position;
-import utillities.Utts;
-
-
+import motion.Position;
+import utillities.Uts;
 import java.util.ArrayList;
 
 
@@ -17,11 +15,6 @@ public class Test_Reaction{
 
     private static ALSpeechRecognition alSpeechRecognition;
     private static ArrayList<String> allWords = new ArrayList<>();
-    protected static long recID;
-    private static ALMemory memory;
-    private ArrayList recWord = new ArrayList<>();
-    private int dialogCase =0;
-    boolean stop=false;
 
 
     public static void main(String[] args) throws Exception{
@@ -30,14 +23,14 @@ public class Test_Reaction{
         alSpeechRecognition.setVocabulary(names, true);
         alSpeechRecognition.pause(false);
 */
-        Utts.AppStart();
-        (new ALFaceDetection(Utts.getSESSION())).setTrackingEnabled(true);
-        alSpeechRecognition = new ALSpeechRecognition(Utts.getSESSION());
-        Utts.setNames(new ArrayList());
-        Utts.addNames("lisa");
-        Utts.addNames("andi");
-        Utts.addNames("iskar");
-        Utts.addNames("stefan");
+        Uts.AppStart();
+        (new ALFaceDetection(Uts.getSESSION())).setTrackingEnabled(true);
+        alSpeechRecognition = new ALSpeechRecognition(Uts.getSESSION());
+        Uts.setNames(new ArrayList());
+        Uts.addNames("lisa");
+        Uts.addNames("andi");
+        Uts.addNames("iskar");
+        Uts.addNames("stefan");
 
         ArrayList<String> uttWords = new ArrayList<>();
         uttWords.add("stop");
@@ -50,10 +43,9 @@ public class Test_Reaction{
 
         ArrayList<String> sentences = new ArrayList<>();
         sentences.add("wie geht es dir?");
-        sentences.add("wer bin ich?");
-        System.out.println(Utts.getNames());
+        System.out.println(Uts.getNames());
 
-        for (String m: Utts.getNames()) {
+        for (String m: Uts.getNames()) {
             allWords.add(m);
 
         }
@@ -65,36 +57,32 @@ public class Test_Reaction{
         for (String m: sentences){
             allWords.add(m);
         }
-
-
-        Thread.sleep(10);
-        memory = new ALMemory(Utts.getSESSION());
-        Test_Reaction test_reaction = new Test_Reaction();
-
-        test_reaction.run(Utts.getSESSION());
-        Utts.getAPP().run();
-        System.out.println("AFTER RUN");
-        alSpeechRecognition.unsubscribe("TestRec");
-    }
-
-
-
-
-
-    public void run(Session session) throws Exception {
-
-        System.out.println("RUN TEST");
-        alSpeechRecognition.subscribe("TestRec");
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(allWords, true);
         alSpeechRecognition.pause(false);
 
-        recID = memory.subscribeToEvent(
-                "WordRecognized", arg0 -> {
+        Thread.sleep(10);
+        Test_Reaction test_reaction = new Test_Reaction();
 
+        test_reaction.run(Uts.getSESSION());
+        Uts.getAPP().run();
+    }
+
+    protected static long recID;
+    private ALMemory memory;
+    private ArrayList recWord = new ArrayList<String>();
+    private int dialogCase =0;
+    boolean stop=false;
+
+    public void run(Session session) throws Exception {
+
+        memory = new ALMemory(session);
+        recID = memory.subscribeToEvent(
+        "WordRecognized", arg0 -> {
                     alSpeechRecognition.pause(true);
                     System.out.println("PAUSED");
-
+                    System.out.println("var stop is "+stop);
+                    System.out.println("dialogCase = "+ dialogCase);
                     //getting the last word
                     recWord = (ArrayList) arg0;
                     System.out.println(recWord);
@@ -107,77 +95,63 @@ public class Test_Reaction{
                     if(!stop) {
                         switch (dialogCase) {
                             case 0:
-                                for (String m : Utts.getNames()) {
+                                for (String m : Uts.getNames()) {
                                     //Talk to known people
                                     if (word.equals(m) && (float) recWord.get(1) > 0.5f) {
                                         try {
-                                            Utts.talk("Hallo " + word + ", wie geht es dir?");
+                                            Uts.talk("Hallo " + word + ", wie geht es dir?");
                                             Thread.sleep(100);
 
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
                                         dialogCase = 1;
-                                        System.out.println("dialogCase = "+ dialogCase);
                                     }
                                 }if(word.equals("wie geht es dir?")&&(float)recWord.get(1)>0.5f){
                                 try {
-                                    Utts.talk("Mir geht es gut und wie geht es dir?");
+                                    Uts.talk("Mir geht es gut und wie geht es dir?");
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 dialogCase = 1;
-                                System.out.println("dialogCase = "+ dialogCase);
                                 }else if(word.equals("hallo")&&(float)recWord.get(1)>0.5f){
                                     try {
                                         Position.winken();
                                     } catch (Exception e) {
                                        e.printStackTrace();
                                     }
-                                }else if(word.equals("wer bin ich?")&&(float)recWord.get(1)>0.5f){
-                                    Test_Vision tv = new Test_Vision();
-                                try {
-                                    System.out.println("FaceRec started");
-                                    tv.run(Utts.getSESSION());
-                                    Utts.getAPP().run();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
                                 }
-                            }
-
-                                break;
+                            break;
                             case 1:
                                 if (word.equals("gut")) {
                                     try {
-                                        Utts.talk("Das finde ich toll!");
+                                        Uts.talk("Das finde ich toll!");
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                     dialogCase = 0;
                                 }else if(word.equals("schlecht")){
                                     try {
-                                        Utts.talk("Das ist aber schade.");
+                                        Uts.talk("Das ist aber schade.");
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                     dialogCase = 0;
-                                    System.out.println("dialogCase = "+ dialogCase);
                                 }
                                 break;
                         }
                         if (word.equals("stop") && (float) recWord.get(1) > 0.3f) {
                             try {
-                                Utts.talk("Soll ich wirklich aufhören?");
+                                Uts.talk("Soll ich wirklich aufhören?");
                                 Thread.sleep(20);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             stop = true;
-                            System.out.println("var stop is "+stop);
 
                         } else if (word.equals("akku") && (int) recWord.get(1) > 0.5f) {
                             try {
-                                Utts.talk("Mein Akku hat noch " + (new ALBattery(Utts.getSESSION())).getBatteryCharge() + "%");
+                                Uts.talk("Mein Akku hat noch " + (new ALBattery(Uts.getSESSION())).getBatteryCharge() + "%");
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -185,26 +159,24 @@ public class Test_Reaction{
                     }else if(stop){
                         if(word.equals("ja")&&(float)recWord.get(1)>0.5f) {
                             try {
-                                Utts.talk("OK, ich höre auf!");
+                                Uts.talk("OK, ich höre auf!");
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             alSpeechRecognition.pause(false);
                             memory.unsubscribeToEvent(recID);
-                            Utts.AppStop();
+                            Uts.AppStop();
                         }else if(word.equals("nein")&&(float)recWord.get(1)>0.5f){
                             try {
-                                Utts.talk("Dann mache ich weiter!");
-                                } catch (Exception e) {
+                                Uts.talk("Dann mache ich weiter!");
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             stop=false;
-                            System.out.println("var stop is "+stop);
                         }
                     }
                     alSpeechRecognition.pause(false);
                     System.out.println("PAUSE END");
                 });
-
     }
 }

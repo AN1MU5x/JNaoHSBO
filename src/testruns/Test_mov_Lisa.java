@@ -2,7 +2,7 @@ package testruns;
 
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALRobotPosture;
-import utillities.Utts;
+import utillities.Uts;
 
 import java.util.ArrayList;
 
@@ -11,19 +11,19 @@ import java.util.ArrayList;
  */
 public class Test_mov_Lisa {
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
+        Uts.AppStart();
 
-        ALMotion anfangsschritt =new ALMotion(Utts.getSESSION());
+        ALMotion anfangsschritt =new ALMotion(Uts.getSESSION());
 
         anfangsschritt.wakeUp();
         anfangsschritt.stopMove();
 
         //Grundstellung
-        ALRobotPosture p= new ALRobotPosture(Utts.getAPP().session());
+        ALRobotPosture p= new ALRobotPosture(Uts.getAPP().session());
         p.goToPosture("Stand",0.5f);
         Thread.sleep(2000);
 
-        Utts.talk("Bitte festhalten");
+        Uts.talk("Bitte festhalten");
 
         //Erster Schritt
         ArrayList bewegung1 =new ArrayList<String>();
@@ -31,8 +31,8 @@ public class Test_mov_Lisa {
         ArrayList zeitpunkt1 =new ArrayList<Float>();
         bewegung1.add(0,"LHipRoll");
         bewegung1.add(1,"RHipRoll");
-        winkel1.add(0,Utts.DegToRad(-5));
-        winkel1.add(1,Utts.DegToRad(5));
+        winkel1.add(0,Uts.DegToRad(-5));
+        winkel1.add(1,Uts.DegToRad(5));
         zeitpunkt1.add(0,2.f);
         zeitpunkt1.add(1,2.f);
         anfangsschritt.setStiffnesses("LLeg",1.0f);
@@ -51,12 +51,12 @@ public class Test_mov_Lisa {
         bewegung2.add(3,"RHipPitch");
         bewegung2.add(4,"LAnklePitch");
         bewegung2.add(5,"RAnklePitch");
-        winkel2.add(0,Utts.DegToRad(5));
-        winkel2.add(1,Utts.DegToRad(5));
-        winkel2.add(2,Utts.DegToRad(10));
-        winkel2.add(3,Utts.DegToRad(10));
-        winkel2.add(4,Utts.DegToRad(-10));
-        winkel2.add(5,Utts.DegToRad(-10));
+        winkel2.add(0,Uts.DegToRad(5));
+        winkel2.add(1,Uts.DegToRad(5));
+        winkel2.add(2,Uts.DegToRad(10));
+        winkel2.add(3,Uts.DegToRad(10));
+        winkel2.add(4,Uts.DegToRad(-10));
+        winkel2.add(5,Uts.DegToRad(-10));
         zeitpunkt2.add(0,5.4f);
         zeitpunkt2.add(1,5.4f);
         zeitpunkt2.add(2,5.4f);
@@ -73,8 +73,8 @@ public class Test_mov_Lisa {
         ArrayList zeitpunkt3 =new ArrayList<Float>();
         bewegung3.add(0,"LHipRoll");
         bewegung3.add(1,"RHipRoll");
-        winkel3.add(0,Utts.DegToRad(10));
-        winkel3.add(1,Utts.DegToRad(10));
+        winkel3.add(0,Uts.DegToRad(10));
+        winkel3.add(1,Uts.DegToRad(10));
         zeitpunkt3.add(0,3.0f);
         zeitpunkt3.add(1,3.0f);
         anfangsschritt.setStiffnesses("LAnkleRoll",0.0f);
@@ -89,11 +89,11 @@ public class Test_mov_Lisa {
         bewegung4.add(2,"LHipPitch");
         bewegung4.add(3,"LShoulderPitch");
         bewegung4.add(4,"LKneePitch");
-        winkel4.add(0,Utts.DegToRad(13));
-        winkel4.add(1,Utts.DegToRad(10));
-        winkel4.add(2,Utts.DegToRad(-40));
-        winkel4.add(3,Utts.DegToRad(0));
-        winkel4.add(4,Utts.DegToRad(40));
+        winkel4.add(0,Uts.DegToRad(13));
+        winkel4.add(1,Uts.DegToRad(10));
+        winkel4.add(2,Uts.DegToRad(-40));
+        winkel4.add(3,Uts.DegToRad(0));
+        winkel4.add(4,Uts.DegToRad(40));
         zeitpunkt4.add(0,7f);
         zeitpunkt4.add(1,7f);
         zeitpunkt4.add(2,7f);
@@ -115,14 +115,14 @@ public class Test_mov_Lisa {
         bewegung5.add(5,"RKneePitch");
         bewegung5.add(6,"LAnklePitch");
         bewegung5.add(7,"LShoulderPitch");
-        winkel5.add(0,Utts.DegToRad(-30));
-        winkel5.add(1,Utts.DegToRad(13));
-        winkel5.add(2,Utts.DegToRad(10));
-        winkel5.add(3,Utts.DegToRad(-30));
-        winkel5.add(4,Utts.DegToRad(2));
-        winkel5.add(5,Utts.DegToRad(40));
-        winkel5.add(6,Utts.DegToRad(30));
-        winkel5.add(7,Utts.DegToRad(0));
+        winkel5.add(0,Uts.DegToRad(-30));
+        winkel5.add(1,Uts.DegToRad(13));
+        winkel5.add(2,Uts.DegToRad(10));
+        winkel5.add(3,Uts.DegToRad(-30));
+        winkel5.add(4,Uts.DegToRad(2));
+        winkel5.add(5,Uts.DegToRad(40));
+        winkel5.add(6,Uts.DegToRad(30));
+        winkel5.add(7,Uts.DegToRad(0));
         zeitpunkt5.add(0,5.f);
         zeitpunkt5.add(1,5.f);
         zeitpunkt5.add(2,5.f);
@@ -145,12 +145,12 @@ public class Test_mov_Lisa {
         bewegung6.add(3,"RKneePitch");
         bewegung6.add(4,"RAnkleRoll");
         bewegung6.add(5,"LShoulderPitch");
-        winkel6.add(0,Utts.DegToRad(25));
-        winkel6.add(1,Utts.DegToRad(17));
-        winkel6.add(2,Utts.DegToRad(17));
-        winkel6.add(3,Utts.DegToRad(35));
-        winkel6.add(4,Utts.DegToRad(2));
-        winkel6.add(5,Utts.DegToRad(0));
+        winkel6.add(0,Uts.DegToRad(25));
+        winkel6.add(1,Uts.DegToRad(17));
+        winkel6.add(2,Uts.DegToRad(17));
+        winkel6.add(3,Uts.DegToRad(35));
+        winkel6.add(4,Uts.DegToRad(2));
+        winkel6.add(5,Uts.DegToRad(0));
         zeitpunkt6.add(0,5.f);
         zeitpunkt6.add(1,5.f);
         zeitpunkt6.add(2,5.f);
@@ -175,15 +175,15 @@ public class Test_mov_Lisa {
         bewegung7.add(6,"LShoulderPitch");
         bewegung7.add(7,"LKneePitch");
         bewegung7.add(8,"LAnklePitch");
-        winkel7.add(0,Utts.DegToRad(-3));
-        winkel7.add(1,Utts.DegToRad(-30));
-        winkel7.add(2,Utts.DegToRad(30));
-        winkel7.add(3,Utts.DegToRad(-25));
-        winkel7.add(4,Utts.DegToRad(-10));
-        winkel7.add(5,Utts.DegToRad(-10));
-        winkel7.add(6,Utts.DegToRad(0));
-        winkel7.add(7,Utts.DegToRad(20));
-        winkel7.add(8,Utts.DegToRad(5));
+        winkel7.add(0,Uts.DegToRad(-3));
+        winkel7.add(1,Uts.DegToRad(-30));
+        winkel7.add(2,Uts.DegToRad(30));
+        winkel7.add(3,Uts.DegToRad(-25));
+        winkel7.add(4,Uts.DegToRad(-10));
+        winkel7.add(5,Uts.DegToRad(-10));
+        winkel7.add(6,Uts.DegToRad(0));
+        winkel7.add(7,Uts.DegToRad(20));
+        winkel7.add(8,Uts.DegToRad(5));
         zeitpunkt7.add(0,5.f);
         zeitpunkt7.add(1,5.f);
         zeitpunkt7.add(2,5.f);
@@ -210,15 +210,15 @@ public class Test_mov_Lisa {
         bewegung8.add(6,"LShoulderPitch");
         bewegung8.add(7,"LKneePitch");
         bewegung8.add(8,"LAnklePitch");
-        winkel8.add(0,Utts.DegToRad(8)); //name7.add(0,"LAnkleRoll");
-        winkel8.add(1,Utts.DegToRad(-10)); //name7.add(1,"RAnklePitch");
-        winkel8.add(2,Utts.DegToRad(30)); //name7.add(2,"RKneePitch");
-        winkel8.add(3,Utts.DegToRad(-20));//name7.add(3,"LHipPitch");
-        winkel8.add(4,Utts.DegToRad(-15));//name7.add(4,"LHipRoll");
-        winkel8.add(5,Utts.DegToRad(-10));//name7.add(5,"RHipRoll");
-        winkel8.add(6,Utts.DegToRad(0));//name7.add(6,"LShoulderPitch");
-        winkel8.add(7,Utts.DegToRad(25));//name7.add(7,"LKneePitch");
-        winkel8.add(8,Utts.DegToRad(-5));//name7.add(8,"LAnklePitch");
+        winkel8.add(0,Uts.DegToRad(8)); //name7.add(0,"LAnkleRoll");
+        winkel8.add(1,Uts.DegToRad(-10)); //name7.add(1,"RAnklePitch");
+        winkel8.add(2,Uts.DegToRad(30)); //name7.add(2,"RKneePitch");
+        winkel8.add(3,Uts.DegToRad(-20));//name7.add(3,"LHipPitch");
+        winkel8.add(4,Uts.DegToRad(-15));//name7.add(4,"LHipRoll");
+        winkel8.add(5,Uts.DegToRad(-10));//name7.add(5,"RHipRoll");
+        winkel8.add(6,Uts.DegToRad(0));//name7.add(6,"LShoulderPitch");
+        winkel8.add(7,Uts.DegToRad(25));//name7.add(7,"LKneePitch");
+        winkel8.add(8,Uts.DegToRad(-5));//name7.add(8,"LAnklePitch");
         zeitpunkt8.add(0,5.f);
         zeitpunkt8.add(1,5.f);
         zeitpunkt8.add(2,5.f);
@@ -245,15 +245,15 @@ public class Test_mov_Lisa {
         bewegung9.add(6,"LShoulderPitch");
         bewegung9.add(7,"LKneePitch");
         bewegung9.add(8,"LAnklePitch");
-        winkel9.add(0,Utts.DegToRad(8)); //name7.add(0,"LAnkleRoll");
-        winkel9.add(1,Utts.DegToRad(-10)); //name7.add(1,"RAnklePitch");
-        winkel9.add(2,Utts.DegToRad(30)); //name7.add(2,"RKneePitch");30
-        winkel9.add(3,Utts.DegToRad(-20));//name7.add(3,"LHipPitch");
-        winkel9.add(4,Utts.DegToRad(10));//name7.add(4,"LHipRoll");
-        winkel9.add(5,Utts.DegToRad(-12));//name7.add(5,"RHipRoll");
-        winkel9.add(6,Utts.DegToRad(0));//name7.add(6,"LShoulderPitch");
-        winkel9.add(7,Utts.DegToRad(32));//name7.add(7,"LKneePitch");
-        winkel9.add(8,Utts.DegToRad(-8));//name7.add(8,"LAnklePitch");
+        winkel9.add(0,Uts.DegToRad(8)); //name7.add(0,"LAnkleRoll");
+        winkel9.add(1,Uts.DegToRad(-10)); //name7.add(1,"RAnklePitch");
+        winkel9.add(2,Uts.DegToRad(30)); //name7.add(2,"RKneePitch");30
+        winkel9.add(3,Uts.DegToRad(-20));//name7.add(3,"LHipPitch");
+        winkel9.add(4,Uts.DegToRad(10));//name7.add(4,"LHipRoll");
+        winkel9.add(5,Uts.DegToRad(-12));//name7.add(5,"RHipRoll");
+        winkel9.add(6,Uts.DegToRad(0));//name7.add(6,"LShoulderPitch");
+        winkel9.add(7,Uts.DegToRad(32));//name7.add(7,"LKneePitch");
+        winkel9.add(8,Uts.DegToRad(-8));//name7.add(8,"LAnklePitch");
         zeitpunkt9.add(0,5.f);
         zeitpunkt9.add(1,5.f);
         zeitpunkt9.add(2,5.f);
@@ -265,7 +265,7 @@ public class Test_mov_Lisa {
         zeitpunkt9.add(8,5.f);
         anfangsschritt.setStiffnesses("RAnklePitch",0.4f);
         anfangsschritt.angleInterpolation(bewegung9,winkel9,zeitpunkt9,true);
-        Utts.talk("Fertig");
+        Uts.talk("Fertig");
         Thread.sleep(3000);
 
     }

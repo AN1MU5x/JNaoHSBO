@@ -1,36 +1,37 @@
-package testruns;
+package audio;
 
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
-import com.aldebaran.qi.helper.proxies.*;
+import com.aldebaran.qi.helper.proxies.ALFaceDetection;
+import com.aldebaran.qi.helper.proxies.ALMemory;
+import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
+import motion.Follow;
 import motion.Position;
 import utillities.Uts;
 import vision.FaceDetectedEvent;
 import java.util.ArrayList;
 
-/**
- * Created by Lisa on 05.04.2017.
- */
-public class Test_Speak{
-
+public class WordRecognizedEvent {
     public static void main(String[] args) throws Exception{
-
         Uts.AppStart();
 
         Thread.sleep(10);
-        Test_Speak speak = new Test_Speak();
-        speak.run(Uts.getSESSION());
+        WordRecognizedEvent cWRE = new WordRecognizedEvent();
+        cWRE.run(Uts.getSESSION());
         Uts.getAPP().run();
     }
 
     private static ALMemory alMemory;
     private static long wordID=0;
-    private ArrayList recWord = new ArrayList<String>();
+    private ArrayList recWord;
     private static ALFaceDetection alFaceDetection;
     private static ALSpeechRecognition alSpeechRecognition;
+    public static boolean hallo;
+    public static boolean wbi;
 
     public void run(Session session) throws Exception {
+        recWord = new ArrayList<String>();
         alMemory = new ALMemory(session);
         alSpeechRecognition = new ALSpeechRecognition(Uts.getSESSION());
         alFaceDetection = new ALFaceDetection(Uts.getSESSION());
@@ -38,9 +39,18 @@ public class Test_Speak{
 
         ArrayList<String> vocabulary = new ArrayList();
         vocabulary.add("hallo");
+        vocabulary.add("hi");
+        vocabulary.add("hey");
         vocabulary.add("wer bin ich");
         vocabulary.add("setz dich hin");
+        vocabulary.add("hinsetzen");
         vocabulary.add("stell dich hin");
+        vocabulary.add("hinstellen");
+        vocabulary.add("aufstehen");
+        vocabulary.add("folge mir");
+        vocabulary.add("folgen");
+        vocabulary.add("komm zu mir");
+        vocabulary.add("stop");
 
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(vocabulary,true);
@@ -50,15 +60,17 @@ public class Test_Speak{
                 "WordRecognized", new EventCallback() {
                     @Override
                     public void onEvent(Object arg0) throws InterruptedException, CallError {
-
                         recWord = (ArrayList) arg0;
                         System.out.println(recWord);
                         String word = (String) recWord.get(0);
                         System.out.println(word);
-                        float wahrscheinlichkeit = (float)recWord.get(1);
+                        float probability = (float)recWord.get(1);
+                        hallo = false;
+                        wbi = false;
 
-                        if(wahrscheinlichkeit>0.5) {
+                        if(probability>0.5) {
                             if (word.equals("<...> wer bin ich <...>")) {
+                                wbi = true;
                                 FaceDetectedEvent vision = new FaceDetectedEvent();
                                 try {
                                     vision.run(Uts.getAPP().session());
@@ -68,35 +80,47 @@ public class Test_Speak{
                                 Uts.getAPP().run();
                                 alMemory.unsubscribeToEvent(wordID);
                             }
-                            else if(word.equals("<...> hallo <...>")){
+                            else if(word.equals("<...> hallo <...>")||word.equals("<...> hi <...>")||word.equals("<...> hey <...>")){
+                                hallo = true;
+                                FaceDetectedEvent vision = new FaceDetectedEvent();
                                 try {
-                                    Uts.talk("Hallo");
+                                    vision.run(Uts.getAPP().session());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                try {
-                                    Position.winken();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                Uts.getAPP().run();
+                                alMemory.unsubscribeToEvent(wordID);
                             }
-                            else if(word.equals("<...> setz dich hin <...>")){
+                            else if(word.equals("<...> setz dich hin <...>")||word.equals("<...> hinsetzen <...>")){
                                 try {
-                                    Position.sitzenRelax();
+                                    Position.sitzen();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                alMemory.unsubscribeToEvent(wordID);
                             }
-                            else if(word.equals("<...> stell dich hin <...>")){
+                            else if(word.equals("<...> stell dich hin <...>")||word.equals("<...> hinstellen <...>")||word.equals("<...> aufstehen <...>")){
                                 try {
                                     Position.stehen();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                alMemory.unsubscribeToEvent(wordID);
                             }
+                            else if(word.equals("<...> folge mir <...>")||word.equals("<...> folgen <...>")){
+                                Follow follow = new Follow();
+                                try {
+                                    follow.run(Uts.getAPP().session());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                Uts.getAPP().run();
+                                alMemory.unsubscribeToEvent(wordID);
+                            }
+
                         }
                     }
                 });
     }
-
 }
+
