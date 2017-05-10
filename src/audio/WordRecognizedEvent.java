@@ -6,7 +6,6 @@ import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
-import motion.Follow;
 import motion.Position;
 import utillities.Uts;
 import vision.FaceDetectedEvent;
@@ -49,8 +48,9 @@ public class WordRecognizedEvent {
         vocabulary.add("aufstehen");
         vocabulary.add("folge mir");
         vocabulary.add("folgen");
-        vocabulary.add("komm zu mir");
-        vocabulary.add("stop");
+        vocabulary.add("geh in die hocke");
+        vocabulary.add("geht in die hocke");
+        vocabulary.add("winke winke");
 
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(vocabulary,true);
@@ -97,7 +97,6 @@ public class WordRecognizedEvent {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                alMemory.unsubscribeToEvent(wordID);
                             }
                             else if(word.equals("<...> stell dich hin <...>")||word.equals("<...> hinstellen <...>")||word.equals("<...> aufstehen <...>")){
                                 try {
@@ -105,17 +104,35 @@ public class WordRecognizedEvent {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                alMemory.unsubscribeToEvent(wordID);
                             }
                             else if(word.equals("<...> folge mir <...>")||word.equals("<...> folgen <...>")){
-                                Follow follow = new Follow();
+                                /*Follow follow = new Follow();
                                 try {
                                     follow.run(Uts.getAPP().session());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 Uts.getAPP().run();
-                                alMemory.unsubscribeToEvent(wordID);
+                                alMemory.unsubscribeToEvent(wordID);*/
+                                try {
+                                    Position.follow();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            else if(word.equals("<...> geh in die hocke <...>")||word.equals("<...> geht in die hocke <...>")){
+                                try {
+                                    Position.hocke();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            else if(word.equals("<...> winke winke <...>")){
+                                try {
+                                    Position.winken();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
 
                         }

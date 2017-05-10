@@ -4,6 +4,7 @@ import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALRobotPosture;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.ALTracker;
+import sensors.TactilTouchedEvent;
 import utillities.Uts;
 import java.util.ArrayList;
 
@@ -26,13 +27,17 @@ public class Position  {
     private static ArrayList array5;
     private static ArrayList array6;
     private static ArrayList array7;
-    private static boolean b = true;
+    public static boolean b;
 
     public static void follow() throws Exception{
+        b = true;
         ALTracker a = new ALTracker(Uts.getSESSION());
         while (b) {
             a.track("Face");
             a.setMode("Move");
+            TactilTouchedEvent ctte = new TactilTouchedEvent();
+            ctte.run(Uts.getSESSION());
+            Uts.getAPP().run();
         }
     }
 
