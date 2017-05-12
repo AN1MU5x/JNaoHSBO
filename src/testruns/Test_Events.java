@@ -1,14 +1,11 @@
 package testruns;
 
 import com.aldebaran.qi.CallError;
-import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.*;
-import movings_Andi_Iskar.Position;
-import utillities.Utts;
 import java.util.ArrayList;
-import static testruns.Test_Combo.getAllWords;
-import static utillities.Utts.*;
+import static utillities.Uts.*;
+import motion.Position;
 
 /**
  * Created by JNaoHSBO on 26.04.2017.

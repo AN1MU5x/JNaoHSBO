@@ -4,7 +4,7 @@ import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
-import utillities.Utts;
+import utillities.Uts;
 import java.util.ArrayList;
 
 /**
@@ -22,13 +22,13 @@ public class Test_Combo {
     }
 
     public static void main(String[] args) throws Exception {
-        Utts.AppStart();
+        Uts.AppStart();
         allWords = new ArrayList<String>();
-        Utts.setNames(new ArrayList());
-        Utts.addNames("lisa");
-        Utts.addNames("andi");
-        Utts.addNames("iskar");
-        Utts.addNames("stefan");
+        Uts.setNames(new ArrayList());
+        Uts.addNames("lisa");
+        Uts.addNames("andi");
+        Uts.addNames("iskar");
+        Uts.addNames("stefan");
 
         ArrayList<String> uttWords = new ArrayList<>();
         uttWords.add("stop");
@@ -43,7 +43,7 @@ public class Test_Combo {
         sentences.add("wie geht es dir?");
         sentences.add("wer bin ich?");
 
-        for (String m: Utts.getNames()) {
+        for (String m: Uts.getNames()) {
             allWords.add(m);
 
         }
@@ -55,11 +55,11 @@ public class Test_Combo {
         for (String m: sentences){
             allWords.add(m);
         }
-        events = new Test_Events(new ALMemory(Utts.getSESSION()), new ALMemory(Utts.getSESSION()), new ALSpeechRecognition(Utts.getSESSION()), new ALFaceDetection(Utts.getSESSION()), allWords);
-        loopEvent = new ALMemory(Utts.getSESSION());
+        events = new Test_Events(new ALMemory(Uts.getSESSION()), new ALMemory(Uts.getSESSION()), new ALSpeechRecognition(Uts.getSESSION()), new ALFaceDetection(Uts.getSESSION()), allWords);
+        loopEvent = new ALMemory(Uts.getSESSION());
         Test_Combo tc = new Test_Combo();
-        tc.run(Utts.getSESSION());
-        Utts.getAPP().run();
+        tc.run(Uts.getSESSION());
+        Uts.getAPP().run();
     }
 
     public void run(Session session) throws Exception {

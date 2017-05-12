@@ -1,10 +1,10 @@
 package utillities;
 
 import com.aldebaran.qi.helper.proxies.ALBattery;
+import com.aldebaran.qi.helper.proxies.ALVideoDevice;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -20,11 +22,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.omg.PortableServer.THREAD_POLICY_ID;
-
-import java.util.Random;
+import java.io.InputStream;
 import java.util.Timer;
-import java.util.TimerTask;
+
+
 
 /**
  * Created by Lisa on 07.04.2017.
@@ -34,18 +35,21 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static Scene scene1, scene2;
     private static Button btn1, btn2;
     private static GridPane grid1, grid2;
-    private static Label name, port, battery, temperatur, lCharge;
+    private static Label name, port, battery, temperatur, lCharge, cam;
     private static Text scenetitle1, scenetitle21, scenetitle22;
     private static HBox hbBtn1, hbBtn2;
     private static TextField userTextField, portTextField;
     private static ALBattery charge, chargeA;
-    private static String sCharge = "",sChargeA="";
+    private static String sCharge = "",sChargeA="", camID;
+    private static ALVideoDevice alVideoDevice;
+    private static ImageView iv1 = new ImageView();
 
     //Benötigt als Datenaustausch zwichen den Threads
     public static String sBattery = "Batterie";
     public static String sTemperatur = "Temp";
     private static int iTmp = 0;
     private Timer t1 = new Timer();
+    private static Image camImage;
 
     public static void main(String[] args) throws Exception{
         window1();
@@ -64,7 +68,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         primaryStage.setScene(scene1);
         primaryStage.show();
 
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(0.2f), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
@@ -84,19 +88,18 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
             Uts.AppStart(userTextField.getText(),portTextField.getText());
             try {
                 Thread.sleep(1000);
+                alVideoDevice = new ALVideoDevice(Uts.getSESSION());
+                camID = alVideoDevice.subscribeCamera("Test", 0, 2, 15, 10);
                 charge = new ALBattery(Uts.getSESSION());
                 sCharge = ""+(charge.getBatteryCharge());
                 System.out.println("\n"+sCharge+"\n");
+                camImage = new Image((InputStream)alVideoDevice.getImagesRemote(camID));
                 btn2.setOnAction(this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             window.setScene(scene2);
             window.centerOnScreen();
-
-
-        }else if(event.getSource()==btn2){
-            System.exit(0);
         }
     }
     public static void window1(){
@@ -153,6 +156,10 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         temperatur = new Label("Temperatur");
         grid2.add(temperatur,0,2);
 
+        //Kamera
+        cam = new Label("Kamera");
+        grid2.add(cam, 0, 3);
+
         //Programm beenden
         btn2 = new Button("Schließen");
         hbBtn2 = new HBox(10);
@@ -162,10 +169,12 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
 
     }
 
+
+
     public static synchronized void aktualisieren()throws Exception{
         iTmp++;
         chargeA = new ALBattery(Uts.getSESSION());
-        sChargeA = ""+(chargeA.getBatteryCharge());
+        sChargeA = ""+(chargeA.getBatteryCharge())+"%";
         System.out.println("\n"+sChargeA+"\n");
         lCharge.setText(sChargeA);
 
