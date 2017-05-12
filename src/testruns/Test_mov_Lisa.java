@@ -6,9 +6,6 @@ import utillities.Uts;
 
 import java.util.ArrayList;
 
-/**
- * Created by Lisa on 26.04.2017.
- */
 public class Test_mov_Lisa {
     public static void main(String[] args) throws Exception {
         Uts.AppStart();

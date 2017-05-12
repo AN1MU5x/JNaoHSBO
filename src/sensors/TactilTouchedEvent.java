@@ -21,7 +21,7 @@ public class TactilTouchedEvent {
                     public void onEvent(Float arg0) throws InterruptedException, CallError {
                         System.out.println("Front Tactil Touched");
                         //Hier Anweisung
-                        Position.b = false;
+                        Position.bFollow = false;
                     }
                 });
         memory.subscribeToEvent(
