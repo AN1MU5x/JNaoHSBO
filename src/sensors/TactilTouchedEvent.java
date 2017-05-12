@@ -1,5 +1,6 @@
 package sensors;
 
+import audio.WordRecognizedEvent;
 import com.aldebaran.qi.CallError;
 import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
@@ -21,7 +22,8 @@ public class TactilTouchedEvent {
                     public void onEvent(Float arg0) throws InterruptedException, CallError {
                         System.out.println("Front Tactil Touched");
                         //Hier Anweisung
-                        Position.bFollow = false;
+                        Position.bFollow = false;//Probeweise zum stopen der follow Funktion
+
                     }
                 });
         memory.subscribeToEvent(
@@ -36,6 +38,14 @@ public class TactilTouchedEvent {
                     public void onEvent(Float arg0) throws InterruptedException, CallError {
                         System.out.println("Rear Tactil Touched");
                         //Hier Anweisung
+                        if(WordRecognizedEvent.iFunktion==3){
+                            try {
+                                Position.stehen();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
                     }
                 });
     }

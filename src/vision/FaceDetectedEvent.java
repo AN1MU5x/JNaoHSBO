@@ -19,13 +19,14 @@ public class FaceDetectedEvent {
     ALTextToSpeech alTextToSpeech;
     ALFaceDetection alFaceDetection;
     private boolean hilf1=true;
+    private int iLocked = 0;
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
         alTextToSpeech = new ALTextToSpeech(session);
         alFaceDetection = new ALFaceDetection(session);
 
-        alFaceDetection.subscribe("Test",1,0.0f);
+        alFaceDetection.subscribe("Test",100000,0.0f);
         alMemory.subscribeToEvent(
                 "FaceDetected", new EventCallback() {
                     @Override
@@ -84,6 +85,17 @@ public class FaceDetectedEvent {
                                     e.printStackTrace();
                                 }
                                 alFaceDetection.unsubscribe("Test");
+                            }
+                        }
+                        else if(WordRecognizedEvent.iFunktion==4){
+                            if (faceLabel.equals("Andi")) {
+                                try {
+                                    Position.follow();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                alFaceDetection.unsubscribe("Test");
+
                             }
                         }
                     }
