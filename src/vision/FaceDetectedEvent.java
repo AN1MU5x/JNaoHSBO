@@ -37,7 +37,7 @@ public class FaceDetectedEvent {
                         ArrayList extraInfo = (ArrayList) (faceInfo.get(1));
                         String faceLabel = (String) (extraInfo.get(2));
                         System.out.println(faceLabel);
-                        if(WordRecognizedEvent.wbi) {
+                        if(WordRecognizedEvent.iFunktion==1) {
                             if (faceLabel.equals("Koch") && hilf1) {
                                 hilf1 = false;
                                 alTextToSpeech.say("Herr " + faceLabel);
@@ -54,7 +54,7 @@ public class FaceDetectedEvent {
                                 alFaceDetection.unsubscribe("Test");
                             }
                         }
-                        else if(WordRecognizedEvent.hallo){
+                        else if(WordRecognizedEvent.iFunktion==2){
                             if (faceLabel.equals("Koch") && hilf1) {
                                 hilf1 = false;
                                 alTextToSpeech.say("Hallo Herr " + faceLabel);

@@ -24,8 +24,6 @@ public class MovementDetectionEvent {
                     public void onEvent(Object o) throws InterruptedException, CallError {
                         System.out.println("Movement detected");
                         //Hier Anweisung
-                        alMovementDetection.unsubscribe("Test");
-
                     }
                 });
     }

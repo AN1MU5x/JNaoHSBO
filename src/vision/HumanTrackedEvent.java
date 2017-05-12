@@ -25,7 +25,6 @@ public class HumanTrackedEvent {
                     public void onEvent(Object o) throws InterruptedException, CallError {
                         System.out.println("ALBasicAwareness/HumanTrackedEvent");
                         //Hier Anweisung
-                        alMemory.unsubscribeToEvent(alBasicAwarenessID);
                     }
                 });
     }
