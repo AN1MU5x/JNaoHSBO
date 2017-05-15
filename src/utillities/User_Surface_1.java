@@ -2,6 +2,7 @@ package utillities;
 
 import com.aldebaran.qi.helper.proxies.ALBattery;
 import com.aldebaran.qi.helper.proxies.ALVideoDevice;
+import com.aldebaran.qi.helper.proxies.ALVideoRecorder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -17,6 +18,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -39,10 +43,13 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static Text scenetitle1, scenetitle21, scenetitle22;
     private static HBox hbBtn1, hbBtn2;
     private static TextField userTextField, portTextField;
+    private static MediaView mediaView;
     private static ALBattery charge, chargeA;
-    private static String sCharge = "",sChargeA="", camID;
+    private static String sCharge = "",sChargeA="";
     private static ALVideoDevice alVideoDevice;
-    private static ImageView iv1 = new ImageView();
+    private static ALVideoRecorder recorder;
+    private static MediaPlayer mediaPlayer;
+    private static Timeline fiveSecondsWonder;
 
     //Benötigt als Datenaustausch zwichen den Threads
     public static String sBattery = "Batterie";
@@ -53,7 +60,6 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
 
     public static void main(String[] args) throws Exception{
         window1();
-        window2();
 
         Application.launch(args);
     }
@@ -68,19 +74,14 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         primaryStage.setScene(scene1);
         primaryStage.show();
 
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(0.2f), new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    aktualisieren();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(0.2f), event -> {
+            try {
+                aktualisieren();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
-        fiveSecondsWonder.play();
     }
     @Override
     public void handle(ActionEvent event){
@@ -88,12 +89,16 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
             Uts.AppStart(userTextField.getText(),portTextField.getText());
             try {
                 Thread.sleep(1000);
-                alVideoDevice = new ALVideoDevice(Uts.getSESSION());
-                camID = alVideoDevice.subscribeCamera("Test", 0, 2, 15, 10);
+                System.out.println("start recording");
+                recorder = new ALVideoRecorder(Uts.getSESSION());
+                recorder.startRecording("/home/nao/recordings/cameras/stream", "VideoStream");
+                mediaPlayer = new MediaPlayer(new Media("/home/nao/recordings/cameras/stream/VideoStream.avi"));
+                mediaView = new MediaView(mediaPlayer);
                 charge = new ALBattery(Uts.getSESSION());
                 sCharge = ""+(charge.getBatteryCharge());
                 System.out.println("\n"+sCharge+"\n");
-                camImage = new Image((InputStream)alVideoDevice.getImagesRemote(camID));
+                window2();
+                fiveSecondsWonder.play();
                 btn2.setOnAction(this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -159,6 +164,8 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         //Kamera
         cam = new Label("Kamera");
         grid2.add(cam, 0, 3);
+        grid2.add(mediaView, 1, 3);
+
 
         //Programm beenden
         btn2 = new Button("Schließen");
