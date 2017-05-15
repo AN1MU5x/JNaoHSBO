@@ -3,6 +3,7 @@ package utillities;
 import com.aldebaran.qi.helper.proxies.ALBattery;
 import com.aldebaran.qi.helper.proxies.ALVideoDevice;
 import com.aldebaran.qi.helper.proxies.ALVideoRecorder;
+import com.sun.media.jfxmedia.control.VideoDataBuffer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -18,7 +19,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
@@ -26,7 +26,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import javax.imageio.stream.ImageInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.List;
 import java.util.Timer;
 
 
@@ -43,13 +48,11 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static Text scenetitle1, scenetitle21, scenetitle22;
     private static HBox hbBtn1, hbBtn2;
     private static TextField userTextField, portTextField;
-    private static MediaView mediaView;
     private static ALBattery charge, chargeA;
-    private static String sCharge = "",sChargeA="";
     private static ALVideoDevice alVideoDevice;
-    private static ALVideoRecorder recorder;
-    private static MediaPlayer mediaPlayer;
+    private static String sCharge = "",sChargeA="", subscriberID;
     private static Timeline fiveSecondsWonder;
+    private static ImageView imageView;
 
     //Benötigt als Datenaustausch zwichen den Threads
     public static String sBattery = "Batterie";
@@ -89,11 +92,14 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
             Uts.AppStart(userTextField.getText(),portTextField.getText());
             try {
                 Thread.sleep(1000);
-                System.out.println("start recording");
-                recorder = new ALVideoRecorder(Uts.getSESSION());
-                recorder.startRecording("/home/nao/recordings/cameras/stream", "VideoStream");
-                mediaPlayer = new MediaPlayer(new Media("/home/nao/recordings/cameras/stream/VideoStream.avi"));
-                mediaView = new MediaView(mediaPlayer);
+                subscriberID = alVideoDevice.subscribeCamera("Test", 0, 2, 0, 5);
+                List<Object> list = (List<Object>) alVideoDevice.getImageRemote(subscriberID);
+                ByteBuffer buffer = (ByteBuffer)list.get(6);
+                ImageInputStream imageInputStream = (ImageInputStream)list.get(6);
+                Image image = new Image((InputStream) imageInputStream);
+                imageView = new ImageView(image);
+
+               // camImage = new Image();
                 charge = new ALBattery(Uts.getSESSION());
                 sCharge = ""+(charge.getBatteryCharge());
                 System.out.println("\n"+sCharge+"\n");
@@ -164,7 +170,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         //Kamera
         cam = new Label("Kamera");
         grid2.add(cam, 0, 3);
-        grid2.add(mediaView, 1, 3);
+        grid2.add(imageView, 1, 3);
 
 
         //Programm beenden
@@ -180,6 +186,9 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
 
     public static synchronized void aktualisieren()throws Exception{
         iTmp++;
+
+        camImage = (Image) alVideoDevice.getImageRemote(subscriberID);
+        alVideoDevice.releaseImage(subscriberID);
         chargeA = new ALBattery(Uts.getSESSION());
         sChargeA = ""+(chargeA.getBatteryCharge())+"%";
         System.out.println("\n"+sChargeA+"\n");
