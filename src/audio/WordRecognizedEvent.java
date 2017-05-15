@@ -63,7 +63,11 @@ public class WordRecognizedEvent {
         vocabulary.add("hinlegen");//iDialog=2
         vocabulary.add("Bauch");//iFunktion=3
         vocabulary.add("Rücken");
-        vocabulary.add("such andi");
+        vocabulary.add("such andi");//iFunktion=4
+        vocabulary.add("such stefan");//iFunktion=5
+        vocabulary.add("such iskar");//iFunktion=6
+        vocabulary.add("such lisa");//iFunktion=7
+        vocabulary.add("stop");
 
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(vocabulary,true);
@@ -212,17 +216,23 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> such andi <...>")&&!bLocked){
-                                //Funktion noch in Bearbeitung
                                 bLocked = true;
                                 iFunktion = 4;
-                                FaceDetectedEvent vision = new FaceDetectedEvent();
-                                try {
-                                    vision.run(Uts.getAPP().session());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                Uts.getAPP().run();
-                                alMemory.unsubscribeToEvent(wordID);
+
+                            }
+                            else if(word.equals("<...> such stefan <...>")&&!bLocked) {
+                                bLocked = true;
+                                iFunktion = 5;
+
+                            }
+                            else if(word.equals("<...> such iskar <...>")&&!bLocked) {
+                                bLocked = true;
+                                iFunktion = 6;
+
+                            }
+                            else if(word.equals("<...> such lisa <...>")&&!bLocked) {
+                                bLocked = true;
+                                iFunktion = 7;
 
                             }
                         }
