@@ -8,6 +8,7 @@ import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 import motion.Position;
+import utillities.Uts;
 
 import java.util.ArrayList;
 /**
@@ -19,13 +20,14 @@ public class FaceDetectedEvent {
     ALTextToSpeech alTextToSpeech;
     ALFaceDetection alFaceDetection;
     private boolean hilf1=true;
+    private int iLocked = 0;
 
     public void run(Session session) throws Exception {
         alMemory = new ALMemory(session);
         alTextToSpeech = new ALTextToSpeech(session);
         alFaceDetection = new ALFaceDetection(session);
 
-        alFaceDetection.subscribe("Test",1,0.0f);
+        alFaceDetection.subscribe("Test",1000,0.0f);
         alMemory.subscribeToEvent(
                 "FaceDetected", new EventCallback() {
                     @Override
@@ -37,6 +39,7 @@ public class FaceDetectedEvent {
                         ArrayList extraInfo = (ArrayList) (faceInfo.get(1));
                         String faceLabel = (String) (extraInfo.get(2));
                         System.out.println(faceLabel);
+                        //Wer bin ich
                         if(WordRecognizedEvent.iFunktion==1) {
                             if (faceLabel.equals("Koch") && hilf1) {
                                 hilf1 = false;
@@ -54,6 +57,7 @@ public class FaceDetectedEvent {
                                 alFaceDetection.unsubscribe("Test");
                             }
                         }
+                        //Hallo
                         else if(WordRecognizedEvent.iFunktion==2){
                             if (faceLabel.equals("Koch") && hilf1) {
                                 hilf1 = false;
