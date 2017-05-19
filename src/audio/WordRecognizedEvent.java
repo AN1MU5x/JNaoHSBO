@@ -28,7 +28,6 @@ public class WordRecognizedEvent {
     public static int iFunktion = 0;
     private static boolean bLocked;
     private static ALMemory alMemory;
-    private static long wordID=0;
     private ArrayList recWord;
     private static ALFaceDetection alFaceDetection;
     private static ALSpeechRecognition alSpeechRecognition;
