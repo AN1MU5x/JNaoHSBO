@@ -12,8 +12,15 @@ import utillities.Uts;
 import vision.FaceDetectedEvent;
 import java.util.ArrayList;
 
+//Aufgaben:
 //stop Funktion
-//Reboot Sprachmodul
+//folge mir
+//komm zu mir
+//Bauch
+//such andi
+//such lisa
+//such iskar
+//such stefan
 
 public class WordRecognizedEvent {
 
@@ -35,6 +42,7 @@ public class WordRecognizedEvent {
         alFaceDetection = new ALFaceDetection(Uts.getSESSION());
         //Setzt Gesichtsverfolgung
         alFaceDetection.setTrackingEnabled(true);
+        alSpeechRecognition.setLanguage("German");
 
         ArrayList<String> vocabulary = new ArrayList();
         vocabulary.add("hallo");//iFunktion=2
@@ -72,8 +80,8 @@ public class WordRecognizedEvent {
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(vocabulary,true);
         alSpeechRecognition.pause(false);
-
-        wordID = alMemory.subscribeToEvent(
+        alSpeechRecognition.subscribe("Word",1000,0.0f);
+        alMemory.subscribeToEvent(
                 "WordRecognized", new EventCallback() {
                     @Override
                     public void onEvent(Object arg0) throws InterruptedException, CallError {
@@ -96,7 +104,7 @@ public class WordRecognizedEvent {
                                     e.printStackTrace();
                                 }
                                 Uts.getAPP().run();
-                                alMemory.unsubscribeToEvent(wordID);
+                                alSpeechRecognition.unsubscribe("Word");
                             }
                             else if(word.equals("<...> hallo <...>")&&!bLocked||word.equals("<...> hi <...>")&&!bLocked||word.equals("<...> hey <...>")&&!bLocked){
                                 bLocked = true;
@@ -108,7 +116,7 @@ public class WordRecognizedEvent {
                                     e.printStackTrace();
                                 }
                                 Uts.getAPP().run();
-                                alMemory.unsubscribeToEvent(wordID);
+                                alSpeechRecognition.unsubscribe("Word");
                             }
                             else if(word.equals("<...> setz dich hin <...>")&&!bLocked||word.equals("<...> hinsetzen <...>")&&!bLocked){
                                 bLocked = true;
@@ -148,7 +156,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> komm zu mir <...>")&&!bLocked){
-                               //Funktion noch nicht vorhanden
+                               //Funktion noch in Bearbeitung
                                 bLocked = true;
                             }
                             else if(word.equals("<...> wie geht es dir <...>")&&!bLocked){
@@ -190,7 +198,7 @@ public class WordRecognizedEvent {
                             else if(word.equals("<...> Bauch <...>")&&iDialog==2&&!bLocked){
                                 bLocked = true;
                                 iDialog = 0;
-                                //Noch zu bearbeiten
+                                //Funktion noch in Bearbeitung
                                 try {
                                     Position.liegenBauch();
                                 } catch (Exception e) {
@@ -204,7 +212,7 @@ public class WordRecognizedEvent {
                                     e.printStackTrace();
                                 }
                                 Uts.getAPP().run();
-                                alMemory.unsubscribeToEvent(wordID);
+                                alSpeechRecognition.unsubscribe("Word");
                             }
                             else if(word.equals("<...> Rücken <...>")&&iDialog==2&&!bLocked){
                                 bLocked = true;
@@ -218,21 +226,22 @@ public class WordRecognizedEvent {
                             else if(word.equals("<...> such andi <...>")&&!bLocked){
                                 bLocked = true;
                                 iFunktion = 4;
-
+                                //Funktion noch in Bearbeitung
                             }
                             else if(word.equals("<...> such stefan <...>")&&!bLocked) {
                                 bLocked = true;
                                 iFunktion = 5;
-
+                                //Funktion noch in Bearbeitung
                             }
                             else if(word.equals("<...> such iskar <...>")&&!bLocked) {
                                 bLocked = true;
                                 iFunktion = 6;
-
+                                //Funktion noch in Bearbeitung
                             }
                             else if(word.equals("<...> such lisa <...>")&&!bLocked) {
                                 bLocked = true;
                                 iFunktion = 7;
+                                //Funktion noch in Bearbeitung
 
                             }
                         }

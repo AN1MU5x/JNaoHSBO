@@ -1,9 +1,6 @@
 import audio.WordRecognizedEvent;
 import utillities.Uts;
 
-/**
- * Created by Lisa on 03.04.2017.
- */
 public class Main {
     public static void main(String[] args) throws Exception {
         Uts.AppStart();
