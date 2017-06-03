@@ -24,7 +24,7 @@ public class FaceDetectedEvent {
         alTextToSpeech = new ALTextToSpeech(session);
         alFaceDetection = new ALFaceDetection(session);
 
-        alFaceDetection.subscribe("Face",1000,0.0f);
+        alFaceDetection.subscribe("Face",10000,0.0f);
         alMemory.subscribeToEvent(
                 "FaceDetected", new EventCallback() {
                     @Override

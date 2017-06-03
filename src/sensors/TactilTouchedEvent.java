@@ -39,6 +39,7 @@ public class TactilTouchedEvent {
                         System.out.println("Rear Tactil Touched");
                         //Hier Anweisung
                         if(WordRecognizedEvent.iFunktion==3){
+                            WordRecognizedEvent.iFunktion=0;
                             try {
                                 Position.stehen();
                             } catch (Exception e) {

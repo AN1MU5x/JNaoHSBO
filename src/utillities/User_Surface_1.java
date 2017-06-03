@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -21,7 +24,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.omg.PortableServer.THREAD_POLICY_ID;
+import vision.VisionCamera;
 
+import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +45,9 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static TextField userTextField, portTextField;
     private static ALBattery charge, chargeA;
     private static String sCharge = "",sChargeA="";
+    private static VisionCamera oVision;
+    private static BufferedImage oLiveVideoBuffered;
+    private static ImageView imgView;
 
     //Benötigt als Datenaustausch zwichen den Threads
     public static String sBattery = "Batterie";
@@ -84,6 +92,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
             Uts.AppStart(userTextField.getText(),portTextField.getText());
             try {
                 Thread.sleep(1000);
+                oVision = new VisionCamera();
                 charge = new ALBattery(Uts.getSESSION());
                 sCharge = ""+(charge.getBatteryCharge());
                 System.out.println("\n"+sCharge+"\n");
@@ -153,6 +162,11 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         temperatur = new Label("Temperatur");
         grid2.add(temperatur,0,2);
 
+        //Live Video
+        oLiveVideoBuffered = new BufferedImage(400,400, BufferedImage.TYPE_INT_RGB);
+        imgView = new ImageView(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
+        grid2.add(imgView, 2,2);
+
         //Programm beenden
         btn2 = new Button("Schließen");
         hbBtn2 = new HBox(10);
@@ -169,6 +183,12 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         System.out.println("\n"+sChargeA+"\n");
         lCharge.setText(sChargeA);
 
+        if(Uts.getSESSION() != null) {
+            oLiveVideoBuffered = oVision.getImage();
+            imgView.setImage(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
+            imgView.setScaleX(3);
+            imgView.setScaleY(3);
+        }
 
     }
 }
