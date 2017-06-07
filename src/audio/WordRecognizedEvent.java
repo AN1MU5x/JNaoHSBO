@@ -12,6 +12,7 @@ import motion.Position;
 import sensors.TactilTouchedEvent;
 //Klasse für verschiedene kleine Methoden wie z.B. AppStart();
 import utillities.Uts;
+//Klasse für die Gesichtserkennung
 import vision.FaceDetectedEvent;
 import java.util.ArrayList;
 
@@ -37,12 +38,13 @@ public class WordRecognizedEvent {
     private static ALSpeechRecognition alSpeechRecognition;
     //Setzt die Dialoge, false = 0 und true > 0
     private int iDialog = 0;
+    private long speechID = 0;
 
     public void run(Session session) throws Exception {
         recWord = new ArrayList<String>();
         alMemory = new ALMemory(session);
-        alSpeechRecognition = new ALSpeechRecognition(Uts.getSESSION());
-        alFaceDetection = new ALFaceDetection(Uts.getSESSION());
+        alSpeechRecognition = new ALSpeechRecognition(session);
+        alFaceDetection = new ALFaceDetection(session);
         //Setzt Gesichtsverfolgung
         alFaceDetection.setTrackingEnabled(true);
         //Spracheinstellung
@@ -86,7 +88,7 @@ public class WordRecognizedEvent {
         alSpeechRecognition.setVocabulary(vocabulary,true);
         alSpeechRecognition.pause(false);
         alSpeechRecognition.subscribe("Word",1000,0.0f);
-        alMemory.subscribeToEvent(
+        speechID = alMemory.subscribeToEvent(
                 "WordRecognized", new EventCallback() {
                     @Override
                     public void onEvent(Object arg0) throws InterruptedException, CallError {
@@ -104,29 +106,31 @@ public class WordRecognizedEvent {
                                 iFunktion = 1;
                                 FaceDetectedEvent vision = new FaceDetectedEvent();
                                 try {
-                                    vision.run(Uts.getAPP().session());
+                                    vision.run(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                Uts.getAPP().run();
+                                alSpeechRecognition.wait(speechID);
                                 alSpeechRecognition.unsubscribe("Word");
+
                             }
                             else if(word.equals("<...> hallo <...>")&&!bLocked||word.equals("<...> hi <...>")&&!bLocked||word.equals("<...> hey <...>")&&!bLocked){
                                 bLocked = true;
                                 iFunktion = 2;
                                 FaceDetectedEvent vision = new FaceDetectedEvent();
                                 try {
-                                    vision.run(Uts.getAPP().session());
+                                    vision.run(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                Uts.getAPP().run();
+
                                 alSpeechRecognition.unsubscribe("Word");
+
                             }
                             else if(word.equals("<...> setz dich hin <...>")&&!bLocked||word.equals("<...> hinsetzen <...>")&&!bLocked){
                                 bLocked = true;
                                 try {
-                                    Position.sitzen();
+                                    Position.sitzen(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -134,7 +138,7 @@ public class WordRecognizedEvent {
                             else if(word.equals("<...> stell dich hin <...>")&&!bLocked||word.equals("<...> hinstellen <...>")&&!bLocked||word.equals("<...> aufstehen <...>")&&!bLocked){
                                 bLocked = true;
                                 try {
-                                    Position.stehen();
+                                    Position.stehen(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -147,7 +151,7 @@ public class WordRecognizedEvent {
                             else if(word.equals("<...> geh in die hocke <...>")&&!bLocked||word.equals("<...> geht in die hocke <...>")&&!bLocked||word.equals("<...> Hocken <...>")&&!bLocked){
                                 bLocked = true;
                                 try {
-                                    Position.hocke();
+                                    Position.hocke(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -155,7 +159,7 @@ public class WordRecognizedEvent {
                             else if(word.equals("<...> winke winke <...>")&&!bLocked||word.equals("<...> Winken <...>")&&!bLocked){
                                 bLocked = true;
                                 try {
-                                    Position.winken();
+                                    Position.winken(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -204,25 +208,26 @@ public class WordRecognizedEvent {
                                 bLocked = true;
                                 iDialog = 0;
                                 try {
-                                    Position.liegenBauch();
+                                    Position.liegenBauch(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 iFunktion = 3;
                                 TactilTouchedEvent tactilTouchedEvent = new TactilTouchedEvent();
                                 try {
-                                    tactilTouchedEvent.run(Uts.getAPP().session());
+                                    tactilTouchedEvent.run(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 Uts.getAPP().run();
                                 alSpeechRecognition.unsubscribe("Word");
+
                             }
                             else if(word.equals("<...> Rücken <...>")&&iDialog==2&&!bLocked){
                                 bLocked = true;
                                 iDialog = 0;
                                 try {
-                                    Position.liegenRuecken();
+                                    Position.liegenRuecken(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

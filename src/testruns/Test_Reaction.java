@@ -116,7 +116,7 @@ public class Test_Reaction{
                                 dialogCase = 1;
                                 }else if(word.equals("hallo")&&(float)recWord.get(1)>0.5f){
                                     try {
-                                        Position.winken();
+                                        Position.winken(session);
                                     } catch (Exception e) {
                                        e.printStackTrace();
                                     }

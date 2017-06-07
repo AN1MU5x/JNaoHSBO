@@ -98,7 +98,7 @@ public class Test_Test_üTest_Andi {
                             }
                             if(wort.equals("<...> setz dich hin <...>")){
                                 try {
-                                    Position.winken();
+                                    Position.winken(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

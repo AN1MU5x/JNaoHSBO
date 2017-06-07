@@ -36,7 +36,7 @@ public class Test_Stand {
                 System.out.println("Erkannt");
                 try {
                     Uts.talk("Na gut, unterhalten wir uns");
-                    Position.sitzenRelax();
+                    Position.sitzenRelax(session);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
