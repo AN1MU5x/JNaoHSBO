@@ -62,16 +62,12 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     }
 
     public static void main(String[] args) throws Exception{
-        window1();
-        window2();
-
         Application.launch(args);
     }
     @Override
     public void start(Stage primaryStage)throws Exception {
 
         window1();
-        window2();
         window = primaryStage;
         window.setTitle("Nao");
         window.centerOnScreen();
@@ -81,15 +77,11 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         primaryStage.setScene(scene1);
         primaryStage.show();
 
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(0.5), new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    aktualisieren();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
+            try {
+                aktualisieren();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
@@ -104,7 +96,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
                 oVision = new VisionCamera();
                 charge = new ALBattery(Uts.getSESSION());
                 sCharge = ""+(charge.getBatteryCharge());
-                System.out.println("\n"+sCharge+"\n");
+                window2();
                 btn2.setOnAction(this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -178,6 +170,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         oLiveVideoBuffered = new BufferedImage(400,400, BufferedImage.TYPE_INT_RGB);
         imgView = new ImageView(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
       //  grid2.add(imgView, 0,1);
+        box.setAlignment(Pos.CENTER);
         box.getChildren().add(imgView);
 
         //Programm beenden
