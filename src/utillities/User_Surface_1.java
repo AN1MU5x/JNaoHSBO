@@ -1,12 +1,11 @@
 package utillities;
 
 import com.aldebaran.qi.helper.proxies.ALBattery;
-import com.aldebaran.qi.helper.proxies.ALVideoDevice;
-import com.aldebaran.qi.helper.proxies.ALVideoRecorder;
-import com.sun.media.jfxmedia.control.VideoDataBuffer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,22 +18,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.omg.PortableServer.THREAD_POLICY_ID;
+import vision.VisionCamera;
 
-import javax.imageio.stream.ImageInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.List;
+import java.awt.image.BufferedImage;
+import java.util.Random;
 import java.util.Timer;
-
-
+import java.util.TimerTask;
 
 /**
  * Created by Lisa on 07.04.2017.
@@ -44,25 +39,25 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static Scene scene1, scene2;
     private static Button btn1, btn2;
     private static GridPane grid1, grid2;
-    private static Label name, port, battery, temperatur, lCharge, cam;
+    private static Label name, port, battery, temperatur, lCharge;
     private static Text scenetitle1, scenetitle21, scenetitle22;
     private static HBox hbBtn1, hbBtn2;
     private static TextField userTextField, portTextField;
     private static ALBattery charge, chargeA;
-    private static ALVideoDevice alVideoDevice;
-    private static String sCharge = "",sChargeA="", subscriberID;
-    private static Timeline fiveSecondsWonder;
-    private static ImageView imageView;
+    private static String sCharge = "",sChargeA="";
+    private static VisionCamera oVision;
+    private static BufferedImage oLiveVideoBuffered;
+    private static ImageView imgView;
 
     //Benötigt als Datenaustausch zwichen den Threads
     public static String sBattery = "Batterie";
     public static String sTemperatur = "Temp";
     private static int iTmp = 0;
     private Timer t1 = new Timer();
-    private static Image camImage;
 
     public static void main(String[] args) throws Exception{
         window1();
+        window2();
 
         Application.launch(args);
     }
@@ -77,14 +72,19 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         primaryStage.setScene(scene1);
         primaryStage.show();
 
-        fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(0.2f), event -> {
-            try {
-                aktualisieren();
-            } catch (Exception e) {
-                e.printStackTrace();
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    aktualisieren();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
     }
     @Override
     public void handle(ActionEvent event){
@@ -92,25 +92,20 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
             Uts.AppStart(userTextField.getText(),portTextField.getText());
             try {
                 Thread.sleep(1000);
-                subscriberID = alVideoDevice.subscribeCamera("Test", 0, 2, 0, 5);
-                List<Object> list = (List<Object>) alVideoDevice.getImageRemote(subscriberID);
-                ByteBuffer buffer = (ByteBuffer)list.get(6);
-                ImageInputStream imageInputStream = (ImageInputStream)list.get(6);
-                Image image = new Image((InputStream) imageInputStream);
-                imageView = new ImageView(image);
-
-               // camImage = new Image();
+                oVision = new VisionCamera();
                 charge = new ALBattery(Uts.getSESSION());
                 sCharge = ""+(charge.getBatteryCharge());
                 System.out.println("\n"+sCharge+"\n");
-                window2();
-                fiveSecondsWonder.play();
                 btn2.setOnAction(this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             window.setScene(scene2);
             window.centerOnScreen();
+
+
+        }else if(event.getSource()==btn2){
+            System.exit(0);
         }
     }
     public static void window1(){
@@ -167,11 +162,10 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         temperatur = new Label("Temperatur");
         grid2.add(temperatur,0,2);
 
-        //Kamera
-        cam = new Label("Kamera");
-        grid2.add(cam, 0, 3);
-        grid2.add(imageView, 1, 3);
-
+        //Live Video
+        oLiveVideoBuffered = new BufferedImage(400,400, BufferedImage.TYPE_INT_RGB);
+        imgView = new ImageView(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
+        grid2.add(imgView, 2,2);
 
         //Programm beenden
         btn2 = new Button("Schließen");
@@ -182,18 +176,19 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
 
     }
 
-
-
     public static synchronized void aktualisieren()throws Exception{
         iTmp++;
-
-        camImage = (Image) alVideoDevice.getImageRemote(subscriberID);
-        alVideoDevice.releaseImage(subscriberID);
         chargeA = new ALBattery(Uts.getSESSION());
-        sChargeA = ""+(chargeA.getBatteryCharge())+"%";
+        sChargeA = ""+(chargeA.getBatteryCharge());
         System.out.println("\n"+sChargeA+"\n");
         lCharge.setText(sChargeA);
 
+        if(Uts.getSESSION() != null) {
+            oLiveVideoBuffered = oVision.getImage();
+            imgView.setImage(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
+            imgView.setScaleX(3);
+            imgView.setScaleY(3);
+        }
 
     }
 }

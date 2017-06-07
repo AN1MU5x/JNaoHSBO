@@ -6,8 +6,11 @@ import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
+//Klasse für alle Bewegungen
 import motion.Position;
+//Klasse für den Kopfsensor
 import sensors.TactilTouchedEvent;
+//Klasse für verschiedene kleine Methoden wie z.B. AppStart();
 import utillities.Uts;
 import vision.FaceDetectedEvent;
 import java.util.ArrayList;
@@ -24,15 +27,15 @@ import java.util.ArrayList;
 
 public class WordRecognizedEvent {
 
-    //Funktions Trigger, false = 0, Funktion true > 0
+    //Setzt Funktionen, false = 0 und true > 0
     public static int iFunktion = 0;
+    //Boolean Variable zum sperren der Funktionen gegeneinander
     private static boolean bLocked;
     private static ALMemory alMemory;
-    private static long wordID=0;
     private ArrayList recWord;
     private static ALFaceDetection alFaceDetection;
     private static ALSpeechRecognition alSpeechRecognition;
-    //Dialog Trigger, false = 0, Dialog true > 0
+    //Setzt die Dialoge, false = 0 und true > 0
     private int iDialog = 0;
 
     public void run(Session session) throws Exception {
@@ -42,8 +45,10 @@ public class WordRecognizedEvent {
         alFaceDetection = new ALFaceDetection(Uts.getSESSION());
         //Setzt Gesichtsverfolgung
         alFaceDetection.setTrackingEnabled(true);
+        //Spracheinstellung
         alSpeechRecognition.setLanguage("German");
 
+        //Wörterbibliothek
         ArrayList<String> vocabulary = new ArrayList();
         vocabulary.add("hallo");//iFunktion=2
         vocabulary.add("hi");//iFunktion=2
@@ -198,7 +203,6 @@ public class WordRecognizedEvent {
                             else if(word.equals("<...> Bauch <...>")&&iDialog==2&&!bLocked){
                                 bLocked = true;
                                 iDialog = 0;
-                                //Funktion noch in Bearbeitung
                                 try {
                                     Position.liegenBauch();
                                 } catch (Exception e) {
