@@ -256,7 +256,6 @@ public class WordRecognizedEvent {
                         }
                     }
                 });
-
     }
 }
 
