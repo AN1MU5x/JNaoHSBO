@@ -41,8 +41,8 @@ public class WordRecognizedEvent {
     public void run(Session session) throws Exception {
         recWord = new ArrayList<String>();
         alMemory = new ALMemory(session);
-        alSpeechRecognition = new ALSpeechRecognition(Uts.getSESSION());
-        alFaceDetection = new ALFaceDetection(Uts.getSESSION());
+        alSpeechRecognition = new ALSpeechRecognition(session);
+        alFaceDetection = new ALFaceDetection(session);
         //Setzt Gesichtsverfolgung
         alFaceDetection.setTrackingEnabled(true);
         //Spracheinstellung
