@@ -6,26 +6,36 @@ import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
+//Klasse für alle Bewegungen
 import motion.Position;
+//Klasse für den Kopfsensor
 import sensors.TactilTouchedEvent;
+//Klasse für verschiedene kleine Methoden wie z.B. AppStart();
 import utillities.Uts;
 import vision.FaceDetectedEvent;
 import java.util.ArrayList;
 
+//Aufgaben:
 //stop Funktion
-//Reboot Sprachmodul
+//folge mir
+//komm zu mir
+//Bauch
+//such andi
+//such lisa
+//such iskar
+//such stefan
 
 public class WordRecognizedEvent {
 
-    //Funktions Trigger, false = 0, Funktion true > 0
+    //Setzt Funktionen, false = 0 und true > 0
     public static int iFunktion = 0;
+    //Boolean Variable zum sperren der Funktionen gegeneinander
     private static boolean bLocked;
     private static ALMemory alMemory;
-    private static long wordID=0;
     private ArrayList recWord;
     private static ALFaceDetection alFaceDetection;
     private static ALSpeechRecognition alSpeechRecognition;
-    //Dialog Trigger, false = 0, Dialog true > 0
+    //Setzt die Dialoge, false = 0 und true > 0
     private int iDialog = 0;
 
     public void run(Session session) throws Exception {
@@ -35,9 +45,10 @@ public class WordRecognizedEvent {
         alFaceDetection = new ALFaceDetection(Uts.getSESSION());
         //Setzt Gesichtsverfolgung
         alFaceDetection.setTrackingEnabled(true);
-
+        //Spracheinstellung
         alSpeechRecognition.setLanguage("German");
 
+        //Wörterbibliothek
         ArrayList<String> vocabulary = new ArrayList();
         vocabulary.add("hallo");//iFunktion=2
         vocabulary.add("hi");//iFunktion=2
@@ -74,8 +85,8 @@ public class WordRecognizedEvent {
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(vocabulary,true);
         alSpeechRecognition.pause(false);
-
-        wordID = alMemory.subscribeToEvent(
+        alSpeechRecognition.subscribe("Word",1000,0.0f);
+        alMemory.subscribeToEvent(
                 "WordRecognized", new EventCallback() {
                     @Override
                     public void onEvent(Object arg0) throws InterruptedException, CallError {
@@ -98,7 +109,7 @@ public class WordRecognizedEvent {
                                     e.printStackTrace();
                                 }
                                 Uts.getAPP().run();
-                                alMemory.unsubscribeToEvent(wordID);
+                                alSpeechRecognition.unsubscribe("Word");
                             }
                             else if(word.equals("<...> hallo <...>")&&!bLocked||word.equals("<...> hi <...>")&&!bLocked||word.equals("<...> hey <...>")&&!bLocked){
                                 bLocked = true;
@@ -110,7 +121,7 @@ public class WordRecognizedEvent {
                                     e.printStackTrace();
                                 }
                                 Uts.getAPP().run();
-                                alMemory.unsubscribeToEvent(wordID);
+                                alSpeechRecognition.unsubscribe("Word");
                             }
                             else if(word.equals("<...> setz dich hin <...>")&&!bLocked||word.equals("<...> hinsetzen <...>")&&!bLocked){
                                 bLocked = true;
@@ -150,7 +161,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> komm zu mir <...>")&&!bLocked){
-                               //Funktion noch nicht vorhanden
+                               //Funktion noch in Bearbeitung
                                 bLocked = true;
                             }
                             else if(word.equals("<...> wie geht es dir <...>")&&!bLocked){
@@ -192,7 +203,6 @@ public class WordRecognizedEvent {
                             else if(word.equals("<...> Bauch <...>")&&iDialog==2&&!bLocked){
                                 bLocked = true;
                                 iDialog = 0;
-                                //Noch zu bearbeiten
                                 try {
                                     Position.liegenBauch();
                                 } catch (Exception e) {
@@ -206,7 +216,7 @@ public class WordRecognizedEvent {
                                     e.printStackTrace();
                                 }
                                 Uts.getAPP().run();
-                                alMemory.unsubscribeToEvent(wordID);
+                                alSpeechRecognition.unsubscribe("Word");
                             }
                             else if(word.equals("<...> Rücken <...>")&&iDialog==2&&!bLocked){
                                 bLocked = true;
@@ -220,21 +230,22 @@ public class WordRecognizedEvent {
                             else if(word.equals("<...> such andi <...>")&&!bLocked){
                                 bLocked = true;
                                 iFunktion = 4;
-
+                                //Funktion noch in Bearbeitung
                             }
                             else if(word.equals("<...> such stefan <...>")&&!bLocked) {
                                 bLocked = true;
                                 iFunktion = 5;
-
+                                //Funktion noch in Bearbeitung
                             }
                             else if(word.equals("<...> such iskar <...>")&&!bLocked) {
                                 bLocked = true;
                                 iFunktion = 6;
-
+                                //Funktion noch in Bearbeitung
                             }
                             else if(word.equals("<...> such lisa <...>")&&!bLocked) {
                                 bLocked = true;
                                 iFunktion = 7;
+                                //Funktion noch in Bearbeitung
 
                             }
                         }

@@ -1,10 +1,12 @@
 package utillities;
 
+import audio.WordRecognizedEvent;
 import com.aldebaran.qi.helper.proxies.ALBattery;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,15 +15,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.omg.PortableServer.THREAD_POLICY_ID;
+import vision.VisionCamera;
 
+import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,10 +43,13 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static GridPane grid1, grid2;
     private static Label name, port, battery, temperatur, lCharge;
     private static Text scenetitle1, scenetitle21, scenetitle22;
-    private static HBox hbBtn1, hbBtn2;
+    private static HBox hbBtn1, hbBtn2, box;
     private static TextField userTextField, portTextField;
     private static ALBattery charge, chargeA;
     private static String sCharge = "",sChargeA="";
+    private static VisionCamera oVision;
+    private static BufferedImage oLiveVideoBuffered;
+    private static ImageView imgView;
 
     //Benötigt als Datenaustausch zwichen den Threads
     public static String sBattery = "Batterie";
@@ -47,14 +57,17 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static int iTmp = 0;
     private Timer t1 = new Timer();
 
-    public static void main(String[] args) throws Exception{
-        window1();
-        window2();
+    public static void open() throws Exception {
+        Application.launch();
+    }
 
+    public static void main(String[] args) throws Exception{
         Application.launch(args);
     }
     @Override
     public void start(Stage primaryStage)throws Exception {
+
+        window1();
         window = primaryStage;
         window.setTitle("Nao");
         window.centerOnScreen();
@@ -64,15 +77,11 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         primaryStage.setScene(scene1);
         primaryStage.show();
 
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    aktualisieren();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
+            try {
+                aktualisieren();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
@@ -84,9 +93,10 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
             Uts.AppStart(userTextField.getText(),portTextField.getText());
             try {
                 Thread.sleep(1000);
+                oVision = new VisionCamera();
                 charge = new ALBattery(Uts.getSESSION());
                 sCharge = ""+(charge.getBatteryCharge());
-                System.out.println("\n"+sCharge+"\n");
+                window2();
                 btn2.setOnAction(this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -131,12 +141,15 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     }
     public static void window2() throws Exception {
         grid2 = new GridPane();
+        box = new HBox(10);
+        StackPane pane = new StackPane();
+        pane.getChildren().add(box);
         grid2.setAlignment(Pos.CENTER);
         grid2.setHgap(100);
         grid2.setVgap(20);
         grid2.setPadding(new Insets(10, 10, 10, 10));
         grid2.setGridLinesVisible(true);
-        scene2 = new Scene(grid2, 1200, 850);
+        scene2 = new Scene(pane, 1200, 850);
 
         //Info
         scenetitle21 = new Text("Info ");
@@ -153,22 +166,37 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         temperatur = new Label("Temperatur");
         grid2.add(temperatur,0,2);
 
+        //Live Video
+        oLiveVideoBuffered = new BufferedImage(400,400, BufferedImage.TYPE_INT_RGB);
+        imgView = new ImageView(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
+      //  grid2.add(imgView, 0,1);
+        box.setAlignment(Pos.CENTER);
+        box.getChildren().add(imgView);
+
         //Programm beenden
         btn2 = new Button("Schließen");
         hbBtn2 = new HBox(10);
         hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn2.getChildren().add(btn2);
-        grid2.add(hbBtn2, 10, 35);
+        grid2.add(hbBtn2, 4, 5);
 
+
+        box.getChildren().add(grid2);
     }
 
     public static synchronized void aktualisieren()throws Exception{
         iTmp++;
-        chargeA = new ALBattery(Uts.getSESSION());
-        sChargeA = ""+(chargeA.getBatteryCharge());
-        System.out.println("\n"+sChargeA+"\n");
-        lCharge.setText(sChargeA);
 
+
+        if(Uts.getSESSION() != null) {
+            chargeA = new ALBattery(Uts.getSESSION());
+            sChargeA = ""+(chargeA.getBatteryCharge());
+            lCharge.setText(sChargeA);
+            oLiveVideoBuffered = oVision.getImage();
+            imgView.setImage(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
+            imgView.setScaleX(3);
+            imgView.setScaleY(3);
+        }
 
     }
 }
