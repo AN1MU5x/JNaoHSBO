@@ -36,6 +36,8 @@ public class WordRecognizedEvent {
         //Setzt Gesichtsverfolgung
         alFaceDetection.setTrackingEnabled(true);
 
+        alSpeechRecognition.setLanguage("German");
+
         ArrayList<String> vocabulary = new ArrayList();
         vocabulary.add("hallo");//iFunktion=2
         vocabulary.add("hi");//iFunktion=2
