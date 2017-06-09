@@ -25,7 +25,7 @@ import java.util.ArrayList;
 //such lisa
 //such iskar
 //such stefan
-
+//
 public class WordRecognizedEvent {
 
     //Setzt Funktionen, false = 0 und true > 0
