@@ -8,7 +8,6 @@ import sensors.TactilTouchedEvent;
 import utillities.Uts;
 import java.util.ArrayList;
 
-
 public class Position  {
 
     private static ALRobotPosture p;
@@ -29,21 +28,21 @@ public class Position  {
     private static ArrayList array7;
     public static boolean bFollow;
 
-    public static void follow() throws Exception{
+    public static void follow(Session session) throws Exception{
         bFollow = true;
-        ALTracker a = new ALTracker(Uts.getSESSION());
+        ALTracker a = new ALTracker(session);
 
         while (bFollow) {
             a.track("Face");
             a.setMode("Move");
             TactilTouchedEvent ctte = new TactilTouchedEvent();
-            ctte.run(Uts.getSESSION());
+            ctte.run(session);
             Uts.getAPP().run();
         }
     }
 
-    public static void sitzen() throws Exception{
-        p = new ALRobotPosture(Uts.getSESSION());
+    public static void sitzen(Session session) throws Exception{
+        p = new ALRobotPosture(session);
         p.stopMove();
 
         if(!p.getPosture().equals("Sit")) {
@@ -53,8 +52,8 @@ public class Position  {
         }
     }
 
-    public static void hocke() throws Exception{
-        p = new ALRobotPosture(Uts.getAPP().session());
+    public static void hocke(Session session) throws Exception{
+        p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("Crouch")) {
             Uts.talk("Gib mir ein moment ich hocke mich hin.");
@@ -62,8 +61,8 @@ public class Position  {
             Uts.talk("Ich bin fertig");
         }
     }
-    public static void stehen() throws Exception{
-        p = new ALRobotPosture(Uts.getAPP().session());
+    public static void stehen(Session session) throws Exception{
+        p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("Stand")) {
             Uts.talk("Gib mir ein moment ich stehe auf.");
@@ -71,8 +70,8 @@ public class Position  {
             Uts.talk("Ich stehe");
         }
     }
-    public static void liegenRuecken() throws Exception{
-        p = new ALRobotPosture(Uts.getAPP().session());
+    public static void liegenRuecken(Session session) throws Exception{
+        p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("LyingBack")) {
             Uts.talk("Gib mir ein moment ich lege mich auf den Rücken.");
@@ -80,8 +79,8 @@ public class Position  {
             Uts.talk("Ich liege auf den Rücken");
         }
     }
-    public static void liegenBauch() throws Exception{
-        p = new ALRobotPosture(Uts.getAPP().session());
+    public static void liegenBauch(Session session) throws Exception{
+        p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("LyingBelly")) {
             Uts.talk("Gib mir ein moment ich lege mich auf den Bauch.");
@@ -89,8 +88,8 @@ public class Position  {
             Uts.talk("Ich liege auf dem Bauch");
         }
     }
-    public static void stehenNull() throws Exception{
-        p = new ALRobotPosture(Uts.getAPP().session());
+    public static void stehenNull(Session session) throws Exception{
+        p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("StandZero")) {
             Uts.talk("Gib mir ein moment ich stell mich hin.");
@@ -98,8 +97,8 @@ public class Position  {
             Uts.talk("Ich bin fertig");
         }
     }
-    public static void sitzenRelax() throws Exception{
-        p = new ALRobotPosture(Uts.getAPP().session());
+    public static void sitzenRelax(Session session) throws Exception{
+        p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("SitRelax")) {
             Uts.talk("Gib mir ein moment ich setze mich relex hin.");
@@ -107,8 +106,8 @@ public class Position  {
             Uts.talk("Ich sitze");
         }
     }
-    public static void stehenInit() throws Exception{
-        p = new ALRobotPosture(Uts.getAPP().session());
+    public static void stehenInit(Session session) throws Exception{
+        p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("StandInit")) {
             Uts.talk("Gib mir ein moment ich stell mich hin");
@@ -117,8 +116,8 @@ public class Position  {
         }
     }
 
-    public static void winken() throws Exception{
-        bew= new ALMotion(Uts.getAPP().session());
+    public static void winken(Session session) throws Exception{
+        bew= new ALMotion(session);
 
         //erzeugen ArrayList
         name =new ArrayList<String>();

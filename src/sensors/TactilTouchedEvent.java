@@ -41,7 +41,7 @@ public class TactilTouchedEvent {
                         if(WordRecognizedEvent.iFunktion==3){
                             WordRecognizedEvent.iFunktion=0;
                             try {
-                                Position.stehen();
+                                Position.stehen(session);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
