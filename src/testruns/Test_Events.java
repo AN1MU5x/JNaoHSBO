@@ -6,6 +6,7 @@ import com.aldebaran.qi.helper.proxies.*;
 import java.util.ArrayList;
 import static utillities.Uts.*;
 import motion.Position;
+import utillities.Uts;
 
 /**
  * Created by JNaoHSBO on 26.04.2017.
@@ -83,7 +84,7 @@ public class Test_Events {
                                     System.out.println("dialogCase = "+ dialogCase);
                                 }else if(word.equals("hallo")&&(float)recWord.get(1)>0.5f){
                                     try {
-                                        Position.winken();
+                                        Position.winken(Uts.getSESSION());
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -186,7 +187,7 @@ public class Test_Events {
                                 hilf1 = false;
                                 alTextToSpeech.say("Hallo " + faceLabel);
                                 try {
-                                    Position.winken();
+                                    Position.winken(Uts.getSESSION());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -201,7 +202,7 @@ public class Test_Events {
                             hilf1=false;
                             alTextToSpeech.say("Hallo");
                             try {
-                                Position.winken();
+                                Position.winken(Uts.getSESSION());
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

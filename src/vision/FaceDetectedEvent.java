@@ -8,7 +8,6 @@ import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 import motion.Position;
-//
 import java.util.ArrayList;
 
 public class FaceDetectedEvent {
