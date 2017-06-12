@@ -38,7 +38,6 @@ public class WordRecognizedEvent {
     private static ALSpeechRecognition alSpeechRecognition;
     //Setzt die Dialoge, false = 0 und true > 0
     private int iDialog = 0;
-    private long speechID = 0;
 
     public void run(Session session) throws Exception {
         recWord = new ArrayList<String>();
@@ -49,6 +48,7 @@ public class WordRecognizedEvent {
         alFaceDetection.setTrackingEnabled(true);
         //Spracheinstellung
         alSpeechRecognition.setLanguage("German");
+        alSpeechRecognition.subscribe("Word",1000,0.0f);
 
         //Wörterbibliothek
         ArrayList<String> vocabulary = new ArrayList();
@@ -87,8 +87,7 @@ public class WordRecognizedEvent {
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(vocabulary,true);
         alSpeechRecognition.pause(false);
-        alSpeechRecognition.subscribe("Word",1000,0.0f);
-        speechID = alMemory.subscribeToEvent(
+        alMemory.subscribeToEvent(
                 "WordRecognized", new EventCallback() {
                     @Override
                     public void onEvent(Object arg0) throws InterruptedException, CallError {
@@ -110,9 +109,7 @@ public class WordRecognizedEvent {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                alSpeechRecognition.wait(speechID);
                                 alSpeechRecognition.unsubscribe("Word");
-
                             }
                             else if(word.equals("<...> hallo <...>")&&!bLocked||word.equals("<...> hi <...>")&&!bLocked||word.equals("<...> hey <...>")&&!bLocked){
                                 bLocked = true;
@@ -123,7 +120,6 @@ public class WordRecognizedEvent {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-
                                 alSpeechRecognition.unsubscribe("Word");
 
                             }
@@ -219,9 +215,7 @@ public class WordRecognizedEvent {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                Uts.getAPP().run();
                                 alSpeechRecognition.unsubscribe("Word");
-
                             }
                             else if(word.equals("<...> Rücken <...>")&&iDialog==2&&!bLocked){
                                 bLocked = true;
