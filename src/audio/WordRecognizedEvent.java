@@ -118,7 +118,7 @@ public class WordRecognizedEvent {
                                 }
 
                             }
-                            else if(word.equals("<...> hallo <...>") && !bLocked | word.equals("<...> hi <...>") && !bLocked | word.equals("<...> hey <...>") && !bLocked){
+                            else if((word.equals("<...> hallo <...>") && !bLocked) | (word.equals("<...> hi <...>") && !bLocked) | (word.equals("<...> hey <...>") && !bLocked)){
 
                                 bLocked = true;
                                 iFunktion = 2;
@@ -130,7 +130,7 @@ public class WordRecognizedEvent {
                                 }
 
                             }
-                            else if(word.equals("<...> setz dich hin <...>") && !bLocked | word.equals("<...> hinsetzen <...>") && !bLocked){
+                            else if((word.equals("<...> setz dich hin <...>") && !bLocked) | (word.equals("<...> hinsetzen <...>") && !bLocked)){
 
                                 bLocked = true;
 
@@ -141,7 +141,7 @@ public class WordRecognizedEvent {
                                 }
 
                             }
-                            else if(word.equals("<...> stell dich hin <...>") && !bLocked | word.equals("<...> hinstellen <...>") && !bLocked | word.equals("<...> aufstehen <...>") && !bLocked){
+                            else if((word.equals("<...> stell dich hin <...>") && !bLocked) | (word.equals("<...> hinstellen <...>") && !bLocked) | (word.equals("<...> aufstehen <...>") && !bLocked)){
 
                                 bLocked = true;
 
@@ -152,7 +152,7 @@ public class WordRecognizedEvent {
                                 }
 
                             }
-                            else if(word.equals("<...> geh in die hocke <...>") && !bLocked | word.equals("<...> geht in die hocke <...>") && !bLocked | word.equals("<...> Hocken <...>") && !bLocked){
+                            else if((word.equals("<...> geh in die hocke <...>") && !bLocked) | (word.equals("<...> geht in die hocke <...>") && !bLocked) | (word.equals("<...> Hocken <...>") && !bLocked)){
 
                                 bLocked = true;
 
@@ -163,7 +163,7 @@ public class WordRecognizedEvent {
                                 }
 
                             }
-                            else if(word.equals("<...> winke winke <...>") && !bLocked | word.equals("<...> Winken <...>") && !bLocked){
+                            else if((word.equals("<...> winke winke <...>") && !bLocked) | (word.equals("<...> Winken <...>") && !bLocked)){
 
                                 bLocked = true;
 
@@ -205,7 +205,7 @@ public class WordRecognizedEvent {
                                 }
 
                             }
-                            else if(word.equals("<...> geht so <...>") && iDialog==1 && !bLocked | word.equals("<...> nicht so gut <...>") && iDialog==1 && !bLocked | word.equals("<...> schlecht <...>") && iDialog==1 && !bLocked){
+                            else if((word.equals("<...> geht so <...>") && iDialog==1 && !bLocked) | (word.equals("<...> nicht so gut <...>") && iDialog==1 && !bLocked) | (word.equals("<...> schlecht <...>") && iDialog==1 && !bLocked)){
 
                                 bLocked = true;
                                 iDialog = 0;
@@ -217,7 +217,7 @@ public class WordRecognizedEvent {
                                 }
 
                             }
-                            else if(word.equals("<...> leg dich hin <...>") && !bLocked | word.equals("<...> hinlegen <...>") && !bLocked){
+                            else if((word.equals("<...> leg dich hin <...>") && !bLocked) | (word.equals("<...> hinlegen <...>") && !bLocked)){
 
                                 bLocked = true;
 

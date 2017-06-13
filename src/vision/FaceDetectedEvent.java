@@ -136,7 +136,7 @@ public class FaceDetectedEvent {
                                     alTextToSpeech.say("Hallo");
 
                                 }
-                                if ((WordRecognizedEvent.iFunktion == 4 | Folgen.prob==true) && WordRecognizedEvent.iFunktion==4) {
+                                if (((WordRecognizedEvent.iFunktion == 4) | (Folgen.prob==true)) && WordRecognizedEvent.iFunktion==4) {
 
                                     if (faceLabel.equals("Andi")) {
 
@@ -153,7 +153,7 @@ public class FaceDetectedEvent {
 
                                     }
                                 }
-                                if ((WordRecognizedEvent.iFunktion == 5 | Folgen.prob==true) && WordRecognizedEvent.iFunktion==5) {
+                                if (((WordRecognizedEvent.iFunktion == 5) | (Folgen.prob==true)) && WordRecognizedEvent.iFunktion==5) {
 
                                     if (faceLabel.equals("Stefan")) {
 
@@ -170,7 +170,7 @@ public class FaceDetectedEvent {
 
                                     }
                                 }
-                                if ((WordRecognizedEvent.iFunktion == 6| Folgen.prob==true) && WordRecognizedEvent.iFunktion==6) {
+                                if (((WordRecognizedEvent.iFunktion == 6) | (Folgen.prob==true)) && WordRecognizedEvent.iFunktion==6) {
 
                                     if (faceLabel.equals("Iskar")) {
 
@@ -187,7 +187,7 @@ public class FaceDetectedEvent {
 
                                     }
                                 }
-                                if ((WordRecognizedEvent.iFunktion == 7 | Folgen.prob==true) && WordRecognizedEvent.iFunktion==7) {
+                                if (((WordRecognizedEvent.iFunktion == 7) | (Folgen.prob==true)) && WordRecognizedEvent.iFunktion==7) {
 
                                     if (faceLabel.equals("Lisa")) {
 
