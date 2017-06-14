@@ -12,7 +12,7 @@ import motion.Position;
 import java.util.ArrayList;
 
 public class FaceDetectedEvent {
-    //iskar
+
    public static ALMemory alMemory1;
    private ALTextToSpeech alTextToSpeech;
    private ALFaceDetection alFaceDetection;

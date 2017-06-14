@@ -43,7 +43,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static Text scenetitle1, scenetitle21, scenetitle22;
     private static HBox hbBtn1, hbBtn2, box;
     private static TextField userTextField, portTextField;
-    private static ALBattery charge, chargeA;
+    private static ALBattery chargeA;
     private static String sCharge = "",sChargeA="";
     private static VisionCamera oVision;
     private static BufferedImage oLiveVideoBuffered;
@@ -52,7 +52,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static String sWord;
     private static float fWord;
     private static TextField textField;
-    public static WordRecognizedEvent recognizedEvent;
+    private static WordRecognizedEvent recognizedEvent;
 
 
     //Benötigt als Datenaustausch zwichen den Threads
@@ -98,10 +98,10 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
             Uts.AppStart(userTextField.getText(),portTextField.getText());
             try {
                 Thread.sleep(1000);
+                chargeA = new ALBattery(Uts.getSESSION());
                 oVision = new VisionCamera();
                 word = new ALMemory(Uts.getSESSION());
-                charge = new ALBattery(Uts.getSESSION());
-                sCharge = ""+(charge.getBatteryCharge());
+                sCharge = ""+(chargeA.getBatteryCharge());
                 sWord = (String) ((List)word.getData("WordRecognized")).get(0);
                 fWord = (float) ((List)word.getData("WordRecognized")).get(1);
                 window2();
@@ -221,7 +221,6 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
 
         try {
             if (Uts.getSESSION() != null) {
-                chargeA = new ALBattery(Uts.getSESSION());
                 sChargeA = "" + (chargeA.getBatteryCharge()+"%");
                 lrecword.setText(sWord);
                 probability.setText(String.valueOf(fWord));

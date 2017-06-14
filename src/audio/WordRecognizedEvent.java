@@ -5,6 +5,7 @@ import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMemory;
+import com.aldebaran.qi.helper.proxies.ALRobotPosture;
 import com.aldebaran.qi.helper.proxies.ALSpeechRecognition;
 //Klasse für alle Bewegungen
 import motion.Folgen;
@@ -17,6 +18,7 @@ import utillities.Uts;
 //Klasse für die Gesichtserkennung
 import vision.FaceDetectedEvent;
 import java.util.ArrayList;
+
 
 //Aufgaben:
 //stop Funktion
@@ -43,7 +45,9 @@ public class WordRecognizedEvent {
     private int iDialog = 0;
 
 
+
     public void run(Session session) throws Exception {
+
 
         recWord = new ArrayList<String>();
         alMemory = new ALMemory(session);
@@ -92,6 +96,9 @@ public class WordRecognizedEvent {
         alSpeechRecognition.pause(true);
         alSpeechRecognition.setVocabulary(vocabulary,true);
         alSpeechRecognition.pause(false);
+
+
+
 
         alMemory.subscribeToEvent(
                 "WordRecognized", new EventCallback() {
