@@ -26,7 +26,7 @@ public class Follow {
                     bTargetLost =true;
                     bSearch =false;
                 }
-                else if((bFollowOn && WordRecognizedEvent.iFunktion==4) | (bFollowOn && WordRecognizedEvent.iFunktion==5) | (bFollowOn && WordRecognizedEvent.iFunktion==6) | (bFollowOn && WordRecognizedEvent.iFunktion==7)){
+                else if((bFollowOn && WordRecognizedEvent.iFunktion==4) || (bFollowOn && WordRecognizedEvent.iFunktion==5)|| (bFollowOn && WordRecognizedEvent.iFunktion==6) || (bFollowOn && WordRecognizedEvent.iFunktion==7)){
                     alTracker.track("Face");
                     alTracker.setMode("Move");
                     bTargetLost =false;

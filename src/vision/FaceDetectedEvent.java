@@ -12,7 +12,6 @@ import motion.Position;
 import java.util.ArrayList;
 
 public class FaceDetectedEvent {
-
    public static ALMemory alMemory1;
    public static long lFaceID = 0;
 
@@ -35,8 +34,8 @@ public class FaceDetectedEvent {
                 "FaceDetected", new EventCallback() {
                     @Override
                     public void onEvent(Object o) throws InterruptedException, CallError {
-                        iCounter++;
 
+                        iCounter++;
                         System.out.println("Face detected");
                         ArrayList faceDetected = (ArrayList) o;
 
@@ -53,7 +52,9 @@ public class FaceDetectedEvent {
 
                                 //Wer bin ich
                                 if (WordRecognizedEvent.iFunktion == 1 && iCounter < 20) {
+
                                     if (faceLabel.equals("Koch") && bOneUse) {
+
                                         bOneUse = false;
                                         iCounter = 0;
                                         alMemory1.unsubscribeToEvent(lFaceID);
@@ -61,6 +62,7 @@ public class FaceDetectedEvent {
                                         alTextToSpeech.say("Herr " + faceLabel);
                                     }
                                     if (faceLabel.equals("Brabender") && bOneUse) {
+
                                         bOneUse = false;
                                         iCounter = 0;
                                         alMemory1.unsubscribeToEvent(lFaceID);
@@ -68,14 +70,16 @@ public class FaceDetectedEvent {
                                         alTextToSpeech.say("Frau " + faceLabel);
                                     }
                                     if (faceLabel.equals("Stefan") && bOneUse || faceLabel.equals("Iskar") && bOneUse || faceLabel.equals("Andi") && bOneUse || faceLabel.equals("Lisa") && bOneUse) {
+
                                         bOneUse = false;
                                         iCounter = 0;
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
                                         alTextToSpeech.say(faceLabel);
-
                                     }
-                                } else if (WordRecognizedEvent.iFunktion == 1 && (iCounter >= 20)) {
+                                }
+                                else if (WordRecognizedEvent.iFunktion == 1 && (iCounter >= 20)) {
+
                                     iCounter = 0;
                                     alMemory1.unsubscribeToEvent(lFaceID);
                                     alFaceDetection.unsubscribe("Face");
@@ -86,6 +90,7 @@ public class FaceDetectedEvent {
                                 else if (WordRecognizedEvent.iFunktion == 2 && iCounter < 20) {
 
                                     if (faceLabel.equals("Koch") && bOneUse) {
+
                                         bOneUse = false;
                                         iCounter = 0;
                                         alMemory1.unsubscribeToEvent(lFaceID);
@@ -98,6 +103,7 @@ public class FaceDetectedEvent {
                                         }
                                     }
                                     if (faceLabel.equals("Brabender") && bOneUse) {
+
                                         bOneUse = false;
                                         iCounter = 0;
                                         alMemory1.unsubscribeToEvent(lFaceID);
@@ -110,6 +116,7 @@ public class FaceDetectedEvent {
                                         }
                                     }
                                     if (faceLabel.equals("Stefan") && bOneUse || faceLabel.equals("Iskar") && bOneUse || faceLabel.equals("Andi") && bOneUse|| faceLabel.equals("Lisa") && bOneUse) {
+
                                         bOneUse = false;
                                         iCounter = 0;
                                         alMemory1.unsubscribeToEvent(lFaceID);
@@ -121,15 +128,20 @@ public class FaceDetectedEvent {
                                             e.printStackTrace();
                                         }
                                     }
-                                } else if (WordRecognizedEvent.iFunktion == 2 && iCounter >= 20) {
+                                }
+                                else if (WordRecognizedEvent.iFunktion == 2 && iCounter >= 20) {
+
                                     iCounter = 0;
                                     alMemory1.unsubscribeToEvent(lFaceID);
                                     alFaceDetection.unsubscribe("Face");
                                     alTextToSpeech.say("Hallo");
                                 }
+
                                 //Suche Andi
                                 if (((WordRecognizedEvent.iFunktion == 4) || (Follow.bTargetLost ==true)) && WordRecognizedEvent.iFunktion==4) {
+
                                     if (faceLabel.equals("Andi")) {
+
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
                                         Follow.bFollowOn =true;
@@ -141,9 +153,12 @@ public class FaceDetectedEvent {
                                         }
                                     }
                                 }
+
                                 //Suche Stefan
                                 if (((WordRecognizedEvent.iFunktion == 5) || (Follow.bTargetLost ==true)) && WordRecognizedEvent.iFunktion==5) {
+
                                     if (faceLabel.equals("Stefan")) {
+
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
                                         Follow.bFollowOn =true;
@@ -155,9 +170,12 @@ public class FaceDetectedEvent {
                                         }
                                     }
                                 }
+
                                 //Suche Iskar
                                 if (((WordRecognizedEvent.iFunktion == 6) || (Follow.bTargetLost ==true)) && WordRecognizedEvent.iFunktion==6) {
+
                                     if (faceLabel.equals("Iskar")) {
+
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
                                         Follow.bFollowOn = true;
@@ -169,9 +187,12 @@ public class FaceDetectedEvent {
                                         }
                                     }
                                 }
+
                                 //Suche Lisa
                                 if (((WordRecognizedEvent.iFunktion == 7) || (Follow.bTargetLost ==true)) && WordRecognizedEvent.iFunktion==7) {
+
                                     if (faceLabel.equals("Lisa")) {
+
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
                                         Follow.bFollowOn =true;
