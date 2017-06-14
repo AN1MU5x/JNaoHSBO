@@ -21,9 +21,10 @@ import java.util.List;
 /**
  * Created by Lisa on 02.06.2017.
  */
-public class VisionCamera {
+public class VisionCamera extends Thread {
     ALVideoDevice oVideoDevice;
     String sHandle;
+    BufferedImage bufferedImage;
 
     public VisionCamera() throws Exception {
         oVideoDevice = new ALVideoDevice(Uts.getSESSION());
@@ -102,5 +103,17 @@ public class VisionCamera {
 
         oVideoDevice.releaseImage(sHandle);
         return img;
+    }
+    @Override
+    public void run(){
+        while(true) try {
+            Thread.sleep(10);
+            bufferedImage = getImage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public BufferedImage getBufferedImage(){
+        return bufferedImage;
     }
 }

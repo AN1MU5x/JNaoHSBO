@@ -2,6 +2,7 @@ package utillities;
 
 import audio.WordRecognizedEvent;
 import com.aldebaran.qi.helper.proxies.ALBattery;
+import com.aldebaran.qi.helper.proxies.ALLeds;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -13,6 +14,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -24,12 +26,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import motion.Position;
 import vision.VisionCamera;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
+import java.util.*;
 
 /**
  * Created by Lisa on 07.04.2017.
@@ -37,10 +38,10 @@ import java.util.Timer;
 public class User_Surface_1 extends Application implements EventHandler<ActionEvent> {
     private static Stage window;
     private static Scene scene1, scene2;
-    private static Button btn1, btn2, btnTalk;
+    private static Button btn1, btn2, btnTalk, btnStand, btnSit, btnLie;
     private static GridPane grid1, grid2;
     private static Label name, port, battery, temperatur, lCharge,lrecword,probability;
-    private static Text scenetitle1, scenetitle21, scenetitle22;
+    private static Text scenetitle1, scenetitle21;
     private static HBox hbBtn1, hbBtn2, box;
     private static TextField userTextField, portTextField;
     private static ALBattery chargeA;
@@ -53,7 +54,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static float fWord;
     private static TextField textField;
     private static WordRecognizedEvent recognizedEvent;
-
+    private static ALLeds alLeds;
 
     //Benötigt als Datenaustausch zwichen den Threads
     public static String sBattery = "Batterie";
@@ -66,12 +67,11 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     }
 
     public static void main(String[] args) throws Exception{
-        recognizedEvent = new WordRecognizedEvent();
         Application.launch(args);
     }
     @Override
     public void start(Stage primaryStage)throws Exception {
-
+        recognizedEvent = new WordRecognizedEvent();
         window1();
         window = primaryStage;
         window.setTitle("Nao");
@@ -82,7 +82,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         primaryStage.setScene(scene1);
         primaryStage.show();
 
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(0.4), event -> {
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(0.25), event -> {
             try {
                 aktualisieren();
             } catch (Exception e) {
@@ -100,6 +100,8 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
                 Thread.sleep(1000);
                 chargeA = new ALBattery(Uts.getSESSION());
                 oVision = new VisionCamera();
+                oVision.start();
+                alLeds = new ALLeds(Uts.getSESSION());
                 word = new ALMemory(Uts.getSESSION());
                 sCharge = ""+(chargeA.getBatteryCharge());
                 sWord = (String) ((List)word.getData("WordRecognized")).get(0);
@@ -109,6 +111,9 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
 
                 btn2.setOnAction(this);
                 btnTalk.setOnAction(this);
+                btnLie.setOnAction(this);
+                btnSit.setOnAction(this);
+                btnStand.setOnAction(this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -123,6 +128,24 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
                 Uts.talk(textField.getText());
             } catch (Exception e) {
                 System.out.println("Ausgabefehler!");
+            }
+        }else if(event.getSource()==btnStand){
+            try {
+                Position.stehen(Uts.getSESSION());
+            } catch (Exception e) {
+                System.out.println("Fehler: Bewegung");
+            }
+        }else if(event.getSource()==btnSit){
+            try {
+                Position.sitzen(Uts.getSESSION());
+            } catch (Exception e) {
+                System.out.println("Fehler: Bewegung");
+            }
+        }else if(event.getSource()==btnLie){
+            try {
+                Position.liegenRuecken(Uts.getSESSION());
+            } catch (Exception e) {
+                System.out.println("Fehler: Bewegung");
             }
         }
     }
@@ -191,7 +214,6 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         box.getChildren().add(imgView);
 
         //Spracherkennung
-
         grid2.add(new Label("gehört"),0,3);
         lrecword =new Label(sWord);
         grid2.add(lrecword,1,3);
@@ -205,12 +227,21 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid2.add(textField,1,4);
         grid2.add(btnTalk,2,4);
 
+        //Bewegen
+        btnStand = new Button("stehen");
+        btnSit = new Button("sitzen");
+        btnLie = new Button("liegen");
+        grid2.add(new Label("Pose"),0,5);
+        grid2.add(btnStand,1,5);
+        grid2.add(btnSit,2,5);
+        grid2.add(btnLie,3,5);
+
         //Programm beenden
         btn2 = new Button("Schließen");
         hbBtn2 = new HBox(10);
         hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn2.getChildren().add(btn2);
-        grid2.add(hbBtn2, 4, 5);
+        grid2.add(hbBtn2, 4, 6);
 
 
         box.getChildren().add(grid2);
@@ -225,7 +256,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
                 lrecword.setText(sWord);
                 probability.setText(String.valueOf(fWord));
                 lCharge.setText(sChargeA);
-                oLiveVideoBuffered = oVision.getImage();
+                oLiveVideoBuffered = oVision.getBufferedImage();
                 imgView.setImage(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
                 imgView.setScaleX(2);
                 imgView.setScaleY(2);
