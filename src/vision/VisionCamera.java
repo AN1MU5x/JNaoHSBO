@@ -104,6 +104,8 @@ public class VisionCamera extends Thread {
         oVideoDevice.releaseImage(sHandle);
         return img;
     }
+
+    //Durchgehendes erzeugen des Neuesten Bildes der Cam als Thread
     @Override
     public void run(){
         while(true) try {

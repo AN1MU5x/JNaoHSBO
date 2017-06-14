@@ -43,12 +43,14 @@ public class Uts extends Thread {
         names.add(name);
     }
 
+    //Umwandlung von Grad in Radiant für Bewegungen
     public static float DegToRad(int d){
         float e;
         e = (float)(d*Math.PI/180);
         return e;
     }
 
+    //Starten der App auf Emma(!NUR AUF EMMA!)
     public static void AppStart(){
         String[] args = new String[]{""};
         APP = new Application(args, EMMA);
@@ -60,6 +62,8 @@ public class Uts extends Thread {
         APP.stop();
     }
 
+    // AppStart Methode zum starten der App auf dem Roboter mit eingegebenen Parametern
+    // name und port, daher nicht nur für Emma anwendbar
     public static void AppStart(String name, String port){
         String[] args = new String[]{""};
         APP = new Application(args,"tcp://"+name+":"+port);
@@ -67,17 +71,20 @@ public class Uts extends Thread {
         SESSION = APP.session();
     }
 
+    // Methode zum sprechen
     public static void talk(String txt) throws Exception{
         ALTextToSpeech a = new ALTextToSpeech(APP.session());
         a.say(txt);
     }
 
+    //Methode um den Roboter zu einem durch Koordinaten festgelegten Punkt gehen zu lassen
     public static void walk(float x, float y, int d) throws Exception {
         ALMotion a = new ALMotion(APP.session());
         a.moveTo(x,y,DegToRad(d));
 
     }
 
+    //Aufnahme eines Gesichts in die bekannten Gesichter
     public static boolean learnFace(String sName) throws Exception {
         ALFaceDetection oA = new ALFaceDetection(Uts.APP.session());
         if(oA.learnFace(sName)){

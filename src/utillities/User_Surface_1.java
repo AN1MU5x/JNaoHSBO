@@ -14,7 +14,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -38,14 +37,14 @@ import java.util.*;
 public class User_Surface_1 extends Application implements EventHandler<ActionEvent> {
     private static Stage window;
     private static Scene scene1, scene2;
-    private static Button btn1, btn2, btnTalk, btnStand, btnSit, btnLie;
+    private static Button btn1, btnClose, btnTalk, btnStand, btnSit, btnLie, btnCrouch, btnWigWag;
     private static GridPane grid1, grid2;
     private static Label name, port, battery, temperatur, lCharge,lrecword,probability;
     private static Text scenetitle1, scenetitle21;
-    private static HBox hbBtn1, hbBtn2, box;
+    private static HBox hbBtn1, hbBtn2, box, poseBox;
     private static TextField userTextField, portTextField;
     private static ALBattery chargeA;
-    private static String sCharge = "",sChargeA="";
+    private static String sCharge = "",sChargeA="",sName,sPort;
     private static VisionCamera oVision;
     private static BufferedImage oLiveVideoBuffered;
     private static ImageView imgView;
@@ -54,14 +53,13 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static float fWord;
     private static TextField textField;
     private static WordRecognizedEvent recognizedEvent;
-    private static ALLeds alLeds;
 
     //Benötigt als Datenaustausch zwichen den Threads
-    public static String sBattery = "Batterie";
-    public static String sTemperatur = "Temp";
     private static int iTmp = 0;
     private Timer t1 = new Timer();
 
+
+    //für den Aufruf der Oberfläche aus einer anderen Methode
     public static void open() throws Exception {
         Application.launch();
     }
@@ -95,13 +93,17 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     @Override
     public void handle(ActionEvent event){
         if(event.getSource()== btn1) {
+
+            //Start des Programms mit eingegebener Addresse des Roboters
+            sName = userTextField.getText();
+            sPort = portTextField.getText();
             Uts.AppStart(userTextField.getText(),portTextField.getText());
+
             try {
                 Thread.sleep(1000);
                 chargeA = new ALBattery(Uts.getSESSION());
                 oVision = new VisionCamera();
                 oVision.start();
-                alLeds = new ALLeds(Uts.getSESSION());
                 word = new ALMemory(Uts.getSESSION());
                 sCharge = ""+(chargeA.getBatteryCharge());
                 sWord = (String) ((List)word.getData("WordRecognized")).get(0);
@@ -109,11 +111,13 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
                 window2();
                 recognizedEvent.run(Uts.getSESSION());
 
-                btn2.setOnAction(this);
+                btnClose.setOnAction(this);
                 btnTalk.setOnAction(this);
                 btnLie.setOnAction(this);
                 btnSit.setOnAction(this);
                 btnStand.setOnAction(this);
+                btnCrouch.setOnAction(this);
+                btnWigWag.setOnAction(this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -121,7 +125,13 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
             window.centerOnScreen();
 
 
-        }else if(event.getSource()==btn2){
+            //Aufruf verschiedener Funktionen durch Knopfdruck
+        }else if(event.getSource()== btnClose){
+            try {
+                Uts.talk("Auf Wiedersehen!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             System.exit(0);
         }else if(event.getSource()==btnTalk){
             try {
@@ -147,9 +157,23 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
             } catch (Exception e) {
                 System.out.println("Fehler: Bewegung");
             }
+        }else if(event.getSource()==btnWigWag) {
+            try {
+                Position.winken(Uts.getSESSION());
+            } catch (Exception e) {
+                System.out.println("Fehler: Bewegung");
+            }
+        }else if(event.getSource()==btnCrouch){
+            try {
+                Position.hocke(Uts.getSESSION());
+            } catch (Exception e) {
+                System.out.println("Fehler: Bewegung");
+            }
         }
     }
     public static void window1(){
+
+        //StartUp Oberfläche
         grid1 = new GridPane();
         grid1.setAlignment(Pos.CENTER);
         grid1.setHgap(10);
@@ -180,8 +204,10 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid1.add(hbBtn1, 1, 4);
     }
     public static void window2() throws Exception {
+
+        //Bedienoberfläche
         grid2 = new GridPane();
-        box = new HBox(155);
+        box = new HBox(160);
         box.setFillHeight(true);
         box.setAlignment(Pos.CENTER);
         StackPane pane = new StackPane();
@@ -189,9 +215,9 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid2.setAlignment(Pos.CENTER);
         grid2.setHgap(20);
         grid2.setVgap(20);
-        grid2.setPadding(new Insets(10, 10, 10, 10));
-        grid2.setGridLinesVisible(true);
-        scene2 = new Scene(pane, 1200, 600);
+        grid2.setPadding(new Insets(10, 5, 10, 5));
+        grid2.setGridLinesVisible(false);
+        scene2 = new Scene(pane, 1000, 500);
 
         //Info
         scenetitle21 = new Text("Info ");
@@ -201,12 +227,14 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         //Batterie Zustand
         lCharge =new Label(sCharge );
         battery = new Label("Batterie");
-        grid2.add(battery,0,1);
-        grid2.add(lCharge,1,1);
+        grid2.add(battery,0,2);
+        grid2.add(lCharge,1,2);
 
-        //Temperatur Diagnose
-        temperatur = new Label("Temperatur");
-        grid2.add(temperatur,0,2);
+        //Emma Daten
+        temperatur = new Label("Roboter");
+        grid2.add(temperatur,0,1);
+        grid2.add(new Label(sName),1,1);
+        grid2.add(new Label("Port: "+sPort),2,1);
 
         //Live Video
         oLiveVideoBuffered = new BufferedImage(150,150, BufferedImage.TYPE_INT_RGB);
@@ -228,19 +256,21 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid2.add(btnTalk,2,4);
 
         //Bewegen
+        poseBox = new HBox(5);
         btnStand = new Button("stehen");
         btnSit = new Button("sitzen");
         btnLie = new Button("liegen");
+        btnCrouch = new Button("hocken");
+        btnWigWag = new Button("winken");
         grid2.add(new Label("Pose"),0,5);
-        grid2.add(btnStand,1,5);
-        grid2.add(btnSit,2,5);
-        grid2.add(btnLie,3,5);
+        poseBox.getChildren().addAll(btnStand,btnSit,btnLie,btnCrouch, btnWigWag);
+        grid2.add(poseBox,1,5,2,1);
 
         //Programm beenden
-        btn2 = new Button("Schließen");
+        btnClose = new Button("Schließen");
         hbBtn2 = new HBox(10);
         hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn2.getChildren().add(btn2);
+        hbBtn2.getChildren().add(btnClose);
         grid2.add(hbBtn2, 4, 6);
 
 
@@ -248,23 +278,28 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     }
 
     public static synchronized void aktualisieren()throws Exception{
-        iTmp++;
+        //Aktualisierung der Oberfläche für sich ändernde Daten
 
         try {
             if (Uts.getSESSION() != null) {
+                //Aktualisierung Batterieladung
                 sChargeA = "" + (chargeA.getBatteryCharge()+"%");
-                lrecword.setText(sWord);
-                probability.setText(String.valueOf(fWord));
                 lCharge.setText(sChargeA);
+
+                //Aktualisierung Bild(LiveCam)
                 oLiveVideoBuffered = oVision.getBufferedImage();
                 imgView.setImage(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
                 imgView.setScaleX(2);
                 imgView.setScaleY(2);
+
+                //Aktualisierung Worterkennung
                 sWord = (String) ((ArrayList)word.getData("WordRecognized")).get(0);
-                //System.out.println(sWord);
+                lrecword.setText(sWord);
                 fWord = (float) ((ArrayList)word.getData("WordRecognized")).get(1);
+                probability.setText(String.valueOf(fWord));
             }
         }catch(ClassCastException cce){
+            //Catch für NULLPOINTEREXCEPTION
             System.out.println("NAO neustarten bitte!");
             System.exit(0);
 
