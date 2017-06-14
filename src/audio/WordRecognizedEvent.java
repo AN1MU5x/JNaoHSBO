@@ -102,7 +102,6 @@ public class WordRecognizedEvent {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                alSpeechRecognition.unsubscribe("Word");
                             }
                             else if((word.equals("<...> hallo <...>") && !bLocked) || (word.equals("<...> hi <...>") && !bLocked) || (word.equals("<...> hey <...>") && !bLocked)){
 
@@ -114,7 +113,6 @@ public class WordRecognizedEvent {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                alSpeechRecognition.unsubscribe("Word");
                             }
                             else if((word.equals("<...> setz dich hin <...>") && !bLocked) || (word.equals("<...> hinsetzen <...>") && !bLocked)){
 
