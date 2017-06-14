@@ -82,6 +82,7 @@ public class WordRecognizedEvent {
                 "WordRecognized", new EventCallback() {
                     @Override
                     public void onEvent(Object arg0) throws InterruptedException, CallError {
+
                         recWord = (ArrayList) arg0;
                         System.out.println(recWord);
                         String word=(String) recWord.get(0);
@@ -90,7 +91,9 @@ public class WordRecognizedEvent {
                         bLocked = false;
 
                         if(probability>0.5) {
+
                             if (word.equals("<...> wer bin ich <...>") && !bLocked) {
+
                                 bLocked = true;
                                 iFunktion = 1;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
@@ -102,6 +105,7 @@ public class WordRecognizedEvent {
                                 alSpeechRecognition.unsubscribe("Word");
                             }
                             else if((word.equals("<...> hallo <...>") && !bLocked) || (word.equals("<...> hi <...>") && !bLocked) || (word.equals("<...> hey <...>") && !bLocked)){
+
                                 bLocked = true;
                                 iFunktion = 2;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
@@ -113,6 +117,7 @@ public class WordRecognizedEvent {
                                 alSpeechRecognition.unsubscribe("Word");
                             }
                             else if((word.equals("<...> setz dich hin <...>") && !bLocked) || (word.equals("<...> hinsetzen <...>") && !bLocked)){
+
                                 bLocked = true;
                                 try {
                                     Position.sitzen(session);
@@ -121,6 +126,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if((word.equals("<...> stell dich hin <...>") && !bLocked) || (word.equals("<...> hinstellen <...>") && !bLocked) || (word.equals("<...> aufstehen <...>") && !bLocked)){
+
                                 bLocked = true;
                                 try {
                                     Position.stehen(session);
@@ -129,6 +135,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if((word.equals("<...> geh in die hocke <...>") && !bLocked) || (word.equals("<...> geht in die hocke <...>") && !bLocked) || (word.equals("<...> Hocken <...>") && !bLocked)){
+
                                 bLocked = true;
                                 try {
                                     Position.hocke(session);
@@ -137,6 +144,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if((word.equals("<...> winke winke <...>") && !bLocked) || (word.equals("<...> Winken <...>") && !bLocked)){
+
                                 bLocked = true;
                                 try {
                                     Position.winken(session);
@@ -149,6 +157,7 @@ public class WordRecognizedEvent {
                                 bLocked = true;
                             }
                             else if(word.equals("<...> wie geht es dir <...>") && !bLocked){
+
                                 bLocked = true;
                                 try {
                                     Uts.talk(" Gut und dir");
@@ -158,6 +167,7 @@ public class WordRecognizedEvent {
                                 iDialog = 1;
                             }
                             else if(word.equals("<...> gut <...>") && iDialog==1 && !bLocked){
+
                                 bLocked = true;
                                 iDialog = 0;
                                 try {
@@ -167,6 +177,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if((word.equals("<...> geht so <...>") && iDialog==1 && !bLocked) || (word.equals("<...> nicht so gut <...>") && iDialog==1 && !bLocked) || (word.equals("<...> schlecht <...>") && iDialog==1 && !bLocked)){
+
                                 bLocked = true;
                                 iDialog = 0;
                                 try {
@@ -176,6 +187,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if((word.equals("<...> leg dich hin <...>") && !bLocked) || (word.equals("<...> hinlegen <...>") && !bLocked)){
+
                                 bLocked = true;
                                 try {
                                     Uts.talk("Soll ich mich auf den Bauch oder auf den Rücken legen?");
@@ -185,6 +197,7 @@ public class WordRecognizedEvent {
                                 iDialog = 2;
                             }
                             else if(word.equals("<...> Bauch <...>") && iDialog==2 && !bLocked){
+
                                 bLocked = true;
                                 iDialog = 0;
                                 try {
@@ -201,6 +214,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> Rücken <...>") && iDialog==2 && !bLocked){
+
                                 bLocked = true;
                                 iDialog = 0;
                                 try {
@@ -210,6 +224,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> such andi <...>") && !bLocked){
+
                                 bLocked = true;
                                 iFunktion = 4;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
@@ -220,6 +235,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> such stefan <...>") && !bLocked) {
+
                                 bLocked = true;
                                 iFunktion = 5;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
@@ -230,6 +246,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> such iskar <...>") && !bLocked) {
+
                                 bLocked = true;
                                 iFunktion = 6;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
@@ -240,6 +257,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> such lisa <...>") && !bLocked) {
+
                                 bLocked = true;
                                 iFunktion = 7;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
@@ -250,6 +268,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> suche stop <...>")) {
+
                                 Follow.alTracker.stopTracker();
                                 FaceDetectedEvent.alMemory1.unsubscribeToEvent(FaceDetectedEvent.lFaceID);
                                 FaceDetectedEvent.alMemory1.unsubscribeAllEvents();
@@ -264,6 +283,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> Vorstellen <...>") && !bLocked) {
+
                                 bLocked = true;
                                 try {
                                     Uts.talk("Hallo ich bin Emma");
@@ -272,6 +292,7 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> wie heißt du <...>") && !bLocked) {
+
                                 bLocked = true;
                                 try {
                                     Uts.talk("Mein Name ist Emma");
