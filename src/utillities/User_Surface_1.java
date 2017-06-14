@@ -32,9 +32,6 @@ import vision.VisionCamera;
 import java.awt.image.BufferedImage;
 import java.util.*;
 
-/**
- * Created by Lisa on 07.04.2017.
- */
 public class User_Surface_1 extends Application implements EventHandler<ActionEvent> {
     private static Stage window;
     private static Scene scene1, scene2;
