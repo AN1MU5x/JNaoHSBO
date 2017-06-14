@@ -38,20 +38,21 @@ public class WordRecognizedEvent {
     private ArrayList recWord;
     private  ALFaceDetection alFaceDetection;
     private  ALSpeechRecognition alSpeechRecognition;
-    private  FaceDetectedEvent FDE;
+    private  FaceDetectedEvent FDE=new FaceDetectedEvent();
     //Setzt die Dialoge, false = 0 und true > 0
     private int iDialog = 0;
+
 
     public void run(Session session) throws Exception {
 
         recWord = new ArrayList<String>();
         alMemory = new ALMemory(session);
+       // FDE=new FaceDetectedEvent();
 
         alSpeechRecognition = new ALSpeechRecognition(session);
-        alFaceDetection = new ALFaceDetection(session);
-        FDE= new FaceDetectedEvent();
+        //alFaceDetection = new ALFaceDetection(session);
         //Setzt Gesichtsverfolgung
-        alFaceDetection.setTrackingEnabled(true);
+       // alFaceDetection.setTrackingEnabled(true);
         //Spracheinstellung
         alSpeechRecognition.setLanguage("German");
         alSpeechRecognition.subscribe("Word",1000,0.0f);
@@ -100,7 +101,8 @@ public class WordRecognizedEvent {
                     public void onEvent(Object arg0) throws InterruptedException, CallError {
                         recWord = (ArrayList) arg0;
                         System.out.println(recWord);
-                        String word = (String) recWord.get(0);
+                        //String word = (String) recWord.get(0);
+                        String word=(String) recWord.get(0);
                         System.out.println(word);
                         float probability = (float)recWord.get(1);
                         //iFunktion = 0;
@@ -332,6 +334,7 @@ public class WordRecognizedEvent {
                     }
                 });
     }
+
 }
 
 

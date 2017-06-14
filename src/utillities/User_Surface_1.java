@@ -39,7 +39,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static Scene scene1, scene2;
     private static Button btn1, btn2, btnTalk;
     private static GridPane grid1, grid2;
-    private static Label name, port, battery, temperatur, lCharge;
+    private static Label name, port, battery, temperatur, lCharge,lrecword,probability;
     private static Text scenetitle1, scenetitle21, scenetitle22;
     private static HBox hbBtn1, hbBtn2, box;
     private static TextField userTextField, portTextField;
@@ -53,6 +53,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
     private static float fWord;
     private static TextField textField;
     public static WordRecognizedEvent recognizedEvent;
+
 
     //Benötigt als Datenaustausch zwichen den Threads
     public static String sBattery = "Batterie";
@@ -175,7 +176,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid2.add(scenetitle21, 0, 0, 2, 1);
 
         //Batterie Zustand
-        lCharge =new Label(sCharge+"%");
+        lCharge =new Label(sCharge );
         battery = new Label("Batterie");
         grid2.add(battery,0,1);
         grid2.add(lCharge,1,1);
@@ -190,9 +191,12 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         box.getChildren().add(imgView);
 
         //Spracherkennung
+
         grid2.add(new Label("gehört"),0,3);
-        grid2.add(new Label(sWord),1,3);
-        grid2.add(new Label(String.valueOf(fWord)),2,3);
+        lrecword =new Label(sWord);
+        grid2.add(lrecword,1,3);
+        probability= new Label(String.valueOf(fWord));
+        grid2.add(probability,2,3);
 
         //Sprechen
         btnTalk = new Button("Sprechen");
@@ -218,13 +222,16 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         try {
             if (Uts.getSESSION() != null) {
                 chargeA = new ALBattery(Uts.getSESSION());
-                sChargeA = "" + (chargeA.getBatteryCharge());
+                sChargeA = "" + (chargeA.getBatteryCharge()+"%");
+                lrecword.setText(sWord);
+                probability.setText(String.valueOf(fWord));
                 lCharge.setText(sChargeA);
                 oLiveVideoBuffered = oVision.getImage();
                 imgView.setImage(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
                 imgView.setScaleX(2);
                 imgView.setScaleY(2);
                 sWord = (String) ((ArrayList)word.getData("WordRecognized")).get(0);
+                //System.out.println(sWord);
                 fWord = (float) ((ArrayList)word.getData("WordRecognized")).get(1);
             }
         }catch(ClassCastException cce){
