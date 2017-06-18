@@ -39,6 +39,8 @@ public class FaceDetectedEvent {
 
                         iCounter++;
                         System.out.println(iCounter+": Face detected");
+
+                        //Für das erkennen des Gesichts ist es nötig
                         ArrayList faceDetected = (ArrayList) o;
 
                         if (faceDetected.size() > 0) {

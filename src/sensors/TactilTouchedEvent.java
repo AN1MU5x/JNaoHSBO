@@ -37,7 +37,7 @@ public class TactilTouchedEvent {
                 "RearTactilTouched", new EventCallback<Float>() {
                     public void onEvent(Float arg0) throws InterruptedException, CallError {
                         System.out.println("Rear Tactil Touched");
-                        //Hier Anweisung
+                        //Aktion zum wieder aufstehen des Nao´s, wenn dieser auf dem Bauch liegt
                         if(WordRecognizedEvent.iFunktion==3){
                             WordRecognizedEvent.iFunktion=0;
                             try {
