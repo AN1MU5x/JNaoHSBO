@@ -18,9 +18,6 @@ import java.nio.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Lisa on 02.06.2017.
- */
 public class VisionCamera extends Thread {
     ALVideoDevice oVideoDevice;
     String sHandle;

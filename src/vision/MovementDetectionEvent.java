@@ -5,9 +5,7 @@ import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALMovementDetection;
-/**
- * Created by Lisa on 26.04.2017.
- */
+
 public class MovementDetectionEvent {
 
     ALMemory alMemory;
