@@ -9,9 +9,6 @@ import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
 import java.util.ArrayList;
 
-/** 
- * Created by Lisa on 06.04.2017.
- */
 public class Uts extends Thread {
 
     private static Application APP;

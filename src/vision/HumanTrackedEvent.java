@@ -6,9 +6,6 @@ import com.aldebaran.qi.helper.EventCallback;
 import com.aldebaran.qi.helper.proxies.ALMemory;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
 
-/**
- * Created by Lisa on 28.04.2017.
- */
 public class HumanTrackedEvent {
 
     ALMemory alMemory;

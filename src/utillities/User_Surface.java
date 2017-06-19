@@ -31,7 +31,7 @@ import vision.VisionCamera;
 import java.awt.image.BufferedImage;
 import java.util.*;
 
-public class User_Surface_1 extends Application implements EventHandler<ActionEvent> {
+public class User_Surface extends Application implements EventHandler<ActionEvent> {
     private static Stage window;
     private static Scene scene1, scene2;
     private static Button btn1, btnClose, btnTalk, btnStand, btnSit, btnLie, btnCrouch, btnWigWag;
@@ -227,18 +227,20 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid2.add(battery,0,2);
         grid2.add(lCharge,1,2);
 
-        //Emma Daten
+        //Roboter Daten(Wurden im ersten Fenster eingegeben)
         temperatur = new Label("Roboter");
         grid2.add(temperatur,0,1);
         grid2.add(new Label(sName),1,1);
         grid2.add(new Label("Port: "+sPort),2,1);
 
         //Live Video
+        //(einzelenes Bild von der Cam, dass immer neu erstellt und unter "aktualisieren" ersetzt wird)
         oLiveVideoBuffered = new BufferedImage(150,150, BufferedImage.TYPE_INT_RGB);
         imgView = new ImageView(SwingFXUtils.toFXImage(oLiveVideoBuffered, null));
         box.getChildren().add(imgView);
 
         //Spracherkennung
+        //(Wörter und Sicherheit werden unter "aktualisieren" erneuert)
         grid2.add(new Label("gehört"),0,3);
         lrecword =new Label(sWord);
         grid2.add(lrecword,1,3);
@@ -246,6 +248,7 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid2.add(probability,2,3);
 
         //Sprechen
+        //Eingegebener Text kann direkt vom Roboter gesagt werden
         btnTalk = new Button("Sprechen");
         grid2.add(new Label("Ausgabe"),0,4);
         textField = new TextField("Ich bin Emma!");
@@ -253,6 +256,8 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
         grid2.add(btnTalk,2,4);
 
         //Bewegen
+        //Vorgefertigte Posen sind per Button aktivierbar
+        //Kamerabild friert ein währen der Bewegung
         poseBox = new HBox(5);
         btnStand = new Button("stehen");
         btnSit = new Button("sitzen");
@@ -297,6 +302,8 @@ public class User_Surface_1 extends Application implements EventHandler<ActionEv
             }
         }catch(ClassCastException cce){
             //Catch für NULLPOINTEREXCEPTION
+            //interner Fehler des Roboters
+            //ersatz für die Ausgabe der Fehlermeldung mit bitte zum Neustart, da dieser das Problem löst
             System.out.println("NAO neustarten bitte!");
             System.exit(0);
 

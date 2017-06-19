@@ -18,9 +18,6 @@ import java.nio.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Lisa on 02.06.2017.
- */
 public class VisionCamera extends Thread {
     ALVideoDevice oVideoDevice;
     String sHandle;
@@ -83,6 +80,8 @@ public class VisionCamera extends Thread {
         oVideoDevice.closeCamera(iCamPos);
     }
 
+    // Umwandlung der RawData des ImageRemote, da unter java ALImage nicht genutzt werden kann
+    // und so ein BufferedImage aus den erhaltenen Daten erstellt werden muss um verwendet werden zu können
     public BufferedImage getImage() throws Exception {
         List<Object> oLst = (List<Object>)oVideoDevice.getImageRemote(sHandle);
 
