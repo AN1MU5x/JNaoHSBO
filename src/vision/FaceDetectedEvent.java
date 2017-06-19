@@ -18,8 +18,10 @@ public class FaceDetectedEvent {
    private ALTextToSpeech alTextToSpeech;
    private ALFaceDetection alFaceDetection;
    private Follow follow ;
+
    //Variable zum Sperren der Funktion nach einmaligem benutzen
    private boolean bOneUse = true;
+
    //Variable zum zählen der Gesichtserkennung
    private int iCounter = 0;
 
@@ -61,9 +63,11 @@ public class FaceDetectedEvent {
 
                                         bOneUse = false;
                                         iCounter = 0;
+
                                         //Event wird beendet
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
+
                                         //Sprachausgabe erfolgt
                                         alTextToSpeech.say("Herr " + faceLabel);
                                     }
@@ -71,9 +75,11 @@ public class FaceDetectedEvent {
 
                                         bOneUse = false;
                                         iCounter = 0;
+
                                         //Event wird beendet
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
+
                                         //Sprachausgabe erfolgt
                                         alTextToSpeech.say("Frau " + faceLabel);
                                     }
@@ -81,9 +87,11 @@ public class FaceDetectedEvent {
 
                                         bOneUse = false;
                                         iCounter = 0;
+
                                         //Event wird beendet
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
+
                                         //Sprachausgabe erfolgt
                                         alTextToSpeech.say(faceLabel);
                                     }
@@ -92,9 +100,11 @@ public class FaceDetectedEvent {
 
                                     bOneUse = false;
                                     iCounter = 0;
+
                                     //Event wird beendet
                                     alMemory1.unsubscribeToEvent(lFaceID);
                                     alFaceDetection.unsubscribe("Face");
+
                                     //Sprachausgabe erfolgt
                                     alTextToSpeech.say("Keine Ahnung");
                                 }
@@ -106,11 +116,14 @@ public class FaceDetectedEvent {
 
                                         bOneUse = false;
                                         iCounter = 0;
+
                                         //Event wird beendet
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
+
                                         //Sprachausgabe erfolgt
                                         alTextToSpeech.say("Hallo Herr " + faceLabel);
+
                                         //Bewegung Winken wird ausgeführt
                                         try {
                                             Position.winken(session);
@@ -122,11 +135,14 @@ public class FaceDetectedEvent {
 
                                         bOneUse = false;
                                         iCounter = 0;
+
                                         //Event wird beendet
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
+
                                         //Sprachausgabe erfolgt
                                         alTextToSpeech.say("Hallo Frau " + faceLabel);
+
                                         //Bewegung Winken wird ausgeführt
                                         try {
                                             Position.winken(session);
@@ -138,11 +154,14 @@ public class FaceDetectedEvent {
 
                                         bOneUse = false;
                                         iCounter = 0;
+
                                         //Event wird beendet
                                         alMemory1.unsubscribeToEvent(lFaceID);
                                         alFaceDetection.unsubscribe("Face");
+
                                         //Sprachausgabe erfolgt
                                         alTextToSpeech.say("Hallo " + faceLabel);
+
                                         //Bewegung Winken wird ausgeführt
                                         try {
                                             Position.winken(session);
@@ -155,9 +174,11 @@ public class FaceDetectedEvent {
 
                                     bOneUse = false;
                                     iCounter = 0;
+
                                     //Event wird beendet
                                     alMemory1.unsubscribeToEvent(lFaceID);
                                     alFaceDetection.unsubscribe("Face");
+
                                     //Sprachausgabe erfolgt
                                     alTextToSpeech.say("Hallo");
                                 }
@@ -172,6 +193,7 @@ public class FaceDetectedEvent {
                                         alFaceDetection.unsubscribe("Face");
                                         Follow.bFollowOn =true;
                                         Follow.bSearch =true;
+
                                         //Aktion Folgen wird ausgeführt
                                         try {
                                             follow.run(session);
@@ -191,6 +213,7 @@ public class FaceDetectedEvent {
                                         alFaceDetection.unsubscribe("Face");
                                         Follow.bFollowOn =true;
                                         Follow.bSearch =true;
+
                                         //Aktion Folgen wird ausgeführt
                                         try {
                                             follow.run(session);
@@ -210,6 +233,7 @@ public class FaceDetectedEvent {
                                         alFaceDetection.unsubscribe("Face");
                                         Follow.bFollowOn = true;
                                         Follow.bSearch = true;
+
                                         //Aktion Folgen wird ausgeführt
                                         try {
                                             follow.run(session);
@@ -229,6 +253,7 @@ public class FaceDetectedEvent {
                                         alFaceDetection.unsubscribe("Face");
                                         Follow.bFollowOn =true;
                                         Follow.bSearch =true;
+
                                         //Aktion Folgen wird ausgeführt
                                         try {
                                             follow.run(session);

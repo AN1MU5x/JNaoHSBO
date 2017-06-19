@@ -10,7 +10,10 @@ import java.util.ArrayList;
 
 public class Position  {
 
+    //Das ALRobotPosture - Modul ermöglicht es Ihnen, den Roboter in verschiedene vordefinierte Positionen zu bewegen
     private static ALRobotPosture p;
+
+    //Das ALMotion-Modul bietet Methoden, die es ermöglichen den Roboter zu bewegen
     private static ALMotion bew;
 
     //Array-Listen zum abspeichern der gelenke, winkel und der Zeit (Funktion winken)
@@ -35,7 +38,7 @@ public class Position  {
     public static void follow(Session session) throws Exception{
         bFollow = true;
 
-        //Anlegen von Typ ALTracker mit übergabe der Session
+        //Anlegen eines Objekts von ALTracker mit übergabe der Session
         ALTracker a = new ALTracker(session);
 
         while (bFollow) {
@@ -54,7 +57,7 @@ public class Position  {
     //Funktion sitzen
     public static void sitzen(Session session) throws Exception{
 
-        //Anlegen einer Variable aus der Klasse ALRobotPosture, welche vordefinierte Positionen beinhaltet
+        //Anlegen eines Objekts aus der Klasse ALRobotPosture, welche vordefinierte Positionen beinhaltet
         p = new ALRobotPosture(session);
 
         //Aufruf der Methode stopMove, um Überschneidungen zu verhindern
@@ -144,7 +147,7 @@ public class Position  {
     //Methode, welche den Roboter winken lässt
     public static void winken(Session session) throws Exception{
 
-        //Anlegen von Variable aus der Klasse ALMotion, welche Methoden zur Ansteuerung der einzelnen Motoren beinhaltet
+        //Anlegen von Objekt aus der Klasse ALMotion, welche Methoden zur Ansteuerung der einzelnen Motoren beinhaltet
         bew= new ALMotion(session);
 
         //Erzeugen ArrayList

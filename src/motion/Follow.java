@@ -20,7 +20,7 @@ public class Follow {
 
     public void run(Session session) throws Exception{
 
-        //Anlegen von alTracker, mit Übergabe der laufenden session
+        //Anlegen eines Objekts von alTracker, mit Übergabe der laufenden session
         alTracker = new ALTracker(session);
 
         //Aufruf des FaceDetectedEvents
