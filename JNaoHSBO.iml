@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="java-naoqi-sdk-2.5.5.5-win32-vs2013" level="project" />
-    <orderEntry type="library" name="java-naoqi-sdk-2.5.5.5-mac64" level="application" />
+    <orderEntry type="library" name="java-naoqi-sdk-2.5.5.5-win32-vs2013" level="project" />
+    <orderEntry type="library" exported="" name="java-naoqi-sdk-2.5.5.5-mac64" level="application" />
   </component>
 </module>

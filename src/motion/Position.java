@@ -12,6 +12,8 @@ public class Position  {
 
     private static ALRobotPosture p;
     private static ALMotion bew;
+
+    //Array-Listen zum abspeichern der gelenke, winkel und der Zeit (Funktion winken)
     private static ArrayList name;
     private static ArrayList name1;
     private static ArrayList angles;
@@ -26,27 +28,43 @@ public class Position  {
     private static ArrayList array5;
     private static ArrayList array6;
     private static ArrayList array7;
+
     public static boolean bFollow;
 
+    //Einfache Folgefunktion
     public static void follow(Session session) throws Exception{
         bFollow = true;
+
+        //Anlegen von Typ ALTracker mit übergabe der Session
         ALTracker a = new ALTracker(session);
 
         while (bFollow) {
             a.track("Face");
             a.setMode("Move");
+
+            //TactilTouchedEvent zum stoppen über die Sensoren am Kopf anlegen
             TactilTouchedEvent ctte = new TactilTouchedEvent();
+
+            //Ausführen der durchgängigen Sensorabfrage
             ctte.run(session);
             Uts.getAPP().run();
         }
     }
 
+    //Funktion sitzen
     public static void sitzen(Session session) throws Exception{
+
+        //Anlegen einer Variable aus der Klasse ALRobotPosture, welche vordefinierte Positionen beinhaltet
         p = new ALRobotPosture(session);
+
+        //Aufruf der Methode stopMove, um Überschneidungen zu verhindern
         p.stopMove();
 
+        //Abfrage ob Roboter bereits sitzt, wenn nicht, wird hinsetzen eingeleitet
         if(!p.getPosture().equals("Sit")) {
             Uts.talk("Gib mir ein moment ich setze mich hin.");
+
+            //Die Methode goToPosture erwartet einen Positonsnamen und die Geschwindigkeit, mit welcher in diese Position bewegt werden soll
             p.goToPosture("Sit", 1.f);
             Uts.talk("Ich hab mich hingesetzt");
         }
@@ -61,6 +79,7 @@ public class Position  {
             Uts.talk("Ich bin fertig");
         }
     }
+
     public static void stehen(Session session) throws Exception{
         p = new ALRobotPosture(session);
         p.stopMove();
@@ -70,6 +89,7 @@ public class Position  {
             Uts.talk("Ich stehe");
         }
     }
+
     public static void liegenRuecken(Session session) throws Exception{
         p = new ALRobotPosture(session);
         p.stopMove();
@@ -79,6 +99,7 @@ public class Position  {
             Uts.talk("Ich liege auf den Rücken");
         }
     }
+
     public static void liegenBauch(Session session) throws Exception{
         p = new ALRobotPosture(session);
         p.stopMove();
@@ -88,6 +109,7 @@ public class Position  {
             Uts.talk("Ich liege auf dem Bauch");
         }
     }
+
     public static void stehenNull(Session session) throws Exception{
         p = new ALRobotPosture(session);
         p.stopMove();
@@ -97,6 +119,7 @@ public class Position  {
             Uts.talk("Ich bin fertig");
         }
     }
+
     public static void sitzenRelax(Session session) throws Exception{
         p = new ALRobotPosture(session);
         p.stopMove();
@@ -106,6 +129,8 @@ public class Position  {
             Uts.talk("Ich sitze");
         }
     }
+
+    //Stehen Einleiten, mit der Option sich auf für folgende Bewegung bereit zu halten
     public static void stehenInit(Session session) throws Exception{
         p = new ALRobotPosture(session);
         p.stopMove();
@@ -116,10 +141,13 @@ public class Position  {
         }
     }
 
+    //Methode, welche den Roboter winken lässt
     public static void winken(Session session) throws Exception{
+
+        //Anlegen von Variable aus der Klasse ALMotion, welche Methoden zur Ansteuerung der einzelnen Motoren beinhaltet
         bew= new ALMotion(session);
 
-        //erzeugen ArrayList
+        //Erzeugen ArrayList
         name =new ArrayList<String>();
         name1 =new ArrayList<String>();
 
@@ -129,13 +157,14 @@ public class Position  {
         time =new ArrayList<Float>();
         time1 =new ArrayList<Float>();
 
-        //hinzufügen bewegungsaktionen zur liste
+        //Hinzufügen Bewegungsaktionen zur liste (Was soll angesprochen werden)
         name.add(0,"RShoulderPitch");
         name.add(1,"RWristYaw");
         name.add(2,"RHand");
 
         name1.add(0,"RShoulderRoll");
-        //festlegen der Aktionswinkel in liste
+
+        //Festlegen der Aktionswinkel in liste (Um wieviel Grad soll zuständiger Motor drehen)
         angles.add(0,Uts.DegToRad(-70));
         angles.add(1,Uts.DegToRad(-70));
         angles.add(2,Uts.DegToRad(50));
@@ -143,15 +172,17 @@ public class Position  {
         angles1.add(0,Uts.DegToRad(-50));
         angles1.add(1,Uts.DegToRad(0));
 
-        //festlegen der Zeitpunkte der Aktionen
+        //Festlegen der Zeitpunkte der Aktionen (Wann und wie Lange soll Aktion durchgeführt werden)
         time.add(0,1.f);
         time.add(1,1.2f);
         time.add(2,1.4f);
 
         time1.add(0,1.0f);
         time1.add(1,2.0f);
-        //Die Steifheit auf 100% stellen
+
+        //Die Steifheit auf 100% stellen, um die Motoren bewegen zu können (weniger Steifheit = weniger Kraft)
         bew.setStiffnesses("RArm",1.0f);
+
         //Bewegungsaktionen ausführen
         bew.angleInterpolation(name,angles,time,true);
 
@@ -200,6 +231,7 @@ public class Position  {
 
     }
 
+    //Eigene Funktion laufen, nicht fertig da sehr sehr Zeitaufwändig und nicht zwingend nötig
     public static ArrayList moveconfigvor() throws Exception{
         array = new ArrayList<>();
         array1 = new ArrayList<>();
