@@ -275,6 +275,7 @@ public class WordRecognizedEvent {
 
                                 bLocked = true;
                                 iFunktion = 4;
+                                iDialog = 3;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
                                 Follow.bTargetLost= true;
                                 try {
@@ -288,6 +289,7 @@ public class WordRecognizedEvent {
 
                                 bLocked = true;
                                 iFunktion = 5;
+                                iDialog = 3;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
                                 try {
                                     faceDetectedEvent.run(session);
@@ -299,6 +301,7 @@ public class WordRecognizedEvent {
 
                                 bLocked = true;
                                 iFunktion = 6;
+                                iDialog = 3;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
                                 try {
                                     faceDetectedEvent.run(session);
@@ -310,6 +313,7 @@ public class WordRecognizedEvent {
 
                                 bLocked = true;
                                 iFunktion = 7;
+                                iDialog = 3;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
                                 try {
                                     faceDetectedEvent.run(session);
@@ -317,7 +321,7 @@ public class WordRecognizedEvent {
                                     e.printStackTrace();
                                 }
                             }
-                            else if(word.equals("<...> suche stop <...>")) {
+                            else if(word.equals("<...> suche stop <...>") && iDialog == 3) {
 
                                 //Varibalen werden auf ihre Ursprungswerte gesetzt
                                 iFunktion=0;
