@@ -56,6 +56,7 @@ public class Position  {
     //Funktion Komm zu  mir
     public static void come(Session session)throws Exception{
 
+        //Anlegen eines Objekts von ALTracker mit übergeben der Session
         ALTracker a = new ALTracker(session);
         a.track("Face");
         a.setMode("Move");
