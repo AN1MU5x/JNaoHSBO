@@ -63,8 +63,8 @@ public class WordRecognizedEvent {
         vocabulary.add("stell dich hin");
         vocabulary.add("hinstellen");
         vocabulary.add("aufstehen");
-        vocabulary.add("folge mir");            //iFunktion=4
-        vocabulary.add("folgen");               //iFunktion=4
+        vocabulary.add("folge mir");
+        vocabulary.add("folgen");
         vocabulary.add("geh in die hocke");
         vocabulary.add("geht in die hocke");
         vocabulary.add("Hocken");
@@ -185,6 +185,16 @@ public class WordRecognizedEvent {
                                 }
                             }
                             else if(word.equals("<...> komm zu mir <...>") && !bLocked){
+
+                                bLocked = true;
+                                try {
+                                    Position.come(session);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                            else if(word.equals("<...> folgen <...>") && !bLocked||word.equals("<...> folge mir <...>") && !bLocked){
 
                                 bLocked = true;
                                 try {

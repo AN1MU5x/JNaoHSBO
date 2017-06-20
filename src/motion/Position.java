@@ -50,8 +50,15 @@ public class Position  {
 
             //Ausführen der durchgängigen Sensorabfrage
             ctte.run(session);
-            Uts.getAPP().run();
         }
+        a.stopTracker();
+    }
+    //Funktion Komm zu  mir
+    public static void come(Session session)throws Exception{
+
+        ALTracker a = new ALTracker(session);
+        a.track("Face");
+        a.setMode("Move");
     }
 
     //Funktion sitzen
