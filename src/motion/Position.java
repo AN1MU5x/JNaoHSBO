@@ -50,8 +50,8 @@ public class Position  {
 
             //Ausführen der durchgängigen Sensorabfrage
             ctte.run(session);
-            Uts.getAPP().run();
         }
+        a.stopTracker();
     }
 
     //Funktion sitzen
