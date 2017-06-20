@@ -28,12 +28,14 @@ public class FaceDetectedEvent {
 
    public void run(Session session) throws Exception {
 
+        //Erstellen von Objekten
         alMemory1 = new ALMemory(session);
         alTextToSpeech = new ALTextToSpeech(session);
         alFaceDetection = new ALFaceDetection(session);
         follow = new Follow();
-        alFaceDetection.subscribe("Face", 500, 0.0f);
 
+        //Event starten
+        alFaceDetection.subscribe("Face", 500, 0.0f);
         lFaceID = alMemory1.subscribeToEvent(
                 "FaceDetected", new EventCallback() {
                     @Override
@@ -42,7 +44,8 @@ public class FaceDetectedEvent {
                         iCounter++;
                         System.out.println(iCounter+": Face detected");
 
-                        //Für das erkennen des Gesichts ist es nötig
+                        //Um an den Namen von gespeicherten Gesichtern zu kommen ist es nötig eine Vielzahl von Listen zu durchlaufen.
+                        //Genaue Aufteilung ist beschrieben in der API.
                         ArrayList faceDetected = (ArrayList) o;
 
                         if (faceDetected.size() > 0) {
@@ -53,6 +56,8 @@ public class FaceDetectedEvent {
 
                                 ArrayList faceInfo = (ArrayList) (faceInfoList.get(0));
                                 ArrayList extraInfo = (ArrayList) (faceInfo.get(1));
+
+                                //Name von gespeicherten Gesichtern
                                 String faceLabel = (String) (extraInfo.get(2));
                                 System.out.println(faceLabel);
 
