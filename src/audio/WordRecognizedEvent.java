@@ -276,7 +276,9 @@ public class WordRecognizedEvent {
                                 bLocked = true;
                                 iFunktion = 4;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
+                                Follow.bTargetLost= true;
                                 try {
+                                    Uts.talk("Ich suche jetzt Andi");
                                     faceDetectedEvent.run(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -317,24 +319,31 @@ public class WordRecognizedEvent {
                             }
                             else if(word.equals("<...> suche stop <...>")) {
 
+                                //Varibalen werden auf ihre Ursprungswerte gesetzt
+                                iFunktion=0;
+                                Follow.bFollowOn =false;
+                                Follow.bSearch =false;
+                                Follow.bTargetLost =false;
+                                Follow.alTracker.setMode("Head");
+
                                 //Die Globale Variable alTracker wird gestoppt, damit der Roboter nicht mehr folgt
                                 Follow.alTracker.stopTracker();
 
-                                //Beenden des Events
-                                FaceDetectedEvent.alMemory1.unsubscribeToEvent(FaceDetectedEvent.lFaceID);
-                                FaceDetectedEvent.alMemory1.unsubscribeAllEvents();
-
                                 //Varibalen werden auf ihre Ursprungswerte gesetzt
-                                Follow.bSearch =false;
-                                Follow.bFollowOn =false;
-                                Follow.bTargetLost =false;
-                                iFunktion=0;
+                               // Follow.bSearch =false;
+                                //Follow.bFollowOn =false;
+                               // Follow.bTargetLost =false;
+                               // iFunktion=0;
 
                                 try {
                                     Uts.talk("Ich folge nicht mehr");
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+
+                                //Beenden des Events
+                                FaceDetectedEvent.alMemory1.unsubscribeToEvent(FaceDetectedEvent.lFaceID);
+                                FaceDetectedEvent.alMemory1.unsubscribeAllEvents();
                             }
                             else if(word.equals("<...> Vorstellen <...>") && !bLocked) {
 

@@ -184,7 +184,7 @@ public class FaceDetectedEvent {
                                 }
 
                                 //Aktion auf "Suche Andi"
-                                if (((WordRecognizedEvent.iFunktion == 4) || (Follow.bTargetLost)) && WordRecognizedEvent.iFunktion==4) {
+                                if ((((WordRecognizedEvent.iFunktion == 4)||Follow.bTargetLost)) && WordRecognizedEvent.iFunktion==4) {
 
                                     if (faceLabel.equals("Andi")) {
 
