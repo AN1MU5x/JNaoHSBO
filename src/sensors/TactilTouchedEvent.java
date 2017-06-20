@@ -20,9 +20,8 @@ public class TactilTouchedEvent {
                 "FrontTactilTouched", new EventCallback<Float>() {
                     public void onEvent(Float arg0) throws InterruptedException, CallError {
                         System.out.println("Front Tactil Touched");
-                        //Hier Anweisung
-                        Position.bFollow = false;//Probeweise zum stopen der follow Funktion
-
+                        if(arg0 == 1)
+                            Position.bFollow = false;   //Stoppt die Funktion "Komm zu mir" an dieser Stelle
                     }
                 });
         alMemory.subscribeToEvent(
