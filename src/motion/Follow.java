@@ -18,6 +18,8 @@ public class Follow {
     //FaceDetectedEvent, siehe: vision/FaceDetectedEvent
     private FaceDetectedEvent faceDetectedEvent;
 
+    int fOneUse=0;
+
     public void run(Session session) throws Exception{
 
         //Anlegen eines Objekts von alTracker, mit Übergabe der laufenden session
@@ -35,7 +37,7 @@ public class Follow {
             if (bFollowOn) {
 
                 //Wenn Ziel verloren und ID des Ziels gesetzt
-                if ((alTracker.isTargetLost() && WordRecognizedEvent.iFunktion==4) || (alTracker.isTargetLost() && WordRecognizedEvent.iFunktion==5) || (alTracker.isTargetLost() && WordRecognizedEvent.iFunktion==6) || (alTracker.isTargetLost() && WordRecognizedEvent.iFunktion==7)) {
+                if (((alTracker.isTargetLost() && WordRecognizedEvent.iFunktion==4) || (alTracker.isTargetLost() && WordRecognizedEvent.iFunktion==5) || (alTracker.isTargetLost() && WordRecognizedEvent.iFunktion==6) || (alTracker.isTargetLost() && WordRecognizedEvent.iFunktion==7))&& (fOneUse ==0)) {
                     bFollowOn = false;
 
                     //Aufruf der Methode stopTracker, um ein folgen einer nicht-gesuchten Person zu verhindern
@@ -49,6 +51,7 @@ public class Follow {
 
                     //bSearch auf false setzten zum verlassen der while - Schleife
                     bSearch =false;
+                    fOneUse=1;
                 }
 
                 //Wenn Person erkannt "bFollowOn" = true und ID gesetzt (4, 5, 6, 7 ...)
@@ -62,9 +65,18 @@ public class Follow {
 
                     //Ziel ist nicht verloren
                     bTargetLost =false;
+
+                    fOneUse =0;
+                    FaceDetectedEvent.alMemory1.unsubscribeAllEvents();
+
                 }
+
 
             }
         }
+
+        alTracker.setMode("Head");
+        alTracker.stopTracker();
+
     }
 }
