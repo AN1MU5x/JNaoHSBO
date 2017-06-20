@@ -5,7 +5,6 @@ import com.aldebaran.qi.Session;
 import com.aldebaran.qi.helper.proxies.ALFaceDetection;
 import com.aldebaran.qi.helper.proxies.ALMotion;
 import com.aldebaran.qi.helper.proxies.ALTextToSpeech;
-
 import java.util.ArrayList;
 
 public class Uts extends Thread {

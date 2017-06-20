@@ -108,7 +108,7 @@ public class VisionCamera extends Thread {
     @Override
     public void run(){
         while(true) try {
-            Thread.sleep(10);
+            Thread.sleep(125);
             bufferedImage = getImage();
         } catch (Exception e) {
             e.printStackTrace();

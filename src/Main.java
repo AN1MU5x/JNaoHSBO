@@ -13,7 +13,7 @@ public class Main{
         //Starten der Spracherkennung
         WordRecognizedEvent wordRecognizedEvent = new WordRecognizedEvent();
         wordRecognizedEvent.run(Uts.getAPP().session());
-        Uts.talk("Hallo");
+        //Uts.talk("Hallo");
         Uts.getAPP().run();
 
     }

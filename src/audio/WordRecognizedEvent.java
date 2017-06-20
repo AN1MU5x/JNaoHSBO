@@ -14,7 +14,7 @@ import vision.FaceDetectedEvent;
 import java.util.ArrayList;
 
 public class WordRecognizedEvent {
-    //Kommentar
+
     public static  ALMemory alMemory;
     private ArrayList recWord;
     private ALFaceDetection alFaceDetection;
