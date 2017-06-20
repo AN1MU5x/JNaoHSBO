@@ -80,10 +80,10 @@ public class WordRecognizedEvent {
         vocabulary.add("hinlegen");             //iDialog=2
         vocabulary.add("Bauch");                //iFunktion=3
         vocabulary.add("Rücken");
-        vocabulary.add("such andi");            //iFunktion=4
-        vocabulary.add("such stefan");          //iFunktion=5
-        vocabulary.add("such iskar");           //iFunktion=6
-        vocabulary.add("such lisa");            //iFunktion=7
+        vocabulary.add("Geh zu andi");            //iFunktion=4
+        vocabulary.add("Geh zu stefan");          //iFunktion=5
+        vocabulary.add("Geh zu iskar");           //iFunktion=6
+        vocabulary.add("Geh zu lisa");            //iFunktion=7
         vocabulary.add("suche stop");
         vocabulary.add("Vorstellen");
         vocabulary.add("wie heißt du");
@@ -281,7 +281,7 @@ public class WordRecognizedEvent {
                                     e.printStackTrace();
                                 }
                             }
-                            else if(word.equals("<...> such andi <...>") && !bLocked){
+                            else if(word.equals("<...> Geh zu andi <...>") && !bLocked){
 
                                 bLocked = true;
                                 iFunktion = 4;
@@ -289,43 +289,46 @@ public class WordRecognizedEvent {
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
                                 Follow.bTargetLost= true;
                                 try {
-                                    Uts.talk("Ich suche jetzt Andi");
+                                    Uts.talk("Ich gehe jetzt zu Andi");
                                     faceDetectedEvent.run(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
-                            else if(word.equals("<...> such stefan <...>") && !bLocked) {
+                            else if(word.equals("<...> Geh zu stefan <...>") && !bLocked) {
 
                                 bLocked = true;
                                 iFunktion = 5;
                                 iDialog = 3;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
                                 try {
+                                    Uts.talk("Ich gehe jetzt zu Stefan");
                                     faceDetectedEvent.run(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
-                            else if(word.equals("<...> such iskar <...>") && !bLocked) {
+                            else if(word.equals("<...> Geh zu iskar <...>") && !bLocked) {
 
                                 bLocked = true;
                                 iFunktion = 6;
                                 iDialog = 3;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
                                 try {
+                                    Uts.talk("Ich gehe jetzt zu Iskar");
                                     faceDetectedEvent.run(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
-                            else if(word.equals("<...> such lisa <...>") && !bLocked) {
+                            else if(word.equals("<...> Geh zu lisa <...>") && !bLocked) {
 
                                 bLocked = true;
                                 iFunktion = 7;
                                 iDialog = 3;
                                 FaceDetectedEvent faceDetectedEvent = new FaceDetectedEvent();
                                 try {
+                                    Uts.talk("Ich gehe jetzt zu Lisa");
                                     faceDetectedEvent.run(session);
                                 } catch (Exception e) {
                                     e.printStackTrace();
