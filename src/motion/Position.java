@@ -23,14 +23,7 @@ public class Position  {
     private static ArrayList angles1;
     private static ArrayList time;
     private static ArrayList time1;
-    private static ArrayList array;
-    private static ArrayList array1;
-    private static ArrayList array2;
-    private static ArrayList array3;
-    private static ArrayList array4;
-    private static ArrayList array5;
-    private static ArrayList array6;
-    private static ArrayList array7;
+
 
     public static boolean bFollow;
 
@@ -73,7 +66,7 @@ public class Position  {
 
         //Abfrage ob Roboter bereits sitzt, wenn nicht, wird hinsetzen eingeleitet
         if(!p.getPosture().equals("Sit")) {
-            Uts.talk("Gib mir ein moment ich setze mich hin.");
+            Uts.talk("Gib mir einen Moment ich setze mich hin.");
 
             //Die Methode goToPosture erwartet einen Positonsnamen und die Geschwindigkeit, mit welcher in diese Position bewegt werden soll
             p.goToPosture("Sit", 1.f);
@@ -85,7 +78,7 @@ public class Position  {
         p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("Crouch")) {
-            Uts.talk("Gib mir ein moment ich hocke mich hin.");
+            Uts.talk("Gib mir einen Moment ich hocke mich hin.");
             p.goToPosture("Crouch", 1.f);
             Uts.talk("Ich bin fertig");
         }
@@ -95,7 +88,7 @@ public class Position  {
         p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("Stand")) {
-            Uts.talk("Gib mir ein moment ich stehe auf.");
+            Uts.talk("Gib mir einen Moment ich stehe auf.");
             p.goToPosture("Stand", 1.f);
             Uts.talk("Ich stehe");
         }
@@ -105,9 +98,9 @@ public class Position  {
         p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("LyingBack")) {
-            Uts.talk("Gib mir ein moment ich lege mich auf den Rücken.");
+            Uts.talk("Gib mir einen Moment ich lege mich auf den Rücken.");
             p.goToPosture("LyingBack", 1.f);
-            Uts.talk("Ich liege auf den Rücken");
+            Uts.talk("Ich liege auf dem Rücken");
         }
     }
 
@@ -115,7 +108,7 @@ public class Position  {
         p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("LyingBelly")) {
-            Uts.talk("Gib mir ein moment ich lege mich auf den Bauch.");
+            Uts.talk("Gib mir einen Moment ich lege mich auf den Bauch.");
             p.goToPosture("LyingBelly", 1.f);
             Uts.talk("Ich liege auf dem Bauch");
         }
@@ -125,7 +118,7 @@ public class Position  {
         p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("StandZero")) {
-            Uts.talk("Gib mir ein moment ich stell mich hin.");
+            Uts.talk("Gib mir einen Moment ich stell mich hin.");
             p.goToPosture("StandZero", 1.f);
             Uts.talk("Ich bin fertig");
         }
@@ -135,7 +128,7 @@ public class Position  {
         p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("SitRelax")) {
-            Uts.talk("Gib mir ein moment ich setze mich relex hin.");
+            Uts.talk("Gib mir einen Moment ich setze mich relex hin.");
             p.goToPosture("SitRelax", 1.f);
             Uts.talk("Ich sitze");
         }
@@ -146,7 +139,7 @@ public class Position  {
         p = new ALRobotPosture(session);
         p.stopMove();
         if(!p.getPosture().equals("StandInit")) {
-            Uts.talk("Gib mir ein moment ich stell mich hin");
+            Uts.talk("Gib mir einen Moment ich stell mich hin");
             p.goToPosture("StandInit", 0.5f);
             Uts.talk("Ich stehe");
         }

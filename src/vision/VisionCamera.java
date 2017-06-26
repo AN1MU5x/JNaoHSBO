@@ -1,21 +1,9 @@
 package vision;
 
 import com.aldebaran.qi.helper.proxies.ALVideoDevice;
-import com.aldebaran.qi.helper.proxies.ALVisionRecognition.*;
-import com.aldebaran.*;
-import javafx.scene.image.Image;
-import sun.awt.image.BufferedImageDevice;
 import utillities.Uts;
-import java.awt.Image.*;
-
 import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
-import java.awt.image.SampleModel;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.nio.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class VisionCamera extends Thread {
